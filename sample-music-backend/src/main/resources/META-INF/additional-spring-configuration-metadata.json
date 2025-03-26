@@ -1,0 +1,39 @@
+{
+  "properties": [
+    {
+      "name": "aliyun.oss.endpoint",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.accessKey."
+    },
+    {
+      "name": "aliyun.oss.accessKeyId",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.secretKey."
+    },
+    {
+      "name": "aliyun.oss.accessKeySecret",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.region."
+    },
+    {
+      "name": "aliyun.oss.bucketName",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.bucket."
+    },
+    {
+      "name": "aliyun.oss.urlPrefix",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.bucket."
+    },
+    {
+      "name": "aliyun.oss.multipart.max-file-size",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.bucket."
+    },
+    {
+      "name": "aliyun.oss.max-request-size",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.bucket."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: music
+  profiles:
+    active: dev # 指定激活配置
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher   # 支持swagger3
+
+server:
+  port: 8080 # 所有环境统一端口
+
+
+mybatis: # mybatis配置
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.sample.music.pojo
+
+music:
+  host: 127.0.0.1 # 公告主机地址变量

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sample.music.mapper.RelateMapper">
+
+    <insert id="addSongsToPlaylist">
+        insert into relate (playlist_id, song_id)
+        values (#{playlistId}, #{id})
+    </insert>
+
+    <delete id="deleteSongsByPlaylist">
+        delete
+        from relate
+        WHERE playlist_id = #{playlistId}
+          AND song_id = #{id}
+    </delete>
+
+    <select id="selectSongsAllByPlaylist" resultType="com.sample.music.pojo.entity.Song">
+        SELECT s.id,
+               s.title,
+               ar.name  AS artist,
+               al.title AS album,
+               s.lyric,
+               s.duration,
+               s.cover,
+               s.mp3_url,
+               s.flac_url,
+               s.style,
+               s.tags,
+               s.listeners,
+               s.permission,
+               s.release_date,
+               re.relate_time AS relateTime
+        FROM song s
+                 JOIN
+             artist ar ON s.artist_id = ar.id
+                 JOIN
+             album al ON s.album_id = al.id
+                 JOIN
+            relate re ON s.id = re.song_id
+        WHERE re.playlist_id = #{id}
+    </select>
+
+    <select id="selectSongsAllByAlbum" resultType="com.sample.music.pojo.entity.Song">
+        SELECT s.id,
+               s.title,
+               a.name   AS artist,
+               al.title AS album,
+               s.lyric,
+               s.duration,
+               s.cover,
+               s.mp3_url,
+               s.flac_url,
+               s.style,
+               s.tags,
+               s.listeners,
+               s.permission,
+               s.release_date
+        FROM song s
+                 JOIN
+             artist a ON s.artist_id = a.id
+                 JOIN
+             album al ON s.album_id = al.id
+        WHERE s.album_id = #{id}
+    </select>
+</mapper>

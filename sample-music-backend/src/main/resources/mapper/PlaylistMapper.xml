@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sample.music.mapper.PlaylistMapper">
+    <insert id="insertPlaylist" parameterType="java.util.List">
+        insert into playlist(user_id, title, likes, listeners, cover, description, create_time, update_time)
+        values(#{userId}, #{title}, 0, 0, #{cover}, '', NOW(), NOW())
+    </insert>
+
+    <delete id="deletePlayListById">
+        delete from playlist where id = #{id}
+    </delete>
+
+    <update id="updatePlayListById">
+        update playlist
+        set title=#{title},
+            <if test="cover != null">
+                cover=#{cover},
+            </if>
+            description=#{description},
+            update_time=NOW()
+        where id = #{id}
+    </update>
+
+
+    <update id="updatePlaylistCover">
+        update playlist
+            set
+        <if test="cover != null">
+            cover=#{cover},
+        </if>
+        update_time=NOW()
+        where id = #{id}
+    </update>
+
+    <update id="favoritesPlus">
+        update playlist set likes = likes + 1 where id = #{id}
+    </update>
+
+    <update id="favoriteSubtract">
+        update playlist set likes = likes - 1 where id = #{id}
+    </update>
+
+    <update id="listenersPlusOne">
+        update playlist set listeners = listeners + 1 where id = #{id}
+    </update>
+
+    <select id="queryPlayListByAll" resultType="com.sample.music.pojo.entity.Playlist">
+        select * from playlist
+    </select>
+
+    <select id="selectPlayListByPage" resultType="com.sample.music.pojo.entity.Playlist">
+        select * from playlist
+        where
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+    </select>
+
+    <select id="selectPlaylistById" resultType="com.sample.music.pojo.entity.Playlist">
+        select * from playlist where id = #{id}
+    </select>
+
+    <select id="selectPlaylistByIdUser" resultType="com.sample.music.pojo.entity.Playlist">
+        select * from playlist where user_id = #{userId} and id = #{id}
+    </select>
+
+    <select id="PublicPagedQuery" resultType="com.sample.music.pojo.entity.Playlist">
+        select * from playlist where is_public = 1
+    </select>
+
+    <select id="PagedQuery" resultType="com.sample.music.pojo.entity.Playlist">
+        select * from playlist where user_id = #{userId}
+    </select>
+
+    <select id="PublicConditionAndPagedQuery" resultType="com.sample.music.pojo.entity.Playlist">
+        select * from playlist where is_public = 1 AND LOWER(title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+    </select>
+
+    <select id="conditionAndPagedQuery" resultType="com.sample.music.pojo.entity.Playlist">
+        select * from playlist where user_id = #{userId} AND LOWER(title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+    </select>
+
+    <select id="queryAllByIds" resultType="com.sample.music.pojo.entity.Playlist">
+        SELECT * FROM playlist WHERE id IN
+        <foreach item='item' index='index' collection='ids' open='(' separator=',' close=')'>
+            #{item}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sample.music.mapper.CommentMapper">
+    <insert id="insertComment">
+        insert into comment( user_id, content, likes, target_type, target_id, create_time, update_time )
+        values (#{userId}, #{content}, #{likes}, #{targetType}, #{targetId}, NOW(), NOW())
+    </insert>
+
+    <update id="favoritesPlus">
+        update comment set likes = likes + 1 where id = #{id}
+    </update>
+
+    <update id="favoriteSubtract">
+        update comment set likes = likes - 1 where id = #{id}
+    </update>
+
+    <select id="queryCommentPaged" resultType="com.sample.music.pojo.entity.Comment">
+        select * from comment where target_type = #{targetType} and target_id = #{targetId}
+    </select>
+</mapper>

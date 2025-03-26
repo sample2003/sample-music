@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sample.music.mapper.PublicityMapper">
+    <insert id="insertPublicity">
+        insert into publicity(title, cover, message, viewers, publicity_type, create_time, update_time)
+        values (#{title}, #{cover}, #{message}, #{viewers}, #{publicityType}, NOW(), NOW());
+    </insert>
+
+    <select id="PagedQuery" resultType="com.sample.music.pojo.vo.view.PublicityView">
+        SELECT n.id,
+               n.title,
+               u.username AS username,
+               u.avatar AS userAvatar,
+               n.cover,
+               n.message,
+               n.viewers,
+               n.create_time,
+               n.update_time
+        FROM publicity n
+            JOIN
+            user u ON n.user_id = u.id
+        WHERE n.publicity_type = #{publicityType}
+    </select>
+
+    <select id="conditionAndPagedQuery" resultType="com.sample.music.pojo.vo.view.PublicityView">
+        SELECT n.id,
+               n.title,
+               u.username AS username,
+               n.cover,
+               n.message,
+               n.viewers,
+               n.create_time,
+               n.update_time
+        FROM publicity n
+                 JOIN
+             user u ON n.user_id = u.id
+        WHERE
+            n.publicity_type = #{publicityType} AND
+            LOWER(n.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+            OR LOWER(u.username) LIKE CONCAT('%', LOWER(#{condition}), '%')
+    </select>
+</mapper>

@@ -1,0 +1,116 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  rabbitmq:
+    host: ${music.host}
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    publisher-confirm-type: correlated  # 确认模式
+    publisher-returns: true
+    connection-timeout: 5000
+    cache:
+      channel:
+        size: 25      # 通道缓存数量
+        checkout-timeout: 1000
+      connection:
+        mode: CHANNEL # 连接池模式
+        size: 5       # 最大连接数
+    listener:
+      simple:
+        concurrency: 5       # 最小消费者数量
+        max-concurrency: 10  # 最大消费者数量
+        prefetch: 10         # 每个消费者最大预取数
+        acknowledge-mode: manual # 手动确认
+  # mysql数据库配置
+  datasource:
+    url: jdbc:mysql://${music.host}:3307/sample_music?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # redis缓存
+  cache:
+    type: redis
+    redis:
+      time-to-live: 1h           # 默认缓存过期时间
+      key-prefix: "music:cache:" # 缓存键前缀
+      use-key-prefix: true       # 启用前缀
+  # redis配置
+  data:
+    redis:
+      host: ${music.host}
+      port: 6379
+      redisson: #redisson限流
+        config: |
+          singleServerConfig:
+            idleConnectionTimeout: 10000
+            connectTimeout: 10000
+            timeout: 3000
+            retryAttempts: 3
+            retryInterval: 1500
+            connectionMinimumIdleSize: 24
+            connectionPoolSize: 64
+            database: 0
+      lettuce: # 连接池
+        pool:
+          max-active: 20      # 最大连接数
+          max-idle: 10        # 最大空闲连接
+          min-idle: 5         # 最小空闲连接
+      database: 0
+  # jwt配置
+  security:
+    jwt:
+      # 秘值
+      key: "sample"
+      # 7天过期
+      expire: 7
+  # 服务器配置
+  servlet:
+    multipart:
+      max-request-size: 52428800 # 50MB
+      max-file-size: 52428800 # 50MB
+  # 邮箱配置
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 3072641494@qq.com
+    password: 
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            enable: true
+# 接口文档配置
+knife4j:
+  enable: true
+  openapi:
+    title: "接口文档"
+    version: 1.0
+    group:
+      default:
+        api-rule: package
+        api-rule-resources:
+          - com.sample.music.controller
+
+logging:
+  level:
+    org.mybatis: DEBUG
+    org.springframework.data.redis: DEBUG
+
+# 阿里云oss对象存储配置
+aliyun:
+  oss:
+    endpoint: ${oss_endpoint}
+    accessKeyId: ${oss_accessKeyId}
+    accessKeySecret: ${oss_accessKeySecret}
+    bucketName: ${oss_bucketName}
+    urlPrefix: ${oss_urlPrefix}
+    servlet:
+      multipart:
+        max-file-size: 100MB
+        max-request-size: 1000MB

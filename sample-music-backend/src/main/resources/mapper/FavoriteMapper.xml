@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sample.music.mapper.FavoriteMapper">
+    <!-- 收藏 / 关注 / 点赞 -->
+    <insert id="AddToFavorites">
+        insert into favorite (user_id, target_type, target_id, favorite_time)
+        values (#{userId}, #{targetType}, #{targetId}, NOW())
+    </insert>
+
+    <!-- 移除收藏 / 移除关注 / 移除点赞 -->
+    <delete id="RemoveByFavorites">
+        delete
+        from favorite
+        where user_id = #{userId} and target_type = #{targetType} and target_id = #{targetId}
+    </delete>
+
+    <!-- 查询收藏歌曲 -->
+    <select id="queryFavoritesSong" resultType="com.sample.music.pojo.vo.favorite.FavoriteSong">
+        SELECT
+            f.id AS favorite_id,
+            f.favorite_time,
+            x.*
+        FROM
+            favorite f
+                LEFT JOIN
+            song x ON f.target_id = x.id AND f.target_type = #{targetType}
+        WHERE
+            f.user_id = #{userId} AND f.target_type = #{targetType};
+    </select>
+
+    <!-- 查询收藏歌单 -->
+    <select id="queryFavoritePlaylist" resultType="com.sample.music.pojo.vo.favorite.FavoritePlaylist">
+        SELECT
+            f.id AS favorite_id,
+            f.favorite_time,
+            x.*
+        FROM
+            favorite f
+                LEFT JOIN
+            playlist x ON f.target_id = x.id AND f.target_type = #{targetType}
+        WHERE
+            f.user_id = #{userId} AND f.target_type = #{targetType};
+    </select>
+
+    <!-- 查询收藏专辑 -->
+    <select id="queryFavoriteAlbum" resultType="com.sample.music.pojo.vo.favorite.FavoriteAlbum">
+        SELECT
+            f.id AS favorite_id,
+            f.favorite_time,
+            x.*
+        FROM
+            favorite f
+                LEFT JOIN
+            album x ON f.target_id = x.id AND f.target_type = #{targetType}
+        WHERE
+            f.user_id = #{userId} AND f.target_type = #{targetType};
+    </select>
+
+    <!-- 查询关注用户 -->
+    <select id="queryFavoriteUser" resultType="com.sample.music.pojo.vo.favorite.FavoriteUser">
+        SELECT
+            f.id AS favorite_id,
+            f.favorite_time,
+            x.*
+        FROM
+            favorite f
+                LEFT JOIN
+            user x ON f.target_id = x.id AND f.target_type = #{targetType}
+        WHERE
+            f.user_id = #{userId} AND f.target_type = #{targetType};
+    </select>
+
+    <!-- 查询点赞评论 -->
+    <select id="queryFavoriteComment" resultType="com.sample.music.pojo.vo.favorite.FavoriteComment">
+        SELECT
+            f.id AS favorite_id,
+            f.favorite_time,
+            x.*
+        FROM
+            favorite f
+                LEFT JOIN
+            comment x ON f.target_id = x.id AND f.target_type = #{targetType}
+        WHERE
+            f.user_id = #{userId} AND f.target_type = #{targetType};
+    </select>
+</mapper>

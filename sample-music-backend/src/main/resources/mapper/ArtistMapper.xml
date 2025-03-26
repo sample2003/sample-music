@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sample.music.mapper.ArtistMapper">
+    <insert id="insertArtistByOne">
+        insert into artist(name, avatar, follows, description, birthday, create_time, update_time)
+        values (#{name}, #{avatar}, #{follows}, #{description}, #{birthday}, NOW(), NOW());
+    </insert>
+
+    <delete id="deleteArtistById">
+        delete from artist where id = #{id}
+    </delete>
+
+    <update id="updateArtistById">
+        update artist
+        set name        = #{name},
+            avatar      = #{avatar},
+            description = #{description},
+            birthday    = #{birthday},
+            update_time = NOW()
+        where id = #{id}
+    </update>
+
+    <select id="selectArtistById" resultType="com.sample.music.pojo.entity.Artist">
+        select * from artist where id = #{id};
+    </select>
+
+    <select id="selectArtistByAll" resultType="com.sample.music.pojo.entity.Artist">
+        select * from artist;
+    </select>
+
+    <select id="selectArtistByName" resultType="com.sample.music.pojo.entity.Artist">
+        select * from artist where name = #{name};
+    </select>
+
+    <select id="PagedQuery" resultType="com.sample.music.pojo.entity.Artist">
+        select * from artist
+    </select>
+
+    <select id="conditionAndPagedQuery" resultType="com.sample.music.pojo.entity.Artist">
+        select * from artist where LOWER(name) LIKE CONCAT('%', LOWER(#{condition}), '%')
+    </select>
+</mapper>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sample.music.mapper.SongMapper">
+    <insert id="insertSong">
+        insert into song(title,
+                         artist_id,
+                         album_id,
+                         artists,
+                         duration,
+                         mp3_url,
+                         flac_url,
+                         cover,
+                         lyric,
+                         style,
+                         tags,
+                         listeners,
+                         permission,
+                         release_date,
+                         create_time,
+                         update_time)
+        values (#{title},
+                (select id from artist where name = #{artist}),
+                (select id from album where title = #{album}),
+                #{artists},
+                #{duration}, #{mp3Url}, #{flacUrl}, #{cover}, #{lyric}, #{style}, #{tags}, #{listeners}, #{permission}, #{releaseDate}, NOW(), NOW());
+    </insert>
+
+    <delete id="deleteSongById">
+        delete
+        from song
+        where id = #{songId}
+    </delete>
+
+    <update id="updateSong">
+        update song
+        set title        = #{title},
+            artist_id    = (select id from artist where name = #{artist}),
+            album_id     = (select id from album where title = #{album}),
+            artists      = #{artists},
+            duration     = #{duration},
+            mp3_url      = #{mp3Url},
+            flac_url     = #{flacUrl},
+            cover        = #{cover},
+            lyric        = #{lyric},
+            style        = #{style},
+            tags         = #{tags},
+            permission   = #{permission},
+            release_date = #{releaseDate},
+            update_time  = NOW()
+        where id = #{id}
+    </update>
+
+    <update id="listenersPlusOne">
+        update song set listeners = listeners + 1 where id = #{id}
+    </update>
+
+    <select id="querySongById" resultType="com.sample.music.pojo.entity.Song">
+        SELECT s.id,
+               s.title,
+               ar.name  AS artist,
+               al.title AS album,
+               s.artists,
+               s.lyric,
+               s.duration,
+               s.cover,
+               s.mp3_url,
+               s.flac_url,
+               s.style,
+               s.tags,
+               s.listeners,
+               s.permission,
+               s.release_date
+        FROM song s
+             LEFT JOIN artist ar ON s.artist_id = ar.id
+             LEFT JOIN album al ON s.album_id = al.id
+        where s.id = #{songId}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM song
+    </select>
+
+    <select id="countByCondition" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM song s
+                 LEFT JOIN artist ar ON s.artist_id = ar.id
+                 LEFT JOIN album al ON s.album_id = al.id
+        <where>
+            <choose>
+                <when test="params == null">
+                    LOWER(s.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                    OR LOWER(ar.name) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                    OR LOWER(al.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'title'">
+                    LOWER(s.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'artist'">
+                    LOWER(ar.name) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'album'">
+                    LOWER(al.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'style'">
+                    LOWER(s.style) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'tag'">
+                    LOWER(s.tag) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="conditionAndPagedQuery" resultType="com.sample.music.pojo.entity.Song">
+        SELECT s.id,
+               s.title,
+               ar.name  AS artist,
+               al.title AS album,
+               s.artists,
+               s.lyric,
+               s.duration,
+               s.cover,
+               s.mp3_url,
+               s.flac_url,
+               s.style,
+               s.tags,
+               s.listeners,
+               s.permission,
+               s.release_date
+        FROM song s
+            LEFT JOIN artist ar ON s.artist_id = ar.id
+            LEFT JOIN album al ON s.album_id = al.id
+        <where>
+            <choose>
+                <when test="params == null">
+                    LOWER(s.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                    OR LOWER(ar.name) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                    OR LOWER(al.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'title'">
+                    LOWER(s.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'artist'">
+                    LOWER(ar.name) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'album'">
+                    LOWER(al.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'style'">
+                    LOWER(s.style) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'tag'">
+                    LOWER(s.tag) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="PagedQuery" resultType="com.sample.music.pojo.entity.Song">
+        SELECT s.id,
+               s.title,
+               ar.name  AS artist,
+               al.title AS album,
+               s.artists,
+               s.lyric,
+               s.cover,
+               s.mp3_url,
+               s.flac_url,
+               s.style,
+               s.tags,
+               s.listeners,
+               s.permission,
+               s.release_date
+        FROM song s
+             LEFT JOIN artist ar ON s.artist_id = ar.id
+             LEFT JOIN album al ON s.album_id = al.id
+    </select>
+
+    <select id="queryAllByIds" resultType="com.sample.music.pojo.entity.Song">
+        SELECT * FROM song WHERE id IN
+        <foreach item='item' index='index' collection='ids' open='(' separator=',' close=')'>
+            #{item}
+        </foreach>
+    </select>
+</mapper>
