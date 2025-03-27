@@ -1,5 +1,6 @@
 /sample-music/sample-music-backend/target/
 /sample-music/sample-music-backend/src/main/resources/config.yml
+/sample-music-backend/src/main/resources/a.txt
 sample-music/sample-music-backend/.idea
 /sample-music/sample-music-backend/*.iws
 /sample-music/sample-music-backend/*.iml
