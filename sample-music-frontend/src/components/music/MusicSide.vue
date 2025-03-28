@@ -89,7 +89,7 @@ export default {
   min-width: 80px;
   min-height: 540px;
   display: grid;
-  grid-template-rows: 20% 40% 40%;
+  grid-template-rows: 20% 30% 50%;
   /*background-color: rgba(139, 128, 175, 0.02);*/
 }
 

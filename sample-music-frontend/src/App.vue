@@ -4,7 +4,6 @@
     <keep-alive v-else>
       <router-view></router-view>
     </keep-alive>
-    <span style="font-size: 70px;font-weight: bold;align-items: center"></span>
   </div>
 </template>
 
@@ -22,15 +21,27 @@ export default {
   methods: {
     handleLoad() {
       this.loading = false;
-    }
+    },
+    // 页面关闭前紧急上报
+    handleBeforeUnload() {
+      if (this.trackStartTime && this.songPlaying) {
+        const duration = Math.floor((Date.now() - this.trackStartTime) / 1000);
+        // 使用sendBeacon确保可靠上报
+        navigator.sendBeacon(
+            `/api/song/log-duration?songId=${this.songPlaying.id}&duration=${duration}`
+        );
+      }
+    },
   },
   mounted() {
     this.setIsPlay(false);
     this.setAudio(null);
     window.addEventListener('load', this.handleLoad);
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
   },
   beforeDestroy() {
     window.removeEventListener('load', this.handleLoad);
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   },
 }
 </script>

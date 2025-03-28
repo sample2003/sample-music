@@ -7,7 +7,7 @@
           <span class="s2" @click="registerInput">注册</span>
           <div class="content">
             <h2>欢迎您</h2>
-            <p style="color: #fff">{{ pContent }}</p>
+            <p style="color: #000">{{ pContent }}</p>
             <!-- 根据 isHovering 的值显示输入框 -->
             <div v-show="isLoginForm">
               <!-- 输入框 -->
@@ -249,7 +249,7 @@ export default {
 }
 
 .content h2 {
-  color: #fff;
+  color: #000;
   font-size: 1.1em;
   margin-bottom: 10px;
   line-height: 1.4em;

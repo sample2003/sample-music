@@ -8,11 +8,13 @@ import userService from "@/api/service/userService";
 export default {
     data() {
         return {
-            lyricsLoaded: false,
-            volume: 50,
-            expAddedTime: 0,
-            hasAddedExp: false,
-            lastProcessedSecond: 0
+            lyricsLoaded: false, // 歌词是否已加载
+            volume: 50, // 声音大小，默认一半
+            expAddedTime: 0, // 播放时间
+            hasAddedExp: false, // 是否已增加过经验
+            lastProcessedSecond: 0, //
+            trackStartTime: null,   // 记录歌曲开始播放的时间戳（毫秒）
+            currentTrackDuration: 0 // 当前歌曲已统计的时长（秒）
         };
     },
     computed: {
@@ -98,6 +100,7 @@ export default {
         },
         // 音频播放时间更新时调用的方法
         handleAudioTimeUpdate() {
+            console.log(this.expAddedTime)
             const currentTime = this.audio.currentTime;
             let currentLyric = null;
             this.setCurrentTime(currentTime);
@@ -332,5 +335,30 @@ export default {
         changeVolume() {
             this.audio.volume = this.volume / 100;
         },
+    },
+
+    // 上报播放时长
+    logTrackDuration() {
+        if (!this.trackStartTime || !this.songPlaying) return;
+
+        // 计算已播放时长（秒）
+        const durationSec = Math.floor((Date.now() - this.trackStartTime) / 1000);
+
+        // 避免上报无效值（如瞬间切歌）
+        if (durationSec < 1) return;
+
+        // 调用API上报数据（示例接口）
+        songService.logPlayDuration({
+            songId: this.songPlaying.id,
+            duration: durationSec
+        }).then(() => {
+            console.log('播放时长上报成功');
+        }).catch(error => {
+            console.error('上报失败:', error);
+        });
+
+        // 重置计时状态
+        this.trackStartTime = null;
+        this.currentTrackDuration = 0;
     },
 };
