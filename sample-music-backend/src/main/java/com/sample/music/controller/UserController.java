@@ -55,9 +55,8 @@ public class UserController {
         if (userService.findUserByName(userRegisterVO.getUsername()) != null) return Result.error("该用户名已被注册");
         if (userService.findUserByEmail(userRegisterVO.getEmail()) != null) return Result.error("该邮箱已被注册");
         Long id = userService.registerUser(userRegisterVO);
-        return Result.success(id+"注册成功");
+        return Result.success(id + "注册成功");
     }
-
 
     /**
      * 用户登录
@@ -100,7 +99,6 @@ public class UserController {
         return Result.error(UNAUTHORIZED, "密码错误");
     }
 
-
     /**
      * 用户登出
      *
@@ -136,9 +134,9 @@ public class UserController {
         User user = userService.findUserByNameOrEmail(username);
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
-        if(userService.isAdmin(user.getId())) {
+        if (userService.isAdmin(user.getId())) {
             userVO.setRole("admin");
-        }else {
+        } else {
             userVO.setRole("user");
         }
         return Result.success(OK, "查询成功", userVO);
@@ -225,6 +223,6 @@ public class UserController {
             return Result.error("经验为0");
         }
         userService.updateUserExp(expAdd);
-        return Result.success("新增经验："+expAdd);
+        return Result.success("新增经验：" + expAdd);
     }
 }

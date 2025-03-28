@@ -2,27 +2,109 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sample.music.mapper.AdminMapper">
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM user
+    </select>
+
+    <select id="countByCondition" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM user u
+        <where>
+            <choose>
+                <when test="params == null">
+                    LOWER(u.username) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'status'">
+                    u.status = #{status}
+                </when>
+                <when test="params == 'sex'">
+                    u.sex = #{sex}
+                </when>
+                <when test="params == 'deleted'">
+                    u.deleted = #{deleted}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="conditionAndPagedQuery" resultType="com.sample.music.pojo.entity.Song">
+        SELECT s.id,
+        s.title,
+        ar.name  AS artist,
+        al.title AS album,
+        s.artists,
+        s.lyric,
+        s.duration,
+        s.cover,
+        s.mp3_url,
+        s.flac_url,
+        s.style,
+        s.tags,
+        s.listeners,
+        s.permission,
+        s.release_date
+        FROM song s
+        LEFT JOIN artist ar ON s.artist_id = ar.id
+        LEFT JOIN album al ON s.album_id = al.id
+        <where>
+            <choose>
+                <when test="params == null">
+                    LOWER(u.username) LIKE CONCAT('%', LOWER(#{condition}), '%')
+                </when>
+                <when test="params == 'status'">
+                    u.status = #{status}
+                </when>
+                <when test="params == 'sex'">
+                    u.sex = #{sex}
+                </when>
+                <when test="params == 'deleted'">
+                    u.deleted = #{deleted}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="PagedQuery" resultType="com.sample.music.pojo.entity.Song">
+        SELECT s.id,
+               s.title,
+               ar.name  AS artist,
+               al.title AS album,
+               s.artists,
+               s.lyric,
+               s.cover,
+               s.mp3_url,
+               s.flac_url,
+               s.style,
+               s.tags,
+               s.listeners,
+               s.permission,
+               s.release_date
+        FROM song s
+                 LEFT JOIN artist ar ON s.artist_id = ar.id
+                 LEFT JOIN album al ON s.album_id = al.id
+    </select>
+
     <select id="selectUsersByPage" resultType="com.sample.music.pojo.dto.UserDTO">
-        select * from user
+        SELECT * FROM user
         <where>
             <if test="status != null">
-                and status = #{status}
+                AND status = #{status}
             </if>
         </where>
     </select>
 
-    <select id="findUserRoleId" resultType="long">
-        select role_id from user_role where user_id = #{userId};
-    </select>
-
-    <select id="findUserRoleName" resultType="string">
-        select role_name from role where id = #{roleId};
+    <select id="findUserRoleByUserId" resultType="string">
+        SELECT r.role_name
+        FROM user_role ur
+                 JOIN role r ON ur.role_id = r.id
+        WHERE ur.user_id = #{userId}
     </select>
 
     <update id="BarreOrFreedUser">
-        update
+        UPDATE
             user
-        set status = #{status}
-        where id = #{id}
+        SET status = #{status}
+        WHERE id = #{id}
     </update>
 </mapper>
