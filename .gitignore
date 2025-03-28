@@ -1,5 +1,4 @@
 /sample-music-backend/target/
-/sample-music-backend/src/main/resources/config.yml
 /sample-music-backend/config.yml
 /sample-music-backend/.idea
 /sample-music-backend/*.iws
@@ -7,5 +6,4 @@
 /sample-music-backend/*.ipr
 
 /sample-music-frontend/.idea
-/sample-music-frontend/node_module/
 /sample-music-frontend/node_modules/
