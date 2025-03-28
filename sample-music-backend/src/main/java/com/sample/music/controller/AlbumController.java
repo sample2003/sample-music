@@ -15,12 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Transactional
 @RestController
-@RequestMapping("/api/album")
 @RequiredArgsConstructor
+@RequestMapping("/api/album")
 public class AlbumController {
     private final AlbumService albumService;
 

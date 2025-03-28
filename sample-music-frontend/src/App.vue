@@ -4,6 +4,7 @@
     <keep-alive v-else>
       <router-view></router-view>
     </keep-alive>
+    <span style="font-size: 70px;font-weight: bold;align-items: center"></span>
   </div>
 </template>
 

@@ -1,6 +1,7 @@
 package com.sample.music.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -8,15 +9,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
+@Data
 @Configuration
+@ConfigurationProperties(prefix = "spring.mail")
 public class MailConfig {
-    @Value("${spring.mail.host}")
     private String host;
-    @Value("${spring.mail.port}")
     private int port;
-    @Value("${spring.mail.username}")
     private String username;
-    @Value("${spring.mail.password}")
     private String password;
 
     @Bean
@@ -32,7 +31,7 @@ public class MailConfig {
         properties.put("mail.transport.protocol", "smtp");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.debug", "true"); // 调试信息，可根据需要开启或关闭
+        properties.put("mail.debug", "true"); // 调试信息
 
         return mailSender;
     }

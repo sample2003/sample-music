@@ -13,8 +13,8 @@ import java.util.List;
 
 @Transactional
 @RestController
-@RequestMapping("/api/artist")
 @RequiredArgsConstructor
+@RequestMapping("/api/artist")
 public class ArtistController {
     private final ArtistService artistService;
     private final FileManageService fileManageService;
@@ -49,8 +49,8 @@ public class ArtistController {
     /**
      * 更新艺术家信息
      *
-     * @param artist
-     * @return
+     * @param artist 艺术家信息
+     * @return Result<Artist>
      */
     @PutMapping("update")
     public Result<Artist> updateArtistById(Artist artist) {
@@ -65,8 +65,9 @@ public class ArtistController {
 
     /**
      * 根据id查询艺术家
-     * @param id
-     * @return
+     *
+     * @param id 艺术家id
+     * @return Result<Artist>
      */
     @GetMapping("select/{id}")
     public Result<Artist> selectArtistById(@PathVariable("id") Long id) {
@@ -77,6 +78,11 @@ public class ArtistController {
         return Result.success(artist);
     }
 
+    /**
+     * 查询全部艺术家
+     *
+     * @return Result<List<Artist>>
+     */
     @GetMapping("select")
     public Result<List<Artist>> selectArtistByAll() {
         List<Artist> artists = artistService.selectArtistByAll();

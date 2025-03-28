@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/favorite")
+@RequestMapping("/api/favorite")
 public class FavoriteController {
     private final FavoriteService favoriteService;
 

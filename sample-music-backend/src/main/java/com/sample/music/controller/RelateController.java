@@ -7,11 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/api/relate")
 @RequiredArgsConstructor
+@RequestMapping("/api/relate")
 public class RelateController {
 
     private final RelateService relateService;

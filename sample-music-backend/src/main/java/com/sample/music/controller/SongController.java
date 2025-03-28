@@ -1,5 +1,6 @@
 package com.sample.music.controller;
 
+import com.github.houbb.sensitive.word.core.SensitiveWordHelper;
 import com.google.gson.Gson;
 import com.sample.music.annotation.AdminOnly;
 import com.sample.music.common.Result;
@@ -177,6 +178,7 @@ public class SongController {
      */
     @PostMapping("insert/comment")
     public Result<String> insertSongComment(Comment comment) {
+        boolean verify = SensitiveWordHelper.contains(String.valueOf(comment));
         comment.setTargetType("song");
         commentService.insertComment(comment);
         return Result.success();

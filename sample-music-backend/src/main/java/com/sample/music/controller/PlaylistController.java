@@ -21,9 +21,9 @@ import java.util.List;
 
 @Transactional
 @RestController
-@RequestMapping("/api/playlist")
 @RequiredArgsConstructor
-public class PlayListController {
+@RequestMapping("/api/playlist")
+public class PlaylistController {
 
     private final PlaylistService playlistService;
 

@@ -2,6 +2,8 @@ spring:
   config:
     activate:
       on-profile: dev
+    import:
+      - optional:file:./config.yml   # 引入外部配置文件
   rabbitmq:
     host: ${music.host}
     port: 5672
@@ -17,7 +19,7 @@ spring:
         checkout-timeout: 1000
       connection:
         mode: CHANNEL # 连接池模式
-        size: 5       # 最大连接数
+        # size: 5       # 最大连接数
     listener:
       simple:
         concurrency: 5       # 最小消费者数量
@@ -76,7 +78,6 @@ spring:
     host: smtp.qq.com
     port: 587
     username: 3072641494@qq.com
-    password: 
     properties:
       mail:
         smtp:
@@ -101,16 +102,3 @@ logging:
   level:
     org.mybatis: DEBUG
     org.springframework.data.redis: DEBUG
-
-# 阿里云oss对象存储配置
-aliyun:
-  oss:
-    endpoint: ${oss_endpoint}
-    accessKeyId: ${oss_accessKeyId}
-    accessKeySecret: ${oss_accessKeySecret}
-    bucketName: ${oss_bucketName}
-    urlPrefix: ${oss_urlPrefix}
-    servlet:
-      multipart:
-        max-file-size: 100MB
-        max-request-size: 1000MB
