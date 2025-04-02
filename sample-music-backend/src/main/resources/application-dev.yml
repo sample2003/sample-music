@@ -26,7 +26,7 @@ spring:
         max-concurrency: 10  # 最大消费者数量
         prefetch: 10         # 每个消费者最大预取数
         acknowledge-mode: manual # 手动确认
-  # mysql数据库配置
+  # mysql配置
   datasource:
     url: jdbc:mysql://${music.host}:3307/sample_music?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
@@ -61,13 +61,6 @@ spring:
           max-idle: 10        # 最大空闲连接
           min-idle: 5         # 最小空闲连接
       database: 0
-  # jwt配置
-  security:
-    jwt:
-      # 秘值
-      key: "sample"
-      # 7天过期
-      expire: 7
   # 服务器配置
   servlet:
     multipart:

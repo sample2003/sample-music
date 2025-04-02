@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
 import com.sample.music.constant.SortType;
+import com.sample.music.constant.TargetType;
 import com.sample.music.exception.BusinessException;
 import com.sample.music.mapper.AlbumMapper;
 import com.sample.music.mapper.ArtistMapper;
@@ -14,9 +15,12 @@ import com.sample.music.pojo.entity.Song;
 import com.sample.music.pojo.vo.view.SongView;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +44,8 @@ public class SongService {
     private final AlbumMapper albumMapper;
 
     private final FileManageService fileManageService;
+
+    private final RedissonClient redissonClient;
 
     private final static Gson GSON = new Gson();
 
@@ -221,7 +227,7 @@ public class SongService {
     }
 
     /**
-     * 条件并分页查询歌曲
+     * 条件并分页查询歌曲 todo
      *
      * @param condition 条件
      * @param params    条件字段
@@ -236,7 +242,7 @@ public class SongService {
     )
     public PageBean<SongView> conditionAndPagedQuery(
             String condition,
-            String params,
+            TargetType params,
             Integer pageNum,
             Integer pageSize,
             SortType sortType)
@@ -248,7 +254,7 @@ public class SongService {
             total = songMapper.countAll();
         } else {
             // 有条件，执行条件总数查询
-            total = songMapper.countByCondition(condition, params);
+            total = songMapper.countByCondition(condition, params.getType());
         }
         PageBean<SongView> pb = new PageBean<>();
         // 设置分页参数
@@ -264,7 +270,7 @@ public class SongService {
             songs = songMapper.PagedQuery();
         } else {
             // 有条件，执行条件查询
-            songs = songMapper.conditionAndPagedQuery(condition, params);
+            songs = songMapper.conditionAndPagedQuery(condition, params.getType());
         }
         songs.forEach(song -> {
             SongView songView = new SongView();
@@ -305,5 +311,23 @@ public class SongService {
      */
     public void listenersPlusOne(Long id) {
         songMapper.listenersPlusOne(id);
+    }
+
+    /**
+     * 个性化推荐歌曲
+     * todo
+     */
+    @Scheduled(cron = "0 0 3 * * ?") // 每天凌晨3点执行
+    public void generateDailyRecommendations() {
+        RLock lock = redissonClient.getLock("task_lock:daily_recommend");
+        try {
+            if (lock.tryLock()) { // 非阻塞尝试
+                // 执行推荐算法计算...
+            }
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
     }
 }

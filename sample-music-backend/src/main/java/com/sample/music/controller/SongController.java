@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.sample.music.annotation.AdminOnly;
 import com.sample.music.common.Result;
 import com.sample.music.constant.SortType;
+import com.sample.music.constant.TargetType;
 import com.sample.music.exception.BusinessException;
 import com.sample.music.pojo.dto.PageBean;
 import com.sample.music.pojo.dto.SongUpload;
@@ -20,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.annotation.Target;
 import java.util.List;
 
 import static com.sample.music.constant.HttpStatusCode.INTERNAL_SERVER_ERROR;
@@ -120,7 +122,7 @@ public class SongController {
     @GetMapping("select/conditionAndPaged")
     public Result<PageBean<SongView>> conditionAndPaged(
             @RequestParam(required = false) String condition,
-            @RequestParam(required = false) String params,
+            @RequestParam(defaultValue = "ALL") TargetType params,
             @RequestParam(defaultValue = "LISTENERS_DESC") SortType sortType,
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize) {
