@@ -19,10 +19,10 @@ export default {
     }
   },
   methods: {
-    async test() {
+    /*async test() {
       const metadata = await parseFile("D:\\KwDownload\\song");
       console.log(metadata)
-    }
+    }*/
   }
 }
 </script>

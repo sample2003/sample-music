@@ -114,7 +114,6 @@ export default {
     async handleLogin() {
       try {
         const res = await userService.userLogin(UserLoginData);
-        console.log(res)
         if (res === 'empty') {
           this.$message("请完整填写登录信息")
         } else if (res === 401) {

@@ -3,14 +3,14 @@
     <div class="exist">
       <div class="title flex">
         <div class="flex">
-          <h2 style="margin: 0 10px;">{{ condition }}</h2><span>的搜索结果如下</span>
+          <h2 style="margin: 0 10px;">{{ searchParams.condition }}</h2><span>的搜索结果如下</span>
         </div>
         <div class="nav">
           <button
               class="btn"
               v-for="(b, index) in btn"
               :key="b.fx"
-              @click="conditionSearch(b.fx, index)"
+              @click="conditionSearch(b.fx)"
               :class="{ 'it': currentBtn === index }"
           ><span>{{ b.name }}</span></button>
         </div>
@@ -24,9 +24,9 @@
       <PageNation
           class="page" v-if="!isExistC && !isExistS"
           :totalItems="songsBySearch.total || 0"
-          :pageSize="itemsPerPage"
+          :pageSize="searchParams.pageSize"
           :pageSizeOptions="pageSizeOptions"
-          :currentPage.sync="currentPage"
+          :currentPage.sync="searchParams.pageNum"
           @update:pageSize="handlePageSizeChange"
           @update:currentPage="fetchData"
       />
@@ -43,7 +43,6 @@
 <script>
 import {mapState} from 'vuex'
 import PageNation from "@/pages/common/PageNation.vue";
-import SongService from "@/api/service/SongService";
 import SongList from "@/pages/music/SongList.vue";
 import RelateService from "@/api/service/RelateService";
 import PlaylistService from "@/api/service/PlaylistService";
@@ -57,28 +56,16 @@ export default {
   },
   data() {
     return {
-      itemsPerPage: 10,
-      currentPage: 1,
       pageSizeOptions: [10, 20, 50, 100],
       currentBtn: 0,
       btn: [
-        {name: "综合", fx: "comprehensive"},
-        {name: "单曲", fx: "title"},
-        {name: "歌手", fx: "artist"},
-        {name: "专辑", fx: "album"},
-        {name: "风格", fx: "style"},
-        {name: "标签", fx: "tag"}]
+        {name: "综合", fx: "ALL"},
+        {name: "单曲", fx: "TITLE"},
+        {name: "歌手", fx: "ARTIST"},
+        {name: "专辑", fx: "ALBUM"},
+        {name: "风格", fx: "STYLE"},
+        {name: "标签", fx: "TAG"}]
     };
-  },
-  props: {
-    type: {  // 新增路由参数prop
-      type: String,
-      default: 'title'
-    },
-    keyword: {  // 新增路由参数prop
-      type: String,
-      default: ''
-    }
   },
   watch: {
     currentPage() {
@@ -86,21 +73,11 @@ export default {
     },
     itemsPerPage() {
       this.fetchData();
-    },
-    // 监听路由参数变化
-    '$route.params': {
-      handler(newParams) {
-        this.handleRouteChange(newParams)
-      },
-      immediate: true
     }
   },
   computed: {
     Icon() {
       return Icon
-    },
-    condition() {  // 改为从路由参数获取
-      return this.$route.params.keyword || ''
     },
     isExistC() {
       return this.condition === null || this.condition === '';
@@ -113,31 +90,19 @@ export default {
     })
   },
   methods: {
-
+    // 加载页面时，根据参数
+    async fetchData() {
+      await this.getSongsByCondition(this.searchParams);
+    },
     async handleRouteChange(params) {
       // 同步参数到搜索条件
-      this.currentBtn = this.btn.findIndex(b => b.fx === (params.type || 'title'))
+      this.currentBtn = this.btn.findIndex(b => b.fx === (params.type || 'ALL'))
       await this.fetchData()
     },
-    async conditionSearch(fx, index) {
+    async conditionSearch(fx) {
+      this.setSearchParams([...this.searchParams.sortType, fx])
       // 修改为更新路由而非直接请求
-      this.$router.push({
-        name: 'MusicSearch',
-        params: {
-          type: fx,
-          keyword: this.condition
-        }
-      })
-    },
-    async fetchData() {
-      const res = await SongService.conditionAndPaged(
-          this.condition,
-          this.$route.params.type || 'title', // 使用路由参数
-          null,
-          this.currentPage,
-          this.itemsPerPage
-      )
-      await this.setSongsBySearch(res)
+      await this.fetchData()
     },
     handlePageSizeChange(newSize) {
       this.itemsPerPage = newSize; // 更新每页显示的条目数

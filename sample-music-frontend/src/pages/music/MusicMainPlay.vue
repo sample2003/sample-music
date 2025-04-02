@@ -299,8 +299,6 @@ export default {
   mounted() {
     this.querySongComment();
     this.startScrollingLyrics();
-    this.checkScroll()
-    window.addEventListener('resize', this.checkScroll)
     // 添加滚动事件监听器
     if (this.$refs.lyricsContainer) {
       this.$refs.lyricsContainer.addEventListener('scroll', this.handleLyricScroll);

@@ -1,6 +1,5 @@
 import axios from "axios";
 import state from "@/store/music/state";
-import PlaylistService from "@/api/service/PlaylistService";
 import SongService from "@/api/service/SongService";
 
 export default {
@@ -57,10 +56,11 @@ export default {
     },
     // 歌曲：查询一个专辑里全部歌曲的数据
     // 歌曲：条件查询并默认查询10条数据
-    async getSongsByCondition({commit}, condition) {
-        const songs = await SongService.conditionAndPaged(condition)
-        commit('setCondition', condition)
-        commit('setSongsBySearch', songs);
+    async getSongsByCondition({commit}, params) {
+      console.log(params)
+      const songs = await SongService.conditionAndPaged(params.condition, params.params, params.sortType, params.pageNum, params.pageSize);
+      console.log(songs)
+      commit('setSongsBySearch', songs);
     },
     // 歌曲：往歌单中增加一首或多首歌曲
     addSongsToPlaylist(data) {

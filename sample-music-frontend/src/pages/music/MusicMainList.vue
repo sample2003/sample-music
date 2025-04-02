@@ -115,7 +115,6 @@ export default {
         if (confirm) {
           // this.delSongList(id)
           const playlist = JSON.parse(localStorage.getItem('playlist'))
-          console.log(this.playlists.map(item => item.id));
           this.$store.dispatch('delSongsByPlaylist', {
             id: playlist.id,
             ids: this.songsInPlaylist.map(item => item.id),

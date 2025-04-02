@@ -175,7 +175,6 @@ export default {
     async parseSong(file) {
       try {
         const metadata = await parseBlob(file);
-        console.log(metadata)
         // 提取标题、歌手等信息（之前已有的代码部分）
         this.$set(this.formData, 'flacAudioFiles', file || null);
         this.$set(this.formData, 'title', metadata.common.title || '');

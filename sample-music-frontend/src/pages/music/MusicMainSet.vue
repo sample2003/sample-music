@@ -11,6 +11,7 @@
     <div class="stream-output">
       {{ streamingText }}
     </div>
+
   </div>
 </template>
 

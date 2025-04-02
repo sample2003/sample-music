@@ -8,7 +8,6 @@
         </keep-alive>
       </transition>
     </div>
-
   </div>
 </template>
 

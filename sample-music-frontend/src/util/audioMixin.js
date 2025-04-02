@@ -321,7 +321,6 @@ export default {
         // 播放全部歌曲
         async playAllSongs(type, items) {
             if (items.songs && items.songs.length > 0) {
-                console.log(items.songs);
                 this.setPlaylistPlaying(items.songs);
                 this.setSongIndex(0);
                 this.setCurrentTime(0)

@@ -102,8 +102,8 @@ const router = new VueRouter({
                     component: MusicMainHome
                 },
                 {
-                    path: '/music/search/:type?/:keyword?',
-                    name: 'MusicSearch',
+                    name: 'search',
+                    path: '/music/search',
                     component: MusicMainSearch,
                     props: true // 启用路由参数传递为props
                 },

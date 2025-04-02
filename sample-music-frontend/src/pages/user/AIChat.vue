@@ -15,6 +15,10 @@
       <button @click="sendMessage">发送</button>
       <button @click="newChat">新对话</button>
     </div>
+
+    <div
+      @click="aaa"
+    ></div>
   </div>
 </template>
 
@@ -27,7 +31,9 @@ export default {
     }
   },
   methods: {
-
+    aaa() {
+      this.setSongLyric()
+    }
   },
 
 }

@@ -22,7 +22,7 @@ export default {
     handleLoad() {
       this.loading = false;
     },
-    // 页面关闭前紧急上报
+    // 页面关闭前紧急上报用户听歌时长
     handleBeforeUnload() {
       if (this.trackStartTime && this.songPlaying) {
         const duration = Math.floor((Date.now() - this.trackStartTime) / 1000);

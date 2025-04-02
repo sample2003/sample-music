@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     emitValue(event) {
-      console.log(event.target.value)
       this.$emit('inputChange', event.target.value);
     },
     inputFx() {

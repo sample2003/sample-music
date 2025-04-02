@@ -16,7 +16,8 @@
           @inputChange="handleInput"
           @fetch="fetchSongs"
           method="fetchSongs"
-          message="搜索歌曲吧"></TextInput>
+          message="搜索歌曲吧">
+      </TextInput>
       <!-- 右边框 -->
       <div v-if="this.userDetail" class="nn1" @click="jumpUserCenter">
         <img :src="this.userDetail.avatar" alt="">
@@ -116,8 +117,12 @@ export default {
     hideWantList() {
       this.isShowWantList = false;
     },
-    fetchSongs() {
-      this.getSongsByCondition(this.value)
+    async fetchSongs() {
+      let searchParams = this.searchParams;
+      console.log(searchParams)
+      searchParams.condition = this.value;
+      await this.setSearchParams(searchParams)
+      console.log(this.searchParams)
       this.$router.push({name: "search"}, () => {
       })
     },
