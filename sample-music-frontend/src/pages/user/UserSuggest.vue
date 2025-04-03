@@ -4,13 +4,11 @@
       <div class="endcap endcap-start"></div>
       <div class="body"></div>
       <div class="endcap endcap-end"></div>
-      <button @click="test">aaaaaa</button>
     </div>
   </div>
 </template>
 
 <script>
-import { parseFile } from 'music-metadata';
 export default {
   name: "UserSuggest",
   data() {
@@ -19,10 +17,6 @@ export default {
     }
   },
   methods: {
-    /*async test() {
-      const metadata = await parseFile("D:\\KwDownload\\song");
-      console.log(metadata)
-    }*/
   }
 }
 </script>
