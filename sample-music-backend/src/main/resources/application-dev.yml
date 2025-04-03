@@ -45,7 +45,7 @@ spring:
       host: ${music.host}
       port: 6379
       redisson: #redisson限流
-        config: |
+        config:
           singleServerConfig:
             idleConnectionTimeout: 10000
             connectTimeout: 10000
@@ -90,6 +90,7 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.sample.music.controller
+#          - com.sample.music.recommended
 
 logging:
   level:

@@ -1,5 +1,6 @@
 package com.sample.music.controller;
 
+import com.sample.music.annotation.RateLimit;
 import com.sample.music.pojo.dto.EmailVerify;
 import com.sample.music.common.FilesType;
 import com.sample.music.pojo.entity.User;
@@ -65,6 +66,7 @@ public class UserController {
      * @param password 密码
      * @return Result
      */
+    @RateLimit
     @PostMapping("login")
     public Result<String> loginUser(
             @Pattern(regexp = ".*") String text,
