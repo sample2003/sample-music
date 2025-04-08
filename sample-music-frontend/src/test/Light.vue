@@ -1,8 +1,10 @@
 <template>
   <div id="userEnter">
-    <div class="enter">
+    <div class="login">
       <div class="container">
         <div class="box">
+          <span class="s1" @click="loginInput">登录</span>
+          <span class="s2" @click="registerInput">注册</span>
           <div class="content">
             <h2>欢迎您</h2>
             <p style="color: #000">{{ pContent }}</p>
@@ -81,13 +83,6 @@
             </div>
           </div>
         </div>
-        <div class="select">
-<!--          <ButtonSelect :btn="btn"></ButtonSelect>-->
-          <button @click="showLogin">aa</button>
-          <button @click="showRegister">aa</button>
-          <button>aa</button>
-          <button>aa</button>
-        </div>
       </div>
     </div>
   </div>
@@ -97,47 +92,15 @@
 import userService from "@/api/service/userService";
 import {UserLoginData, UserRegisterData} from "@/api/pojo/UserSubmit";
 import store from "@/store";
-import {nanoid} from "nanoid";
-import Icon from "@/util/common/Icon";
-import ButtonSelect from "@/pages/common/ButtonSelect.vue";
 
 export default {
   name: "UserEnter",
-  components: {ButtonSelect},
   data() {
-    const btn = [
-      {
-        btnID: nanoid(),
-        btnName: "info",
-        name: "账号信息",
-        btnIcon: Icon.userIcon
-      },
-      {
-        btnID: nanoid(),
-        btnName: "collect",
-        name: "我的收藏",
-        btnIcon: Icon.collectIcon
-      },
-      {
-        btnID: nanoid(),
-        btnName: "suggest",
-        name: "评价建议",
-        btnIcon: Icon.suggestIcon
-      },
-      {
-        btnID: nanoid(),
-        btnName: "music",
-        name: "进入音乐",
-        btnIcon: Icon.homeIcon
-      },
-    ]
     return {
       // 添加一个标志位来控制是否显示输入框
       isLoginForm: false,
       isRegisterForm: false,
-      btn: btn
     }
-
   },
   methods: {
     showLogin() {
@@ -194,7 +157,6 @@ export default {
       }
     },
   },
-
   computed: {
     UserRegisterData() {
       return UserRegisterData
@@ -233,7 +195,6 @@ export default {
 /*大容器*/
 .container {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -357,6 +318,66 @@ export default {
   background-image: linear-gradient(315deg, var(--main-color), var(--second-color));
 }
 
+/*给span定义位置*/
+.s1, .s2 {
+  cursor: pointer;
+  line-height: 100px;
+  z-index: 6;
+}
+
+/*创建左上悬浮的小方块，不悬浮时隐藏*/
+.box .s1 {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transition: 0.3s;
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  animation: animate 2s ease-in-out infinite;
+}
+
+/*定义方块大小，悬浮时显示*/
+.box .hv1, .box:hover .s1 {
+  opacity: 1;
+  top: -50px;
+  left: 0;
+  width: 100px;
+  height: 100px;
+}
+
+/*创建右下悬浮的小方块，不悬浮时隐藏*/
+.box .s2 {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: 0.5s;
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  animation: animate 2s ease-in-out infinite;
+  animation-delay: -1s;
+}
+
+/*定义方块大小，悬浮时显示*/
+.box .hv2, .box:hover .s2 {
+  opacity: 1;
+  bottom: -50px;
+  right: 50px;
+  width: 100px;
+  height: 100px;
+}
+
 .inputBox {
   width: 100%;
   height: 100%;
@@ -406,6 +427,17 @@ export default {
   box-shadow: inset 2px 2px 4px #b3b3b3,
   inset -2px -2px 4px #ffffff;
   border: 1px solid var(--main-color);
+}
+
+/*给两个方块的动画*/
+@keyframes animate {
+  0%,
+  100% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translate(-10px);
+  }
 }
 
 @keyframes changeColor {

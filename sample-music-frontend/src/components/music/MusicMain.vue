@@ -4,7 +4,7 @@
     <div class="main">
       <transition name="fade">
         <keep-alive>
-          <router-view></router-view>
+          <router-view :property="this.show"></router-view>
         </keep-alive>
       </transition>
     </div>
@@ -19,7 +19,13 @@ export default {
     return {}
   },
   methods: {},
-  computed: {}
+  computed: {
+    show() {
+      const isPlayRoute = this.$route.path.includes('/music/play');
+      const isEmpty = this.songPlaying == null || Object.keys(this.songPlaying).length === 0;
+      return !isEmpty && !isPlayRoute;
+    }
+  }
 }
 </script>
 

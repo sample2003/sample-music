@@ -4,11 +4,11 @@ module.exports = defineConfig({
   lintOnSave: false,
   devServer: {
     port: 8088,
-    proxy: {
+    /*proxy: {
       '/api': {
         target: 'http://localhost:8080', // 代理目标地址
         changeOrigin: true, // 允许跨域
       }
-    }
+    }*/
   },
 })

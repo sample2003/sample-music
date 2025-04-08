@@ -3,11 +3,16 @@
     <div class="first flex">
       <div class="recommend">
         <h3 class="headSpan">Hi，{{ this.userDetail?.username ?? '你好' }}，为你推荐歌曲</h3>
+        <!-- HTML 保持原有结构不变 -->
         <div class="res">
-          <div class="re" v-for="r in this.albumDetail.songs?.slice(0,5) || []" :key="r.id" @click="playBySong(r)">
-            <img :src="r.cover" alt="">
-            <img :src="Icon.playWhiteIcon" alt="">
-            <p>{{ r.title }}</p>
+          <div class="re" v-for="r in albumDetail.songs?.slice(0,5) || []"
+               :key="r.id"
+               @click="playBySong(r)">
+            <div class="img-container">
+              <img :src="r.cover" alt="专辑封面" class="cover">
+              <img :src="Icon.playWhiteIcon" alt="播放" class="play-icon">
+            </div>
+            <p class="song-title">{{ r.title }}</p>
           </div>
         </div>
       </div>
@@ -95,10 +100,7 @@
             <span>{{ pl.listeners }}</span>
           </div>
           <span>{{ pl.description || '暂无描述' }}</span>
-          <span style="display: inline-flex;white-space: nowrap;"><img :src="Icon.calendarIcon" alt=""
-                                                                       style="width: 10%;padding-left: 5px;">{{
-              pl.createTime
-            }}</span>
+          <span style="display: inline-flex;white-space: nowrap;"><img :src="Icon.calendarIcon" alt="" style="width: 10%;padding-left: 5px;">{{ pl.createTime }}</span>
         </div>
       </div>
     </div>
@@ -123,6 +125,9 @@ import Icon from "@/util/common/Icon";
 
 export default {
   name: "MusicMainHome",
+  props: {
+    show: Boolean
+  },
   data() {
     return {
       classify: [
@@ -205,12 +210,17 @@ export default {
       await this.getPlaylists();
       await this.getNotice();
       await this.playSlides();
+      if(this.show) {
+        document.getElementById("Home").style.height = "90%"
+      }else {
+        document.getElementById("Home").style.height = "100%"
+      }
     }
   },
   computed: {
     Icon() {
       return Icon
-    }
+    },
   },
   mounted() {
     this.initHome()
@@ -232,7 +242,9 @@ export default {
 .first {
   width: 100%;
   height: 20%;
-  margin-top: 1%;
+  margin: 2%;
+  display: flex;
+  justify-content: start;
   align-items: end;
 }
 
@@ -241,88 +253,115 @@ export default {
   height: 100%;
   border-radius: 10px;
   display: flex;
+  margin-right: 10px;
   justify-content: end;
   flex-direction: column;
 }
 
-.recommend h3 {
-  width: 100%;
-  height: 20%;
-  text-align: start;
-}
-
+/* CSS 样式 */
 .res {
-  width: 100%;
-  height: 70%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
 .re {
-  width: 18%;
-  height: 100%;
-  cursor: pointer;
   position: relative;
-  border-radius: 5px;
+  max-width: 100%;
+  padding-top: 100%; /* 创建正方形容器 */
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
   transition: all 0.2s ease;
-  border-bottom: 2px solid var(--main-color);
 }
 
-.re img {
-  width: 80%;
+.img-container {
   position: absolute;
-  left: 10%;
-  top: 10%;
-  z-index: 1;
-  border-radius: 5px;
-  transition: 0.2s all ease;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%; /* 初始只显示上半部分 */
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
-.re img:nth-of-type(2) {
-  width: 50%;
-  padding: 15%;
-  left: 10%;
-  top: 10%;
-  background-color: rgba(34, 34, 34, 0.6);
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
   opacity: 0;
-  z-index: 2;
+  transition: all 0.3s ease;
 }
 
+.song-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  margin: 0;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--fourth-color);
+  color: black;
+  font-size: 14px;
+  text-align: center;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hover 效果 */
 .re:hover {
-  box-shadow: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.re:hover img:nth-of-type(2) {
+.re:hover .img-container {
+  height: 100%;
+}
+
+.re:hover .cover {
+  transform: scale(1);
+}
+
+.re:hover .play-icon {
   opacity: 1;
 }
 
-.re p {
-  max-width: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  font-weight: bold;
-  text-overflow: ellipsis;
-  font-size: 0.8em;
+.re:hover .song-title {
+  opacity: 0;
+  transform: translateY(100%);
 }
 
 .notice {
   width: 28%;
   height: 90%;
+  margin-right: 10px;
   border-radius: 10px;
   transition: all 0.2s ease;
   position: relative;
   cursor: default;
-  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
+  border: 1px solid var(--fourth-color);
 }
 
 .notice:hover {
   height: 95%;
-  box-shadow: 12px 12px 24px #b3b3b3, -12px -12px 24px #ffffff;
+  border: 1px solid var(--main-color);
 }
 
 .notice-slides {
@@ -404,10 +443,11 @@ export default {
 
 .headSpan {
   width: 100%;
-  height: 20%;
-  padding: 10px;
+  height: 1.2em;
+  padding: 2px 2px 5px;
+  border-radius: 10px;
   text-align: start;
-  font-style: italic;
+  background: var(--main-backgroundColor);
 }
 
 .classifys {
@@ -452,25 +492,24 @@ export default {
   width: 100%;
   height: 9%;
   display: flex;
-  justify-content: start;
-  gap: 2%;
-  align-items: center;
 }
 
 .card {
   width: 15%;
   padding-top: 16%;
+  margin: 10px 5px 10px 10px;
   overflow: hidden;
   position: relative;
   border-radius: 10px;
   transition: all 0.2s ease;
   cursor: pointer;
-  border: 1px solid #00000000;
-  box-shadow: 12px 12px 24px #b3b3b3, -2px -2px 4px #ffffff;
+  border: 2px solid var(--fourth-color);
+  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
+  box-sizing: border-box;
 }
 
 .card:hover {
-  border: 1px solid var(--main-color);
+  border: 2px solid var(--main-color);
   box-shadow: none;
 }
 
@@ -569,11 +608,15 @@ export default {
   left: 0;
   align-items: center;
   font-size: 0.8em;
-  color: var(--second-color);
+  color: var(--third-color);
   text-align: start;
   background-color: var(--fourth-color);
   text-indent: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.card:hover > span:nth-of-type(3) {
+  background-color: var(--main-color);
 }
 </style>

@@ -35,8 +35,6 @@ service.interceptors.response.use(
         } else {
             // 处理其他错误
         }
-        // 后端服务器关闭时，跳转到错误页面
-        router.push({ name: "ServerClose" }).catch((err) => console.error(err));
         throw error; // 重新抛出错误，以便可以在组件中进一步处理
     }
 );

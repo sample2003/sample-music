@@ -91,7 +91,7 @@ export default {
   min-width: 80px;
   min-height: 540px;
   display: grid;
-  grid-template-rows: 20% 30% 50%;
+  grid-template-rows: 10% 30% 60%;
 }
 
 .top {
@@ -133,7 +133,6 @@ export default {
   padding: 5px 0;
   margin-left: 10px;
   grid-template-rows: repeat(6, 1fr);
-  background-color: rgba(139, 128, 175, 0.1);
 }
 
 /* 按钮统一格式 */

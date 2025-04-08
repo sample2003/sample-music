@@ -14,7 +14,14 @@ Vue.mixin(userStore)
 Vue.use(ConfirmDialogPlugin)
 
 new Vue({
-    render: h => h(App),
-    router: router,
-    store: store,
+  render: h => h(App),
+  router: router,
+  store: store,
+  mounted() {
+    // Vue 初始化完成后移除加载动画
+    const loadingElement = document.getElementById('app-loading')
+    if (loadingElement) {
+      loadingElement.style.display = 'none'
+    }
+  }
 }).$mount('#app')

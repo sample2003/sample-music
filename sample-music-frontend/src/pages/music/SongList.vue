@@ -202,8 +202,8 @@ export default {
   width: 50%;
   border: #fff solid 3px;
   position: absolute;
-  top: 5px;
-  left: 4px;
+  top: 4px;
+  left: 3px;
   opacity: 0;
   border-top: none;
   border-right: none;
@@ -217,8 +217,8 @@ export default {
   width: 50%;
   border: #fff solid 3px;
   position: absolute;
-  top: 5px;
-  left: 4px;
+  top: 4px;
+  left: 3px;
   opacity: 1;
   border-top: none;
   border-right: none;

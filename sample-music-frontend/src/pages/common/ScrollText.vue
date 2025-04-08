@@ -1,4 +1,3 @@
-<!-- ScrollText.vue -->
 <template>
   <div class="title-artist" :style="{ maxWidth: maxWidth }">
     <div ref="container" class="title">
