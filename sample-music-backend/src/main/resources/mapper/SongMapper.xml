@@ -88,7 +88,7 @@
                  LEFT JOIN album al ON s.album_id = al.id
         <where>
             <choose>
-                <when test="params == all">
+                <when test="params == 'all'">
                     LOWER(s.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
                     OR LOWER(ar.name) LIKE CONCAT('%', LOWER(#{condition}), '%')
                     OR LOWER(al.title) LIKE CONCAT('%', LOWER(#{condition}), '%')

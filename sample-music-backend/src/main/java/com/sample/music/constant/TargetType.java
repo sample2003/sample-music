@@ -12,6 +12,7 @@ public enum TargetType {
     TAG("tag");
 
     private final String type;
+
     TargetType(final String type) {
         this.type = type;
     }
