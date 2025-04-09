@@ -16,6 +16,8 @@
           @inputChange="handleInput"
           @fetch="fetchSongs"
           method="fetchSongs"
+          :search-icon="true"
+          :cancel-icon="true"
           message="搜索歌曲吧">
       </TextInput>
       <!-- 右边框 -->
@@ -77,6 +79,7 @@ import TextInput from "@/pages/common/TextInput.vue";
 
 export default {
   name: 'MusicLayout',
+  components: {TextInput, Side, Control, Main},
   computed: {
     Icon() {
       return Icon
@@ -94,7 +97,6 @@ export default {
       isShowWantList: false
     }
   },
-  components: {TextInput, Side, Control, Main},
   methods: {
     handleInput(value) {
       this.value = value;
@@ -118,13 +120,17 @@ export default {
       this.isShowWantList = false;
     },
     async fetchSongs() {
-      let searchParams = this.searchParams;
-      console.log(searchParams)
-      searchParams.condition = this.value;
-      await this.setSearchParams(searchParams)
-      console.log(this.searchParams)
-      this.$router.push({name: "search"}, () => {
-      })
+
+      this.$router.replace({
+        name: "search",
+        params: { // 必须与路由 path 中的 :xxx 名称对应
+          condition: this.value,
+          params: 'ALL',
+          sortType: 'LISTENERS_DESC',
+          pageNum: 1,
+          pageSize: 10
+        }
+      }, () => {})
     },
   },
 }

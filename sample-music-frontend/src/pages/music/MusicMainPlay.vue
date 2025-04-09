@@ -612,14 +612,4 @@ export default {
   }
 }
 
-/* 完整示例 */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s, transform 0.3s;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(10px);
-}
 </style>

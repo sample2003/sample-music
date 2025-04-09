@@ -31,7 +31,8 @@ service.interceptors.response.use(
             error.message === "ECONNABORTED"
         ) {
             // 后端服务器关闭时，跳转到错误页面
-            router.push({ name: "ServerClose" }).catch((err) => console.error(err));
+            router.push({
+              name: "ServerClose"}).catch((err) => console.error(err));
         } else {
             // 处理其他错误
         }

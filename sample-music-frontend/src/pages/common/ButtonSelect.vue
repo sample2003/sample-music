@@ -1,17 +1,18 @@
+<!-- Button组件改造后 -->
 <template>
   <div id="ButtonSelect">
     <div
         class="btns"
-        v-for="b in btn"
-        :key="`btn-${b.id}`"
+        v-for="btn in buttonList"
+        :key="getKey(btn)"
     >
       <button
           class="btn flex"
-          @click="jump(b.btnName)"
-          :class="{'it': isCurrentRoute(b.btnName)}"
+          @click="handleClick(btn)"
+          :class="{ 'it': isButtonActive(btn) }"
       >
-        <img v-if="b.btnIcon" :src="b.btnIcon" alt="">
-        <span>{{ b.name }}</span>
+        <img v-if="showIcon && getIcon(btn)" :src="getIcon(btn)" alt="">
+        <span>{{ getLabel(btn) }}</span>
       </button>
     </div>
   </div>
@@ -19,35 +20,73 @@
 
 <script>
 export default {
-  name: "ButtonSelect",
+  name: 'ButtonSelect',
   props: {
-    method: {
-      type: String,
-      default: 'input',
-    },
-    btn: {
+    // 按钮配置数组
+    buttonList: {
       type: Array,
-      default: () => []
+      required: true
+    },
+    // 激活状态判断函数
+    isActive: {
+      type: Function,
+      default: () => false
+    },
+    // 图标字段名或获取方法
+    iconField: {
+      type: [String, Function],
+      default: 'btnIcon'
+    },
+    // 文本字段名或获取方法
+    labelField: {
+      type: [String, Function],
+      default: 'name'
+    },
+    // 点击参数字段名或获取方法
+    clickParamField: {
+      type: [String, Function],
+      default: 'fx'
+    },
+    // 是否显示图标
+    showIcon: {
+      type: Boolean,
+      default: false
+    },
+    // 唯一键字段名或获取方法
+    keyField: {
+      type: [String, Function],
+      default: 'id'
     }
   },
   methods: {
-    jump(btnName) {
-      // 示例路由跳转，根据实际项目调整
-      if (this.$route.name !== btnName) {
-        this.$router.push({name: btnName})
-      }
+    getKey(item) {
+      return typeof this.keyField === 'function'
+          ? this.keyField(item)
+          : item[this.keyField];
     },
-    select(btnName) {
-      // 示例路由跳转，根据实际项目调整
-      if (this.$route.name !== btnName) {
-        this.$router.push({name: btnName})
-      }
+    getIcon(item) {
+      return typeof this.iconField === 'function'
+          ? this.iconField(item)
+          : item[this.iconField];
     },
-    isCurrentRoute(btnName) {
-      return this.$route.name === btnName
+    getLabel(item) {
+      return typeof this.labelField === 'function'
+          ? this.labelField(item)
+          : item[this.labelField];
+    },
+    getClickParam(item) {
+      return typeof this.clickParamField === 'function'
+          ? this.clickParamField(item)
+          : item[this.clickParamField];
+    },
+    isButtonActive(item) {
+      return this.isActive(item);
+    },
+    handleClick(item) {
+      this.$emit('button-click', this.getClickParam(item));
     }
   }
-}
+};
 </script>
 
 <style scoped>

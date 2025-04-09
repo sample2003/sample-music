@@ -1,6 +1,6 @@
 <template>
   <div id="serverClose">
-    <h1>服务器已关闭，请下次再来吧。。。</h1>
+    <h1>服务器已关闭，请下次再来吧 ~(￣▽￣)~* </h1>
   </div>
 </template>
 
@@ -12,5 +12,11 @@ export default {
 
 <style scoped>
 #serverClose {
+  width: 100%;
+  height: 100%;
+  background: var(--main-backgroundColor);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

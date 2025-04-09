@@ -3,15 +3,15 @@
     <!-- 每页大小 -->
     <div class="page-size-selector">
       每页显示：
-      <select v-model="localPageSize" @change="emitPageSizeChange">
+      <select v-model="localPageSize" @change="emitChangePageSize">
         <option v-for="option in pageSizeOptions" :key="option" :value="option">
           {{ option }}
         </option>
       </select>
     </div>
     <!-- 上一页 -->
-    <button class="prev-page" :disabled="currentPage <= 1" @click="changePage(currentPage - 1)">
-      上
+    <button class="prev-page" :disabled="currentPage <= 1" @click="changePageNum(currentPage - 1)">
+      <span>上</span>
     </button>
     <!-- 显示页数 -->
     <div class="page-numbers">
@@ -20,7 +20,7 @@
           :key="index"
           :class="{ 'page-number': true, active: page === currentPage, disabled: page === '...' }"
           :disabled="page === '...'"
-          @click="changePage(page)"
+          @click="changePageNum(page)"
       >
         {{ page }}
       </button>
@@ -28,14 +28,15 @@
     </div>
 
     <!-- 下一页 -->
-    <button class="next-page" :disabled="currentPage >= pageCount" @click="changePage(currentPage + 1)">
-      下
+    <button class="next-page" :disabled="currentPage >= pageCount" @click="changePageNum(currentPage + 1)">
+      <span>下</span>
     </button>
     <!-- 跳转到指定页数 -->
     <div class="page-size-selector">
-      跳转到：<input type="number" v-model="cp" :max="this.pageCount" @keyup.enter="changePage(Number(cp))">
+      跳转到：<input type="number" v-model="cp" :max="this.pageCount" @keyup.enter="changePageNum(Number(cp))">
     </div>
   </div>
+
 </template>
 
 <script>
@@ -98,13 +99,13 @@ export default {
   },
   methods: {
     // 改变当前页数
-    async changePage(page) {
+    async changePageNum(page) {
       if (page < 1 || page > this.pageCount) return;
       this.$emit('update:currentPage', page); // 发射更新当前页码的事件
       this.cp = page;
     },
     // 改变页码大小
-    async emitPageSizeChange() {
+    async emitChangePageSize() {
       this.$emit('update:pageSize', this.localPageSize);
       this.$emit('update:currentPage', 1); // 发射更新当前页码的事件
       this.cp = 1; // 重置跳转框中的页码为第一页
@@ -133,7 +134,6 @@ export default {
 
 /* 每页大小选择 */
 .page-size-selector {
-  width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,15 +141,15 @@ export default {
 }
 
 .page-size-selector select {
-  width: 30%;
-  height: 80%;
+  width: 60px;
+  height: 90%;
   outline: none;
   border-radius: 5px;
 }
 
 .page-size-selector input {
-  width: 30%;
-  height: 75%;
+  width: 60px;
+  height: 90%;
   outline: none;
   text-indent: 5px;
   border-radius: 5px;
@@ -170,6 +170,7 @@ export default {
 
 .page-number {
   width: 35px;
+  height: 100%;
   border: 1px solid var(--fourth-color);
   cursor: pointer;
   border-radius: 5px;
@@ -183,7 +184,9 @@ export default {
 
 .prev-page,
 .next-page {
-  width: 5%;
+  width: 35px;
+  height: 100%;
+  max-width: 5%;
   border: 1px solid var(--main-color);
   border-radius: 5px;
   background-color: var(--fourth-color);

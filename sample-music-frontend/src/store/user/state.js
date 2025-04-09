@@ -1,8 +1,10 @@
+import accessEnum from "@/util/access/accessEnum";
+
 const state = {
     userToken: '',
     userDetail: {
         id: 0,
-        username: "未登录",
+        username: accessEnum.NOT_LOGIN,
         phone: "",
         email: "",
         sex: "",

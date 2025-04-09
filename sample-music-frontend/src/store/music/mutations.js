@@ -13,10 +13,6 @@ export default {
     state.songsBySearch = payload;
     saveToLocalStorage(state);
   },
-  setSearchParams(state, payload) {
-    state.searchParams = payload;
-    saveToLocalStorage(state);
-  },
   setSongsByRecent(state, payload) {
     state.songsByRecent = payload;
     saveToLocalStorage(state);
@@ -84,9 +80,6 @@ export default {
     state.play.Timestamp = payload;
     saveToLocalStorage(state);
   },
-  setCondition(state, payload) {
-    state.condition = payload;
-  }
 }
 
 // 辅助函数，用于将 state 保存到 localStorage
@@ -95,10 +88,8 @@ function saveToLocalStorage() {
     playlistDetail: state.playlistDetail,
     albumDetail: state.albumDetail,
     songsBySearch: state.songsBySearch,
-    searchParams: state.searchParams,
     checked: state.checked,
     play: state.play,
-    condition: state.condition
   };
   window.localStorage.setItem('sampleMusic', JSON.stringify(musicState));
 }

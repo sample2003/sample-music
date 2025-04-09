@@ -8,7 +8,6 @@ import musicState from "@/store/music/state";
 import userState from "@/store/user/state";
 import userMutations from "@/store/user/mutations";
 import userActions from "@/store/user/actions"
-import state from "@/store/music/state";
 
 Vue.use(Vuex);
 

@@ -10,14 +10,6 @@ const defaultState = {
   albumDetail: {},
   // 搜索出的歌曲
   songsBySearch: {},
-  // 搜索字段
-  searchParams: {
-    condition: "",
-    params: "ALL",
-    sortType: "LISTENERS_DESC",
-    pageNum: 1,
-    pageSize: 10,
-  },
   // 最近播放
   songsByRecent: [],
   // 选中的歌曲或歌单
@@ -97,10 +89,6 @@ const state = {
   playlistDetail: savedState?.playlistDetail || defaultState.playlistDetail,
   albumDetail: savedState?.albumDetail || defaultState.albumDetail,
   songsBySearch: savedState?.songsBySearch || defaultState.songsBySearch,
-  searchParams: {
-    ...defaultState.searchParams,
-    ...(savedState?.searchParams || {})
-  },
   songsByRecent: savedState?.songsBySearch || defaultState.songsByRecent,
   checked: {
     ...defaultState.checked,
@@ -110,7 +98,6 @@ const state = {
     ...defaultState.play,
     ...(savedState?.play || {})
   },
-  condition: savedState?.condition || defaultState.condition,
 };
 
 // 如果state中有任何数据，则将其保存到localStorage

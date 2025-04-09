@@ -103,9 +103,15 @@ const router = new VueRouter({
         },
         {
           name: 'search',
-          path: '/music/search',
+          path: '/music/search/:condition/:params/:sortType/:pageNum/:pageSize',
           component: MusicMainSearch,
-          props: true // 启用路由参数传递为props
+          props: route => ({
+            condition: route.params.condition,
+            params: route.params.params,
+            sortType: route.params.sortType,
+            pageNum: Number(route.params.pageNum) || 1,
+            pageSize: Number(route.params.pageSize) || 10
+          }) // 启用路由参数传递为props
         },
         {
           name: "list",

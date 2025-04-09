@@ -1,28 +1,28 @@
 <template>
   <div id="userCollect">
     <div class="nav">
-      <button
-          class="btn"
-          v-for="b in btn"
-          :key="b.btnID"
-          @click="jump(b.btnName)"
-          :class="{'it': isCurrentRoute(b.btnName)}">
-        <span>{{ b.name }}</span>
-      </button>
+      <ButtonSelect
+          :button-list="btn"
+          :show-icon="false"
+          :is-active="(item) => isCurrentRoute(item.btnName)"
+          :click-param-field="'btnName'"
+          :key-field="'btnID'"
+          @button-click="jump"
+      />
     </div>
     <div class="detail">
-      <transition name="fade">
-        <router-view></router-view>
-      </transition>
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import {nanoid} from "nanoid";
+import ButtonSelect from "@/pages/common/ButtonSelect.vue";
 
 export default {
   name: 'UserCollect',
+  components: {ButtonSelect},
   data() {
     return {
       btn: [
@@ -83,48 +83,9 @@ export default {
   gap: 1vw;
 }
 
-.btn {
-  border: 1px solid #0000;
-  padding: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s;
-  background-color: var(--second-color);
-  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
-}
-
-.btn:hover {
-  box-shadow: none;
-  border: 1px solid var(--fourth-color);
-}
-
-.it {
-  box-shadow: inset 2px 2px 4px #b3b3b3, inset -2px -2px 4px #ffffff;
-}
-
-.it span {
-  color: var(--main-color);
-}
-
 .detail {
   width: 100%;
   overflow: scroll;
 }
 
-/* 元素进入（淡入）阶段 */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease; /* 设置过渡动画的时长为0.5秒，缓动函数为ease，这里时长可根据需求调整 */
-  opacity: 1; /* 设置元素进入和离开时的初始透明度为0，实现淡入淡出的视觉起点和终点效果 */
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0; /* 设置元素进入和离开时的初始透明度为0，实现淡入淡出的视觉起点和终点效果 */
-}
-
-.fade-enter-to,
-.fade-leave {
-  opacity: 1; /* 设置元素进入完成和离开前的透明度为1，也就是完全可见的状态 */
-}
 </style>

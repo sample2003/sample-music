@@ -3,9 +3,8 @@
     <div class="first flex">
       <div class="recommend">
         <h3 class="headSpan">Hi，{{ this.userDetail?.username ?? '你好' }}，为你推荐歌曲</h3>
-        <!-- HTML 保持原有结构不变 -->
         <div class="res">
-          <div class="re" v-for="r in albumDetail.songs?.slice(0,5) || []"
+          <div class="re" v-for="r in albumDetail.songs?.slice(0,10) || []"
                :key="r.id"
                @click="playBySong(r)">
             <div class="img-container">
@@ -35,6 +34,28 @@
               class="indicator-dot"
               :class="{ 'active': idx === noticeIndex }"
               @click="setActiveIndex(idx, 'notice')">
+          </span>
+        </div>
+      </div>
+      <!-- 广告滚动框 -->
+      <div class="notice">
+        <div class="notice-slides">
+          <div class="notice-slide" v-for="a in advert" :key="`advert-${a.id}`"
+               :class="{'active': advertIndex === advert.indexOf(a)}"
+               @mouseenter="clear('advert')"
+               @mouseleave="playSlides('advert')">
+            <div class="back" :style="{ 'background-image': `url(${a.cover})` }"></div>
+            <span>{{ a.title }}</span>
+          </div>
+        </div>
+        <!-- 指示器 -->
+        <div class="notice-indicators">
+          <span
+              v-for="(n, idx) in notice"
+              :key="idx"
+              class="indicator-dot"
+              :class="{ 'active': idx === otherIndex }"
+              @click="setActiveIndex(idx, 'other')">
           </span>
         </div>
       </div>
@@ -143,8 +164,9 @@ export default {
       playlistsAndSongs: [],
       detailType: "", // 初始化 detailType
       notice: [],
+      advert: [],
       noticeIndex: 0, // 当前公告轮播的索引
-      otherIndex: 0, // 当前广告轮播的索引
+      advertIndex: 0, // 当前广告轮播的索引
     }
   },
   methods: {
@@ -164,9 +186,9 @@ export default {
         this.intervalNotice = setInterval(() => {
           this.noticeIndex = (this.noticeIndex + 1) % this.notice.length;
         }, 3000); // 每3秒自动播放下一张
-      } else if (type === 'other') {
+      } else if (type === 'advert') {
         this.intervalOther = setInterval(() => {
-          this.otherIndex = (this.otherIndex + 1) % this.notice.length;
+          this.advertIndex = (this.advertIndex + 1) % this.advert.length;
         }, 3000); // 每3秒自动播放下一张
       } else {
         this.intervalNotice = setInterval(() => {
@@ -249,7 +271,7 @@ export default {
 }
 
 .recommend {
-  width: 25%;
+  width: calc(25% - 50px);
   height: 100%;
   border-radius: 10px;
   display: flex;
@@ -260,16 +282,20 @@ export default {
 
 /* CSS 样式 */
 .res {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  display: flex; /* 改为弹性布局 */
+  flex-wrap: wrap; /* 禁止换行 */
+  gap: 15px;
+  padding-top: 10px;
+  padding-left: 20px;
+  width: 95%;
+  overflow: scroll;
 }
 
 .re {
+  /* 修改尺寸定义方式 */
+  flex: 0 0 55px; /* 固定宽度 */
+  height: 55px; /* 正方形高度 */
   position: relative;
-  max-width: 100%;
-  padding-top: 100%; /* 创建正方形容器 */
   cursor: pointer;
   overflow: hidden;
   border-radius: 8px;
@@ -312,13 +338,12 @@ export default {
   width: 100%;
   height: 50%;
   margin: 0;
-  padding: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--fourth-color);
   color: black;
-  font-size: 14px;
+  font-size: 0.8em;
   text-align: center;
   transition: all 0.3s ease;
   white-space: nowrap;
@@ -349,7 +374,7 @@ export default {
 }
 
 .notice {
-  width: 28%;
+  width: 24%;
   height: 90%;
   margin-right: 10px;
   border-radius: 10px;

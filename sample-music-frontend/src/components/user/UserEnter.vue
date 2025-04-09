@@ -7,20 +7,24 @@
             <h2>欢迎您</h2>
             <p style="color: #000">{{ pContent }}</p>
             <!-- 根据 isHovering 的值显示输入框 -->
-            <div v-show="isLoginForm">
+            <div>
+              <TextInput
+                  message="请输入账号或邮箱"
+                  @inputChange="handleInputParam"
+                  param-key="text"
+                  :user-icon="true"
+                  :cancel-icon="true"
+                  style="height: 30%" />
+              <TextInput
+                  message="请输入密码"
+                  type="password"
+                  @inputChange="handleInputParam"
+                  param-key="password"
+                  :user-icon="true"
+                  :cancel-icon="true"
+                  style="height: 30%" />
               <!-- 输入框 -->
-              <div class="search flex">
-                <div class="inputBox">
-                  <input
-                      type="text"
-                      required="required"
-                      v-model="UserLoginData.text"
-                  >
-                  <span>请输入用户名或邮箱</span>
-                </div>
-              </div>
-              <!-- 输入框 -->
-              <div class="search flex">
+<!--              <div class="search flex">
                 <div class="inputBox">
                   <input
                       type="password"
@@ -29,11 +33,11 @@
                   >
                   <span>请输入密码</span>
                 </div>
-              </div>
+              </div>-->
               <a @click="handleLogin">{{ aContent }}</a>
             </div>
-            <div v-show="isRegisterForm">
-              <!-- 输入框 -->
+<!--            <div v-show="isRegisterForm">
+              &lt;!&ndash; 输入框 &ndash;&gt;
               <div class="search flex">
                 <div class="inputBox">
                   <input
@@ -44,7 +48,7 @@
                   <span>请输入用户名</span>
                 </div>
               </div>
-              <!-- 输入框 -->
+              &lt;!&ndash; 输入框 &ndash;&gt;
               <div class="search flex">
                 <div class="inputBox">
                   <input
@@ -55,7 +59,7 @@
                   <span>请输入邮箱</span>
                 </div>
               </div>
-              <!-- 输入框 -->
+              &lt;!&ndash; 输入框 &ndash;&gt;
               <div class="search flex">
                 <div class="inputBox">
                   <input
@@ -66,7 +70,7 @@
                   <span>请输入密码</span>
                 </div>
               </div>
-              <!-- 输入框 -->
+              &lt;!&ndash; 输入框 &ndash;&gt;
               <div class="search flex">
                 <div class="inputBox">
                   <input
@@ -78,15 +82,12 @@
                 </div>
               </div>
               <a @click="handleRegister">{{ aContent }}</a>
-            </div>
+            </div>-->
           </div>
         </div>
         <div class="select">
-<!--          <ButtonSelect :btn="btn"></ButtonSelect>-->
-          <button @click="showLogin">aa</button>
-          <button @click="showRegister">aa</button>
-          <button>aa</button>
-          <button>aa</button>
+          <ButtonSelect :button-list="btn"></ButtonSelect>
+
         </div>
       </div>
     </div>
@@ -100,54 +101,44 @@ import store from "@/store";
 import {nanoid} from "nanoid";
 import Icon from "@/util/common/Icon";
 import ButtonSelect from "@/pages/common/ButtonSelect.vue";
+import TextInput from "@/pages/common/TextInput.vue";
 
 export default {
   name: "UserEnter",
-  components: {ButtonSelect},
+  components: {TextInput, ButtonSelect},
   data() {
     const btn = [
       {
         btnID: nanoid(),
         btnName: "info",
-        name: "账号信息",
+        name: "邮箱/账号",
         btnIcon: Icon.userIcon
       },
       {
         btnID: nanoid(),
-        btnName: "collect",
-        name: "我的收藏",
-        btnIcon: Icon.collectIcon
-      },
-      {
-        btnID: nanoid(),
         btnName: "suggest",
-        name: "评价建议",
+        name: "微信登录",
         btnIcon: Icon.suggestIcon
       },
       {
         btnID: nanoid(),
         btnName: "music",
-        name: "进入音乐",
+        name: "用户注册",
         btnIcon: Icon.homeIcon
       },
     ]
     return {
       // 添加一个标志位来控制是否显示输入框
-      isLoginForm: false,
-      isRegisterForm: false,
+      currentBtn: '',
       btn: btn
     }
 
   },
   methods: {
-    showLogin() {
-      this.isRegisterForm = false;
-      this.isLoginForm = true;
+    handleInputParam(param, value) {
+      UserLoginData[param] = value;
     },
-    showRegister() {
-      this.isLoginForm = false;
-      this.isRegisterForm = true;
-    },
+    // 用户登录
     async handleLogin() {
       try {
         const res = await userService.userLogin(UserLoginData);
@@ -171,6 +162,7 @@ export default {
         console.error(error);
       }
     },
+    // 用户注册
     async handleRegister() {
       try {
         await userService.userRegister(UserRegisterData);
@@ -181,16 +173,6 @@ export default {
       } catch (error) {
         // 注册失败的处理逻辑
         console.error(error);
-      }
-    },
-    loginInput() {
-      if (this.UserLoginData !== null) {
-        this.showLogin();
-      }
-    },
-    registerInput() {
-      if (this.UserRegisterData !== null) {
-        this.showRegister();
       }
     },
   },
@@ -204,9 +186,9 @@ export default {
     },
     pContent() {
       if (this.isLoginForm || this.isRegisterForm) {
-        return '基本信息';
+        return '请填写基本信息';
       } else {
-        return '样本音乐提供了超多无损歌曲在线收听，祝你有个好的体验';
+        return '祝你有个好的体验';
       }
     },
     aContent() {
@@ -256,6 +238,7 @@ export default {
 /*内容部分，层级1*/
 .content {
   width: 400px;
+  height: 60%;
   position: relative;
   left: 0;
   padding: 30px;

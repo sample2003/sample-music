@@ -1,11 +1,16 @@
 <template>
   <div id="textInput">
-    <div class="inputBox">
-      <img :src="Icon.searchIcon" alt=""
+    <div class="inputBox flex">
+      <img :src="Icon.searchIcon" alt="搜索"
+           class="searchIcon"
            @click="inputFx"
-           v-if="this.method === 'fetchSongs'">
+           v-if="this.searchIcon">
+      <img :src="Icon.userIcon" alt="用户"
+           class="userIcon"
+           @click="inputFx"
+           v-if="this.userIcon">
       <input
-          type="text"
+          :type="this.type"
           required="required"
           v-model="value"
           @input="emitValue"
@@ -15,9 +20,18 @@
       <img
           :src="Icon.closeIcon"
           alt="关闭"
+          class="cancelIcon"
           v-show="value"
           @click="clearInput"
-          v-if="this.method === 'fetchSongs'"
+          v-if="this.cancelIcon"
+      >
+      <img
+          :src="Icon.unknowSexIcon"
+          alt="关闭"
+          class="passwordIcon"
+          v-show="value"
+          @click="clearInput"
+          v-if="this.passwordIcon"
       >
     </div>
   </div>
@@ -36,6 +50,30 @@ export default {
     message: {
       type: String,
       default: ''
+    },
+    type: {
+      type: String,
+      default: 'text'
+    },
+    paramKey: {
+      type: String,
+      default: null
+    },
+    searchIcon: {
+      type: Boolean,
+      default: false
+    },
+    cancelIcon: {
+      type: Boolean,
+      default: false
+    },
+    userIcon: {
+      type: Boolean,
+      default: false
+    },
+    passwordIcon: {
+      type: Boolean,
+      default: false
     },
   },
   computed: {
@@ -59,7 +97,15 @@ export default {
   },
   methods: {
     emitValue(event) {
-      this.$emit('inputChange', event.target.value);
+      const value = event.target.value;
+
+      // 同时触发两个参数
+      if (this.paramKey) {
+        this.$emit('inputChange', this.paramKey, value);
+      } else {
+        // 保持原有单个参数触发方式
+        this.$emit('inputChange', value);
+      }
     },
     inputFx() {
       if (this.method === 'fetchSongs') this.$emit('fetch');
@@ -76,14 +122,16 @@ export default {
 <style scoped>
 #textInput {
   width: 100%;
-  height: 100%;
+  min-width: 100px;
+  height: 96%;
+  margin: 2% 0;
 }
 
 .inputBox {
   width: 100%;
   height: 100%;
   font-size: 1.1em;
-  transition: 0.5s all;
+  transition: 0.2s all;
   position: relative;
   text-align: center;
   background: var(--second-color);
@@ -93,31 +141,40 @@ export default {
 }
 
 .inputBox img {
-  height: 60%;
+  width: 10%;
   font-size: 1.1em;
-  position: absolute;
-  top: 20%;
   padding: 2px;
   box-sizing: border-box;
-  border-radius: 50%;
+  border-radius: 5px;
   transition: 0.2s all;
   text-align: center;
 }
 
-.inputBox img:hover {
-  background: var(--fourth-color);
+.searchIcon {
+  left: 0;
+  cursor: pointer;
 }
 
-.inputBox img:nth-child(1) {
+.userIcon {
   left: 0;
 }
 
-.inputBox img:nth-child(2) {
+.cancelIcon {
+  right: 0;
+  cursor: pointer;
+}
+
+.passwordIcon {
   right: 0;
 }
 
+.searchIcon:hover,
+.cancelIcon:hover {
+  background: var(--fourth-color);
+}
+
 .inputBox input {
-  width: 80%;
+  width: 78%;
   height: 100%;
   outline: none;
   background: #0000;

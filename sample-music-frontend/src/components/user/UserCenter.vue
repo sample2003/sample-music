@@ -8,15 +8,14 @@
         <span>{{ this.userDetail.username ?? accessEnum.NOT_LOGIN }}</span>
       </div>
       <div class="nav flex">
-        <div class="btns" v-for="b in btn" :key="b.id">
-          <button
-              class="btn flex"
-              @click="jump(b.btnName)"
-              :class="{'it': isCurrentRoute(b.btnName)}">
-            <img :src="b.btnIcon" alt="">
-            <span>{{ b.name }}</span>
-          </button>
-        </div>
+        <ButtonSelect
+            :button-list="btn"
+            :show-icon="true"
+            :is-active="(item) => isCurrentRoute(item.btnName)"
+            :click-param-field="'btnName'"
+            :key-field="'btnID'"
+            @button-click="jump"
+        />
       </div>
     </div>
     <div class="player" v-if="show">
@@ -55,10 +54,11 @@ import ACCESS_ENUM from "@/util/access/accessEnum";
 import Icon from "@/util/common/Icon";
 import accessEnum from "@/util/access/accessEnum";
 import ScrollText from "@/pages/common/ScrollText.vue";
+import ButtonSelect from "@/pages/common/ButtonSelect.vue";
 
 export default {
   name: "UserCenter",
-  components: {ScrollText},
+  components: {ButtonSelect, ScrollText},
   computed: {
     accessEnum() {
       return accessEnum
@@ -391,38 +391,6 @@ export default {
   height: 100%;
 }
 
-.btns {
-  white-space: nowrap;
-  margin: 0 1%;
-}
-
-.btns img {
-  width: 20%;
-}
-
-.btn {
-  cursor: pointer;
-  border-radius: 10px;
-  padding: 10px;
-  transition: all 0.2s;
-  box-sizing: border-box;
-  border: 1px solid #0000;
-  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
-}
-
-.btn:hover {
-  box-shadow: none;
-  border: 1px solid var(--fourth-color);
-}
-
-.it {
-  box-shadow: inset 2px 2px 4px #b3b3b3, inset -2px -2px 4px #ffffff;
-}
-
-.it span {
-  color: var(--main-color);
-}
-
 .main {
   width: 96%;
   height: 90%;
@@ -430,24 +398,6 @@ export default {
   margin-left: 2%;
   overflow: scroll;
 }
-
-/* 元素进入（淡入）阶段 */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease; /* 设置过渡动画的时长为0.5秒，缓动函数为ease，这里时长可根据需求调整 */
-  opacity: 1; /* 设置元素进入和离开时的初始透明度为0，实现淡入淡出的视觉起点和终点效果 */
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0; /* 设置元素进入和离开时的初始透明度为0，实现淡入淡出的视觉起点和终点效果 */
-}
-
-.fade-enter-to,
-.fade-leave {
-  opacity: 1; /* 设置元素进入完成和离开前的透明度为1，也就是完全可见的状态 */
-}
-
 
 .anm {
   animation: keyframes-fill .5s;
