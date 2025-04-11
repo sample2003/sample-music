@@ -1,25 +1,13 @@
 package com.sample.music.service;
 
-import com.sample.music.exception.BusinessException;
 import com.sample.music.mapper.PlaylistMapper;
 import com.sample.music.mapper.SongMapper;
-import com.sample.music.pojo.dto.FavoriteItems;
-import com.sample.music.pojo.entity.Favorites;
 import com.sample.music.pojo.entity.Song;
 import com.sample.music.mapper.RelateMapper;
-import com.sample.music.pojo.vo.favorite.FavoriteSong;
-import com.sample.music.utils.ThreadLocalUtil;
-import com.sample.music.utils.UserContext;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
-import java.util.Map;
-
-import static com.sample.music.constant.HttpStatusCode.CONFLICT;
 
 @Service
 @RequiredArgsConstructor

@@ -77,6 +77,10 @@
         select * from playlist where is_public = 1 AND LOWER(title) LIKE CONCAT('%', LOWER(#{condition}), '%')
     </select>
 
+    <select id="checkBelongTo" resultType="com.sample.music.pojo.entity.Playlist">
+        select * from playlist where id = #{id}
+    </select>
+
     <select id="conditionAndPagedQuery" resultType="com.sample.music.pojo.entity.Playlist">
         select * from playlist where user_id = #{userId} AND LOWER(title) LIKE CONCAT('%', LOWER(#{condition}), '%')
     </select>

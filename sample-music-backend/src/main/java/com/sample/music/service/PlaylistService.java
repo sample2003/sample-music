@@ -1,20 +1,17 @@
 package com.sample.music.service;
 
 import cn.hutool.json.JSONUtil;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sample.music.constant.HttpStatusCode;
 import com.sample.music.exception.BusinessException;
 import com.sample.music.mapper.AlbumMapper;
 import com.sample.music.mapper.ArtistMapper;
 import com.sample.music.pojo.dto.PageBean;
 import com.sample.music.pojo.dto.PlaylistUpload;
 import com.sample.music.pojo.dto.UserDTO;
-import com.sample.music.pojo.entity.Comment;
 import com.sample.music.pojo.entity.Playlist;
 import com.sample.music.mapper.PlaylistMapper;
 import com.sample.music.pojo.entity.Song;
-import com.sample.music.pojo.entity.User;
-import com.sample.music.pojo.vo.CommentWithUser;
 import com.sample.music.pojo.vo.PlaylistWithSongs;
 import com.sample.music.pojo.vo.view.SongView;
 import com.sample.music.utils.ThreadLocalUtil;
@@ -25,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -75,10 +73,19 @@ public class PlaylistService {
     /**
      * 修改歌单
      *
-     * @param playList 歌单信息与图片文件
+     * @param playlist 歌单信息与图片文件
      */
-    public void updatePlayListById(Playlist playList) {
-        playlistMapper.updatePlayListById(playList);
+    public void updatePlaylistById(Playlist playlist) {
+        Map<String, Object> claims = ThreadLocalUtil.get();
+        Integer id = (Integer) claims.get("id");
+        if(playlist.getId().equals(id.longValue())){
+            throw new BusinessException(HttpStatusCode.UNAUTHORIZED, "无权修改该歌单");
+        }
+        if(playlist.getImageFiles() != null) {
+            String coverUrl = fileManageService.uploadFile(playlist.getImageFiles(), "cover");
+            playlist.setCover(coverUrl);
+        }
+        playlistMapper.updatePlayListById(playlist);
     }
 
     /**
@@ -241,6 +248,19 @@ public class PlaylistService {
         playlistWithSongs.setUsername(u.getUsername());
         playlistWithSongs.setUserAvatar(u.getAvatar());
         return playlistWithSongs;
+    }
+
+
+    /**
+     * 查验证歌单是否属于该用户
+     *
+     * @param id 歌单id
+     */
+    public Boolean checkBelongTo(Long id) {
+        boolean flag;
+        Playlist playlist = playlistMapper.checkBelongTo(id);
+        flag = playlist != null;
+        return flag;
     }
 
     /**

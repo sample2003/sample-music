@@ -10,7 +10,7 @@ public interface PlaylistMapper {
     /**
      * 创建歌单（用户）
      */
-    void insertPlaylist(Playlist songList);
+    void insertPlaylist(Playlist playlist);
 
     /**
      * 删除歌单（用户）
@@ -20,7 +20,7 @@ public interface PlaylistMapper {
     /**
      * 更新歌单（用户）
      */
-    void updatePlayListById(Playlist songList);
+    void updatePlayListById(Playlist playlist);
 
     /**
      * 更新歌单封面（用户）
@@ -36,6 +36,11 @@ public interface PlaylistMapper {
      * 查询一个歌单和相关歌曲信息（游客）
      */
     Playlist selectPlaylistById(Long id);
+
+    /**
+     * 查询歌单所属
+     */
+    Playlist checkBelongTo(Long id);
 
     /**
      * 收听数

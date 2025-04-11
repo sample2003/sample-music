@@ -1,5 +1,6 @@
 package com.sample.music.controller;
 
+import cn.hutool.core.lang.UUID;
 import com.sample.music.annotation.RateLimit;
 import com.sample.music.pojo.dto.EmailVerify;
 import com.sample.music.common.FilesType;
@@ -18,11 +19,13 @@ import com.sample.music.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +44,7 @@ public class UserController {
     private final EmailService emailService;
     private final FileManageService fileManageService;
     private final StringRedisTemplate stringRedisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 用户注册
@@ -168,6 +172,26 @@ public class UserController {
         return userService.registerCode(emailVerify)
                 .map(Result::success)
                 .orElseGet(() -> Result.error("发送验证码失败"));
+    }
+
+    @GetMapping("/qrcode")
+    public Result<String> generateQrcode(@RequestParam String type) {
+        String state = UUID.randomUUID().toString();
+        String redirectUrl = "";
+
+/*        if ("wechat".equals(type)) {
+            redirectUrl = String.format(
+                    "https://open.weixin.qq.com/connect/qrconnect?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_login&state=%s",
+                    WX_APP_ID, URLEncoder.encode(WX_REDIRECT_URI), state);
+        } else if ("qq".equals(type)) {
+            redirectUrl = String.format(
+                    "https://graph.qq.com/oauth2.0/show?which=Login&display=pc&response_type=code&client_id=%s&redirect_uri=%s&state=%s",
+                    QQ_CLIENT_ID, URLEncoder.encode(QQ_REDIRECT_URI), state);
+        }*/
+
+        // 存储state到Redis（有效期300秒）
+        redisTemplate.opsForValue().set("qrcode:"+state, "unscathed", 300, TimeUnit.SECONDS);
+        return Result.success(redirectUrl);
     }
 
     /**

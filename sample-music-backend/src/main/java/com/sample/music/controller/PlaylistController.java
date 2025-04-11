@@ -63,13 +63,9 @@ public class PlaylistController {
      * @return Result<PlayList>
      */
     @PutMapping("update")
-    public Result<Playlist> updatePlaylistById(Playlist playlist) {
+    public Result<Playlist> updatePlaylist(Playlist playlist) {
         if (playlistService.isExist(playlist.getId())) {
-            if(playlist.getImageFiles() != null) {
-                String coverUrl = fileManageService.uploadFile(playlist.getImageFiles(), "cover");
-                playlist.setCover(coverUrl);
-            }
-            playlistService.updatePlayListById(playlist);
+            playlistService.updatePlaylistById(playlist);
             return Result.success(playlist);
         }
         return Result.error("歌单不存在");
@@ -128,6 +124,17 @@ public class PlaylistController {
     public Result<PlaylistWithSongs> queryPlaylistWithSongs(@PathVariable("id") Long id) {
         PlaylistWithSongs playlistWithSongs = playlistService.queryPlaylistWithSongs(id);
         return Result.success(playlistWithSongs);
+    }
+
+    /**
+     * 查验证歌单是否属于该用户
+     *
+     * @param id 歌单id
+     */
+    @GetMapping("check/{id}")
+    public Result<Boolean> checkBelongTo(@PathVariable("id") Long id) {
+        Boolean flag = playlistService.checkBelongTo(id);
+        return Result.success(flag);
     }
 
     /**
