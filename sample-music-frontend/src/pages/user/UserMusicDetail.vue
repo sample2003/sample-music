@@ -40,10 +40,10 @@
         </div>
         <div class="change-button">
           <div @click="showSongList" :class="{'it' : isShowSongList}">
-            <span>歌曲<span class="nsp">{{ this.albumDetail.songs.length || 0 }}</span></span>
+            <span>歌曲<span class="nsp">{{ this.albumDetail?.songs?.length || 0 }}</span></span>
           </div>
           <div @click="showComment" :class="{'it' : isShowComment}">
-            <span>评论<span class="nsp">{{ user_comment.length || 0}}</span></span>
+            <span>评论<span class="nsp">{{ user_comment?.length || 0}}</span></span>
           </div>
         </div>
       </div>
@@ -62,25 +62,25 @@
 
     <div v-else-if="detailType === 'playlist'" class="detail">
       <div class="detail-top">
-        <img :src="playlistWithSongs.cover ?? Icon.musicColorIcon" alt="">
+        <img :src="playlistWithSongs?.cover ?? Icon.musicColorIcon" alt="">
         <img :src="Icon.diskPng" alt="">
         <div class="detail-message">
           <div class="dt d1">
             <div class="title1">
               <span>{{ this.classify }}</span>
-              <h2>{{ playlistWithSongs.title }}</h2>
+              <h2>{{ playlistWithSongs?.title }}</h2>
             </div>
-            <img :src="Icon.updateIcon" alt="" @click="updatePlaylist(playlistWithSongs.id)">
+            <img :src="Icon.updateIcon" alt="" @click="updatePlaylist(playlistWithSongs?.id)">
           </div>
 
           <div class="dt d2">
             <div class="artist1 flex">
-              <img :src="playlistWithSongs.userAvatar" alt="">
-              <span style="padding: 10px">{{ playlistWithSongs.username }}</span>
+              <img :src="playlistWithSongs?.userAvatar" alt="">
+              <span style="padding: 10px">{{ playlistWithSongs?.username }}</span>
             </div>
             <div class="artist2 flex">
               <img :src="Icon.calendarIcon" alt="">
-              <span style="color: #888888">{{ playlistWithSongs.createTime }}发布</span>
+              <span style="color: #888888">{{ playlistWithSongs?.createTime }}发布</span>
             </div>
           </div>
 
@@ -89,19 +89,19 @@
               <p>收听数</p>
               <span class="tag">
                 <img :src="Icon.headsetIcon" alt="">
-                {{ playlistWithSongs.listeners }}
+                {{ playlistWithSongs?.listeners }}
               </span>
             </div>
             <div class="kick flex">
               <p>收藏人数</p>
               <span class="tag">
                 <img :src="Icon.notLoveIcon" alt="">
-                {{ playlistWithSongs.likes }}
+                {{ playlistWithSongs?.likes }}
               </span>
             </div>
-            <div class="kick flex" v-show="playlistWithSongs.tags">
+            <div class="kick flex" v-show="playlistWithSongs?.tags">
               <p>标签</p>
-              <span class="tag" v-for="t in playlistWithSongs.tags" :key="t">{{ t }}</span>
+              <span class="tag" v-for="t in playlistWithSongs?.tags" :key="t">{{ t }}</span>
             </div>
           </div>
 
@@ -116,24 +116,24 @@
             </div>
             <div class="change-button flex" @click="showSongList" :class="{'itt' : this.isShowSongList}">
               <span style="white-space: nowrap;">歌曲<span style="margin-left: 5px;">{{
-                  playlistWithSongs.songs.length || 0
+                  playlistWithSongs?.songs?.length || 0
                 }}</span></span>
             </div>
             <div class="change-button flex" @click="showComment" :class="{'itt' : this.isShowComment}">
               <span style="white-space: nowrap;">评论<span style="margin-left: 5px;">{{
-                  user_comment.length || 0
+                  user_comment?.length || 0
                 }}</span></span>
             </div>
           </div>
         </div>
         <div class="detail-description">
           <span class="sp">{{ classify }}介绍</span>
-          <span>{{ playlistWithSongs.description }}</span>
+          <span>{{ playlistWithSongs?.description }}</span>
         </div>
       </div>
-      <div v-if="isShowSongList && playlistWithSongs.songs.length > 0" class="detail-bottom dt-songList">
+      <div v-if="isShowSongList && playlistWithSongs?.songs?.length > 0" class="detail-bottom dt-songList">
         <SongList
-            :songs="songs(playlistWithSongs.songs)"
+            :songs="songs(playlistWithSongs?.songs)"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"

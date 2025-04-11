@@ -345,7 +345,8 @@ span {
   overflow: auto;
   right: 0;
   bottom: 105%;
-  background-color: var(--fourth-color);
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
   border-radius: 5px;
 }
 
@@ -355,13 +356,23 @@ span {
   align-items: center;
   margin: 5px;
   border-radius: 5px;
+  transition: 0.2s all ease;
 }
 
 .historySong span {
   color: black;
 }
 
-.historySong:hover, .hoi {
+.historySong:hover {
+  background-color: var(--fourth-color);
+}
+
+.hoi {
+  transition: 0.2s all ease;
+  background-color: var(--main-color);
+}
+
+.hoi:hover {
   background-color: var(--main-color);
 }
 
@@ -381,6 +392,7 @@ span {
 .historySong div {
   width: 65%;
   display: flex;
+  transition: 0.2s all ease;
   flex-direction: column;
 }
 
@@ -388,6 +400,7 @@ span {
   width: 100%;
   text-align: start;
   overflow: hidden;
+  transition: 0.2s all ease;
   text-overflow: ellipsis;
 }
 

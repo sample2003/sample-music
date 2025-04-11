@@ -21,9 +21,9 @@
           message="搜索歌曲吧">
       </TextInput>
       <!-- 右边框 -->
-      <div class="nn1" @click="jumpUserCenter">
-        <img :src="this.userDetail.avatar ?? Icon.notLoginIcon" alt="">
-        <span>{{ this.userDetail.username ?? accessEnum.NOT_LOGIN }}</span>
+      <div class="nn1" @click="userDetail ? jumpUserCenter() : jumpUserEnter()">
+        <img :src="userDetail?.avatar ?? Icon.notLoginIcon" alt="">
+        <span>{{ userDetail?.username ?? accessEnum.NOT_LOGIN }}</span>
       </div>
       <div class="nn2">
         <a href="https://www.kugou.com/" target="_blank"><img :src="Icon.kgyyIcon" alt=""></a>

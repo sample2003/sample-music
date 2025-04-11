@@ -7,7 +7,9 @@
     ></textarea>
     <span>{{ message }}</span>
     <button v-if="area && type !=='text'" @click="submitFx">发布</button>
-    <p v-show="maxLimit !== '0' && area.length !== 0"><span style="color: var(--main-color)">{{ area.length }}</span>/{{ this.maxLimit }}</p>
+    <p v-show="maxLimit !== '0' && area.length !== 0"><span style="color: var(--main-color)">{{
+        area.length
+      }}</span>/{{ this.maxLimit }}</p>
   </div>
 </template>
 
@@ -15,20 +17,10 @@
 export default {
   name: "TextArea",
   props: {
-    message: {
-      type: String
-    },
-    value: {
-      type: String
-    },
-    maxLimit: {
-      type: String,
-      default: "200"
-    },
-    type: {
-      type: String,
-      default: 'text'
-    }
+    message: {type: String},
+    value: {type: String},
+    maxLimit: {type: String, default: "200"},
+    type: {type: String, default: 'text'}
   },
   data() {
     return {
@@ -43,12 +35,11 @@ export default {
     },
     // 限制评论长度
     limitCommentLength(event) {
-      if(this.maxLimit !== '0') {
+      if (this.maxLimit !== '0') {
         if (this.area.length > this.maxLimit) {
           this.area = this.area.slice(0, parseInt(this.maxLimit));
         }
       }
-      // 同时触发两个参数
       if (this.paramKey) {
         this.$emit('input', this.paramKey, event.target.value);
       } else {

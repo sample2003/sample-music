@@ -1,18 +1,15 @@
 <template>
   <div id="app">
-    <LoadingPage v-if="loading"></LoadingPage>
-    <keep-alive v-else>
+    <keep-alive>
       <router-view></router-view>
     </keep-alive>
   </div>
 </template>
 
 <script>
-import LoadingPage from "@/pages/common/LoadingPage.vue";
 
 export default {
   name: 'App',
-  components: {LoadingPage},
   data() {
     return {
       loading: false,
@@ -36,11 +33,9 @@ export default {
   mounted() {
     this.setIsPlay(false);
     this.setAudio(null);
-    window.addEventListener('load', this.handleLoad);
     window.addEventListener('beforeunload', this.handleBeforeUnload);
   },
   beforeDestroy() {
-    window.removeEventListener('load', this.handleLoad);
     window.removeEventListener('beforeunload', this.handleBeforeUnload);
   },
 }

@@ -1,14 +1,12 @@
 <template>
-  <div id="Main" class="flex">
+  <div id="Main" :style="mainStyle">
     <!-- 内容区 -->
     <div class="main">
       <transition name="fade" mode="out-in">
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
+        <router-view></router-view>
       </transition>
     </div>
-    <span>本网站只做于学习用途，若有问题联系作者删除</span>
+    <span style="font-size: 0.8em;line-height: 1em;padding: 0.1em;">本网站只做于学习用途，若有问题联系作者删除</span>
   </div>
 </template>
 
@@ -17,18 +15,35 @@
 export default {
   name: "MusicMain",
   data() {
-    return {}
+    return {
+      mainHeight: '100%'
+    }
   },
   methods: {
-    initSize() {
-      if(this.show) {
-        document.getElementById("Main").style.height = "90%"
-      }else {
-        document.getElementById("Main").style.height = "100%"
+    updateSize() {
+      this.$nextTick(() => {
+        this.mainHeight = this.show ? "89%" : "100%"
+      })
+    }
+  },
+  watch: {
+    '$route'() {
+      this.updateSize()
+    },
+    // 监听播放状态变化
+    songPlaying: {
+      deep: true,
+      handler() {
+        this.updateSize()
       }
     }
   },
   computed: {
+    mainStyle() {
+      return {
+        height: this.mainHeight
+      }
+    },
     show() {
       const isPlayRoute = this.$route.path.includes('/music/play');
       const isEmpty = this.songPlaying == null || Object.keys(this.songPlaying).length === 0;
@@ -36,19 +51,23 @@ export default {
     }
   },
   mounted() {
-    this.initSize()
+    this.updateSize()
   }
 }
 </script>
 
 <style scoped>
 #Main {
+  display: flex;
+  justify-content: start;
+  align-items: center;
   flex-direction: column;
+  transition: height 0.2s ease;
 }
 
 .main {
   width: 100%;
-  height: calc(100% - 2.5em);
+  height: calc(100% - 1.4em);
 }
 
 </style>

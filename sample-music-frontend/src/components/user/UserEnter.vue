@@ -160,12 +160,12 @@ export default {
       }
     },
     handleLoginParam(param, value) {
-      UserLoginData[param] = value;
+      this.loginParam[param] = value;
     },
     // 用户登录
     async handleLogin() {
       try {
-        const res = await userService.userLogin(UserLoginData);
+        const res = await userService.userLogin(this.loginParam);
         if (res === 'empty') {
           this.$message("请完整填写登录信息")
         } else if (res === 401) {
@@ -178,7 +178,6 @@ export default {
           // 登录成功的处理逻辑
           await store.dispatch('user/getLoginUser')
           this.loginParam = this.clear(this.loginParam)
-          console.log(this.loginParam)
           this.$message("登录成功")
           // 登录成功的处理逻辑
           await this.$router.push('/music/home');
@@ -315,7 +314,7 @@ export default {
   position: absolute;
   background: #fff;
   top: 0;
-  left: 20px;
+  left: .5em;
   width: 50%;
   height: 100%;
   /* 新增文字样式 */

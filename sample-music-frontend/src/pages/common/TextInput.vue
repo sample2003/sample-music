@@ -7,13 +7,24 @@
            v-if="this.searchIcon">
       <img :src="Icon.userIcon" alt="用户"
            class="userIcon"
-           @click="inputFx"
            v-if="this.userIcon">
+      <img :src="Icon.emailIcon" alt="邮箱"
+           class="emailIcon"
+           v-if="this.emailIcon">
+      <img :src="Icon.passwordIcon" alt="密码"
+           class="passwordIcon"
+           v-if="this.passwordIcon">
+      <img :src="Icon.verifyIcon" alt="验证码"
+           class="verifyIcon"
+           v-if="this.verifyIcon">
+      <img :src="Icon.invitationIcon" alt="邀请码"
+           class="invitationIcon"
+           v-if="this.invitationIcon">
       <input
-          :type="this.type"
+          :type="type"
           required="required"
-          v-model="value"
-          @input="emitValue"
+          :value="value"
+          @input="emitValue($event)"
           @keyup.enter="inputFx"
       >
       <span :class="className">{{ message }}</span>
@@ -21,17 +32,9 @@
           :src="Icon.closeIcon"
           alt="关闭"
           class="cancelIcon"
-          v-show="value"
-          @click="clearInput"
           v-if="this.cancelIcon"
-      >
-      <img
-          :src="Icon.unknowSexIcon"
-          alt="关闭"
-          class="passwordIcon"
           v-show="value"
           @click="clearInput"
-          v-if="this.passwordIcon"
       >
     </div>
   </div>
@@ -43,38 +46,18 @@ import Icon from "@/util/common/Icon";
 export default {
   name: 'TextInput',
   props: {
-    method: {
-      type: String,
-      default: 'input',
-    },
-    message: {
-      type: String,
-      default: ''
-    },
-    type: {
-      type: String,
-      default: 'text'
-    },
-    paramKey: {
-      type: String,
-      default: null
-    },
-    searchIcon: {
-      type: Boolean,
-      default: false
-    },
-    cancelIcon: {
-      type: Boolean,
-      default: false
-    },
-    userIcon: {
-      type: Boolean,
-      default: false
-    },
-    passwordIcon: {
-      type: Boolean,
-      default: false
-    },
+    method: {type: String, default: 'input',},
+    message: {type: String, default: ''},
+    type: {type: String, default: 'text'},
+    value: {type: String, default: ''},
+    paramKey: {type: String, default: null},
+    searchIcon: {type: Boolean, default: false},
+    cancelIcon: {type: Boolean, default: false},
+    userIcon: {type: Boolean, default: false},
+    passwordIcon: {type: Boolean, default: false},
+    verifyIcon: {type: Boolean, default: false},
+    invitationIcon: {type: Boolean, default: false},
+    emailIcon: {type: Boolean, default: false},
   },
   computed: {
     Icon() {
@@ -92,19 +75,17 @@ export default {
   },
   data() {
     return {
-      value: '',
     }
   },
   methods: {
     emitValue(event) {
-      const value = event.target.value;
-
-      // 同时触发两个参数
       if (this.paramKey) {
-        this.$emit('inputChange', this.paramKey, value);
+        this.$emit('inputChange', this.paramKey, event.target.value);
+        this.$emit('loginInput', this.paramKey, event.target.value);
+        this.$emit('registerInput', this.paramKey, event.target.value);
       } else {
         // 保持原有单个参数触发方式
-        this.$emit('inputChange', value);
+        this.$emit('inputChange', event.target.value);
       }
     },
     inputFx() {
@@ -112,8 +93,10 @@ export default {
       // else if(this.method === 'insertPlaylist') this.$emit('insertPlaylist');
     },
     clearInput() {
-      this.value = '';
       this.$emit('inputChange', '');
+      this.$emit('inputChange', this.paramKey, '');
+      this.$emit('loginInput', this.paramKey, '');
+      this.$emit('registerInput', this.paramKey, '');
     },
   }
 }
