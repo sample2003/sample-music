@@ -16,6 +16,9 @@
               v-model="formData[field]"/>
           <span>{{ titleLength }}/15</span>
         </div>
+        <div class="ipt2" v-else-if="field === 'title'">
+          <TextInput :message="formData[field]"></TextInput>
+        </div>
         <div class="ipt2" v-else-if="field === 'description'">
                     <textarea
                         :id="field"
@@ -46,8 +49,10 @@
 
 <script>
 import PlaylistService from "@/api/service/PlaylistService";
+import TextInput from "@/pages/common/TextInput.vue";
 
 export default {
+  components: {TextInput},
   data() {
     return {
       fields: {},

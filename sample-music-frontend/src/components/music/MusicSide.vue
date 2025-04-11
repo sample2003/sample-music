@@ -60,9 +60,9 @@ export default {
         },
         {
           btnID: nanoid(),
-          btnName: "ai",
-          btnR: "ai",
-          btnIcon: Icon.noteIcon
+          btnName: "AI",
+          btnR: "AI",
+          btnIcon: Icon.deepseekIcon
         },
       ]
     }
@@ -91,7 +91,7 @@ export default {
   min-width: 80px;
   min-height: 540px;
   display: grid;
-  grid-template-rows: 10% 30% 60%;
+  grid-template-rows: 10% 40% 50%;
 }
 
 .top {

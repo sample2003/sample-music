@@ -4,11 +4,20 @@
       <TextInput
           @inputChange="handleInput"
           style="width: 300px;height: 40px;"
-          method="insertPlaylist"
+          method="input"
+          param-key="playlistTitle"
           message="请输入歌单标题"></TextInput>
       <div style="width: 100%;">
-        <input v-model="newTag" placeholder="回车新增标签" class="ipt2" style="width: 100%;"
-               @keyup.enter="addTag($event)">
+        <TextInput
+          @inputChange="handleInput"
+          style="width: 300px;height: 40px;"
+          method="input"
+          param-key="newTag"
+          @enter="addTag"
+          :value="newTag"
+          v-model="newTag"
+          message="回车新增标签"
+        ></TextInput>
         <div class="tags">
                     <span v-for="tag in tags" :key="tag" class="tag">
                         {{ tag }}
@@ -53,12 +62,16 @@ export default {
       isPublic: false,
       inputTitle: '', // 用于存储输入框的值
       newTag: '',
-      tags: []
+      tags: [],
     }
   },
   methods: {
-    handleInput(value) {
-      this.inputTitle = value;
+    handleInput(param, value) {
+      if(param === "playlistTitle") {
+        this.inputTitle = value;
+      }else {
+        this.newTag = value
+      }
     },
     handleConfirm() {
       this.insertPlaylistSimple();
@@ -67,10 +80,8 @@ export default {
     handleCancel() {
       this.$emit('cancel');
     },
-    addTag(event) {
-      // 阻止默认行为和事件冒泡
-      event.preventDefault();
-      event.stopPropagation();
+    addTag() {
+      alert("a")
       if (this.newTag.trim() && !this.tags.includes(this.newTag.trim())) {
         this.tags.push(this.newTag.trim());
         // this.$set(this.formData, 'tags', formTags); // 触发响应式更新
@@ -204,9 +215,7 @@ button:hover {
 }
 
 .in {
-  margin: 5px;
   justify-content: start;
-  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
 }
 
 .tags {

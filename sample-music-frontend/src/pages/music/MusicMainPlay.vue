@@ -2,7 +2,6 @@
   <div id="Play" class="flex">
     <!-- 左边部分 -->
     <div class="play_left">
-
       <transition name="fade" mode="out-in">
         <!-- 旋转封面 -->
         <div v-if="!isShowComment && !isShowDetail" key="cover" class="pl_effect">
@@ -13,8 +12,8 @@
             <div class="pic">
               <img :src="Icon.diskPng" alt="">
             </div>
-            <img :src="Icon.stylusPng" alt="" :class="isPlay? 'sr':'sp'">
           </div>
+          <img :src="Icon.stylusPng" alt="" :class="isPlay? 'sr':'sp'" class="stylus">
         </div>
         <!-- 评论区 -->
         <div v-else-if="isShowComment && !isShowDetail" key="comment" class="pl_comment">
@@ -397,9 +396,29 @@ export default {
 .pl_effect {
   width: 50%;
   border-radius: 10%;
+  position: relative;
   border: 1px solid var(--fourth-color);
   user-select: none;
   box-shadow: 12px 12px 24px #b3b3b3, -12px -12px 24px #ffffff;
+}
+
+.stylus {
+  /* 重新定位到父容器右上角 */
+  width: 15%;
+  position: absolute;
+  right: 5%;
+  top: 0;
+  z-index: 10;
+  transition: all 0.5s;
+  transform-origin: 60% 15%; /* 设置旋转基点为上边缘的中间 */
+}
+
+.sp {
+  transform: rotate(-12deg);
+}
+
+.sr {
+  transform: rotate(3deg);
 }
 
 .play_style {
@@ -464,18 +483,8 @@ export default {
   animation: rotate 8s infinite linear paused;
 }
 
-.sp {
-  transform: rotate(-10deg);
-  transform-origin: 70% 12%; /* 设置旋转基点为上边缘的中间 */
-}
-
 .songRunning {
   animation: rotate 8s infinite linear running;
-}
-
-.sr {
-  transform: rotate(20deg);
-  transform-origin: 70% 12%; /* 设置旋转基点为上边缘的中间 */
 }
 
 .pl_comment {

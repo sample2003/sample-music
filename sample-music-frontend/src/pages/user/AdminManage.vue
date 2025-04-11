@@ -11,7 +11,7 @@
       </button>
     </div>
     <div class="main">
-      <transition name="fade">
+      <transition name="fade" mode="out-in">
         <DynamicCrud
             :title="pageConfig[currentPage]?.title"
             :fields="pageConfig[currentPage]?.fields"
@@ -31,7 +31,7 @@ import User from "@/api/pojo/User";
 import SongUpload from "@/api/pojo/upload/SongUpload";
 import SongManage from "@/pages/manage/SongManage.vue";
 import PlaylistUpload from "@/api/pojo/upload/PlaylistUpload";
-import PlaylistManage from "@/pages/manage/PlaylistManage.vue";
+import PlaylistManage from "@/pages/music/UserPlaylistManage.vue";
 import AlbumManage from "@/pages/manage/AlbumManage.vue";
 import AlbumUpload from "@/api/pojo/upload/AlbumUpload";
 import ArtistUpload from "@/api/pojo/upload/ArtistUpload";

@@ -2,7 +2,7 @@
   <div id="Music">
     <Side id="Side"/>
     <Main id="Main"/>
-    <transition name="fade-down">
+    <transition name="fade" mode="out-in">
       <Control id="Control" v-if="show" key="control"/>
     </transition>
     <div class="navigate">
@@ -21,13 +21,9 @@
           message="搜索歌曲吧">
       </TextInput>
       <!-- 右边框 -->
-      <div v-if="this.userDetail" class="nn1" @click="jumpUserCenter">
-        <img :src="this.userDetail.avatar" alt="">
-        <span>{{ this.userDetail.username }}</span>
-      </div>
-      <div v-else class="nn1" @click="jumpUserEnter">
-        <img :src="'https://sample2003.oss-cn-guangzhou.aliyuncs.com/picture/wuk.jpg'" alt="">
-        <span>点击登录</span>
+      <div class="nn1" @click="jumpUserCenter">
+        <img :src="this.userDetail.avatar ?? Icon.notLoginIcon" alt="">
+        <span>{{ this.userDetail.username ?? accessEnum.NOT_LOGIN }}</span>
       </div>
       <div class="nn2">
         <a href="https://www.kugou.com/" target="_blank"><img :src="Icon.kgyyIcon" alt=""></a>
@@ -36,17 +32,7 @@
         <a href="https://www.kuwo.cn/" target="_blank"><img :src="Icon.kwyyIcon" alt=""></a>
       </div>
       <div class="nn3" @mouseenter="showWantList" @mouseleave="hideWantList">
-        <div class="search s2 flex">
-          <div class="inputBox">
-            <input
-                type="text"
-                required="required"
-                @keyup.enter="addMyWant"
-                v-model="wantListener"
-            >
-            <span>我想听</span>
-          </div>
-        </div>
+        <TextInput message="我想听"></TextInput>
         <div class="want-lists" v-show="isShowWantList">
           <div class="want-list">
             <p>啊</p>
@@ -76,11 +62,15 @@ import Control from './MusicControl.vue'
 import Main from './MusicMain.vue'
 import Icon from "@/util/common/Icon";
 import TextInput from "@/pages/common/TextInput.vue";
+import accessEnum from "../../util/access/accessEnum";
 
 export default {
   name: 'MusicLayout',
   components: {TextInput, Side, Control, Main},
   computed: {
+    accessEnum() {
+      return accessEnum
+    },
     Icon() {
       return Icon
     },
@@ -121,7 +111,7 @@ export default {
     },
     async fetchSongs() {
 
-      this.$router.replace({
+      this.$router.push({
         name: "search",
         params: { // 必须与路由 path 中的 :xxx 名称对应
           condition: this.value,
@@ -162,17 +152,6 @@ export default {
   grid-column: 1 / span 2;
 }
 
-.fade-down-enter-active,
-.fade-down-leave-active {
-  transition: all 0.5s ease; /* 设置过渡动画的时长和缓动函数，可根据需要调整时长等参数 */
-}
-
-.fade-down-enter,
-.fade-down-leave-to {
-  opacity: 0; /* 设置透明度为 0，让组件在动画开始和结束时完全透明 */
-  transform: translateY(100%); /* 使用 translateY 将组件沿着 Y 轴向下移动自身高度的距离，实现往下渐渐消失的视觉效果，这里假设初始是完全移出可视区域 */
-}
-
 .navigate {
   grid-row: 1 / span 1;
   grid-column: 2 / span 1;
@@ -211,11 +190,11 @@ export default {
   width: 70%;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: 0.1s all ease;
+  transition: 0.2s all ease;
 }
 
 .nn1:hover span {
-  color: var(--second-color);
+  letter-spacing: 2px;
 }
 
 .nn2 {

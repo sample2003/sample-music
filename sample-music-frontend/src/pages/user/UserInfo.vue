@@ -17,6 +17,10 @@
         </div>
       </div>
     </div>
+    <div>
+      <img :src="this.userDetail.avatar" alt="" style="width: 10%">
+      <p ></p>
+    </div>
   </div>
 </template>
 

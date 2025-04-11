@@ -130,9 +130,15 @@ export default {
     },
     // 搜索歌手
     searchArtist(value) {
-      this.getSongsByCondition(value);
       this.$router.push({
-        name: "search"
+        name: "search",
+        params: { // 必须与路由 path 中的 :xxx 名称对应
+          condition: value,
+          params: 'ARTIST',
+          sortType: 'LISTENERS_DESC',
+          pageNum: 1,
+          pageSize: 10
+        }
       }, () => {
       })
     },

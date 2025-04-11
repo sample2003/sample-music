@@ -62,59 +62,61 @@
 
     <div v-else-if="detailType === 'playlist'" class="detail">
       <div class="detail-top">
-        <img :src="playlistDetail.cover ?? Icon.musicColorIcon" alt="">
+        <img :src="playlistWithSongs.cover ?? Icon.musicColorIcon" alt="">
         <img :src="Icon.diskPng" alt="">
         <div class="detail-message">
           <div class="dt d1">
             <div class="title1">
               <span>{{ this.classify }}</span>
-              <h2>{{ playlistDetail.title }}</h2>
+              <h2>{{ playlistWithSongs.title }}</h2>
             </div>
-            <img :src="Icon.updateIcon" alt="" @click="updatePlaylist(playlistDetail.id)">
+            <img :src="Icon.updateIcon" alt="" @click="updatePlaylist(playlistWithSongs.id)">
           </div>
 
           <div class="dt d2">
             <div class="artist1 flex">
-              <img :src="playlistDetail.userAvatar" alt="">
-              <span style="padding: 10px">{{ playlistDetail.username }}</span>
+              <img :src="playlistWithSongs.userAvatar" alt="">
+              <span style="padding: 10px">{{ playlistWithSongs.username }}</span>
             </div>
             <div class="artist2 flex">
               <img :src="Icon.calendarIcon" alt="">
-              <span style="color: #888888">{{ playlistDetail.createTime }}发布</span>
+              <span style="color: #888888">{{ playlistWithSongs.createTime }}发布</span>
             </div>
           </div>
 
           <div class="dt d3">
             <div class="kick flex">
               <p>收听数</p>
-              <span class="tag"><img :src="Icon.headsetIcon" alt="">
-                                {{ playlistDetail.listeners }}
-                            </span>
+              <span class="tag">
+                <img :src="Icon.headsetIcon" alt="">
+                {{ playlistWithSongs.listeners }}
+              </span>
             </div>
             <div class="kick flex">
               <p>收藏人数</p>
-              <span class="tag"><img :src="Icon.notLoveIcon" alt="">
-                                {{ playlistDetail.likes }}
-                            </span>
+              <span class="tag">
+                <img :src="Icon.notLoveIcon" alt="">
+                {{ playlistWithSongs.likes }}
+              </span>
             </div>
-            <div class="kick flex" v-show="playlistDetail.tags">
+            <div class="kick flex" v-show="playlistWithSongs.tags">
               <p>标签</p>
-              <span class="tag" v-for="t in playlistDetail.tags" :key="t">{{ t }}</span>
+              <span class="tag" v-for="t in playlistWithSongs.tags" :key="t">{{ t }}</span>
             </div>
           </div>
 
           <div class="dt d4">
-            <div class="select-button" @click="playAllSongs('playlist', playlistDetail)">
+            <div class="select-button" @click="playAllSongs('playlist', playlistWithSongs)">
               <img :src="Icon.playIcon" alt="">
               <p style="white-space: nowrap;">播放全部</p>
             </div>
-            <div class="select-button" @click="changeFavoritesPlaylist(playlistDetail.id)">
+            <div class="select-button" @click="changeFavoritesPlaylist(playlistWithSongs.id)">
               <img :src="isFavorite ? Icon.loveColorIcon : Icon.notLoveIcon" alt="">
               <p style="white-space: nowrap;">{{ isFavorite ? '取消收藏' : `收藏${this.classify}` }}</p>
             </div>
             <div class="change-button flex" @click="showSongList" :class="{'itt' : this.isShowSongList}">
               <span style="white-space: nowrap;">歌曲<span style="margin-left: 5px;">{{
-                  playlistDetail.songs.length || 0
+                  playlistWithSongs.songs.length || 0
                 }}</span></span>
             </div>
             <div class="change-button flex" @click="showComment" :class="{'itt' : this.isShowComment}">
@@ -126,12 +128,12 @@
         </div>
         <div class="detail-description">
           <span class="sp">{{ classify }}介绍</span>
-          <span>{{ playlistDetail.description }}</span>
+          <span>{{ playlistWithSongs.description }}</span>
         </div>
       </div>
-      <div v-if="isShowSongList" class="detail-bottom dt-songList">
+      <div v-if="isShowSongList && playlistWithSongs.songs.length > 0" class="detail-bottom dt-songList">
         <SongList
-            :songs="songs(this.playlistDetail.songs)"
+            :songs="songs(playlistWithSongs.songs)"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -139,6 +141,9 @@
       </div>
       <div v-else-if="isShowComment" class="detail-bottom dt-comment">
         <UserComment :detailType="detailType" :targetId="targetId"></UserComment>
+      </div>
+      <div v-else>
+        <p>暂无歌曲</p>
       </div>
     </div>
   </div>
@@ -151,8 +156,6 @@ import PlaylistService from "@/api/service/PlaylistService";
 import RelateService from "@/api/service/RelateService";
 import FavoriteService from "@/api/service/FavoriteService";
 import UserComment from "@/pages/common/UserComment.vue";
-import tools from "@/util/common/tools";
-import {PlaylistUpdate} from "@/api/pojo/update/PlaylistUpdate";
 import Icon from "@/util/common/Icon";
 
 export default {
@@ -160,6 +163,7 @@ export default {
   components: {UserComment, SongList},
   data() {
     return {
+      playlistWithSongs: {},
       detailType: "",
       isShowSongList: true,
       isShowComment: false,
@@ -181,11 +185,7 @@ export default {
   },
   methods: {
     updatePlaylist(id) {
-      const pu = tools.copy(this.playlistDetail, PlaylistUpdate)
-      this.$router.push({
-        path: `/music/list/manage/playlist/${id}`,
-        query: {fields: pu}
-      });
+      this.$router.push({path: `/music/list/manage/playlist/${id}`});
     },
     // 展示歌曲
     showSongList() {
@@ -227,8 +227,8 @@ export default {
     // 查询是否收藏歌单
     async isFavoritePlaylist() {
       const favoritePlaylist = await FavoriteService.queryFavoritePlaylist();
-      if (this.playlistDetail && favoritePlaylist) {
-        if (favoritePlaylist.some(c => c.id === this.playlistDetail.id)) {
+      if (this.playlistWithSongs && favoritePlaylist) {
+        if (favoritePlaylist.some(c => c.id === this.playlistWithSongs.id)) {
           this.isFavorite = true;
           return true;
         } else {
@@ -268,11 +268,16 @@ export default {
     },
     // 获取歌单信息
     async fetchPlaylistData(playlistId) {
-      const playlistWithSongs = await PlaylistService.playlistWithSongs(playlistId);
-      // this.setPlaylistDetail(playlistWithSongs);
-      const userComment = await PlaylistService.queryCommentPaged(playlistId);
-      this.user_comment = userComment?.items || []; // 直接赋值
-      await this.isFavoritePlaylist();
+      const flag = await PlaylistService.checkBelongTo(playlistId);
+      if (flag) {
+        this.playlistWithSongs = await PlaylistService.playlistWithSongs(playlistId);
+        const userComment = await PlaylistService.queryCommentPaged(playlistId);
+        this.user_comment = userComment?.items || []; // 直接赋值
+        await this.isFavoritePlaylist();
+      }else {
+        this.$message("该歌单不属于你")
+        this.$router.go(-1);
+      }
     },
     // 增加歌曲至歌单
     async handleAdd(ids) {
@@ -287,8 +292,8 @@ export default {
     async handleDelete(ids) {
       this.$confirm(`是否从歌单移除选中歌曲？`, async (confirmed) => {
         if (confirmed) {
-          await RelateService.deleteSongsByPlaylist(this.playlistDetail.id, ids)
-          await this.queryPlaylistDetail(this.playlistDetail)
+          await RelateService.deleteSongsByPlaylist(this.playlistWithSongs.id, ids)
+          await this.queryPlaylistDetail(this.playlistWithSongs)
         }
       })
     },

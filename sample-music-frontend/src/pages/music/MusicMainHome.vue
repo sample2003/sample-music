@@ -51,11 +51,11 @@
         <!-- 指示器 -->
         <div class="notice-indicators">
           <span
-              v-for="(n, idx) in notice"
+              v-for="(a, idx) in advert"
               :key="idx"
               class="indicator-dot"
-              :class="{ 'active': idx === otherIndex }"
-              @click="setActiveIndex(idx, 'other')">
+              :class="{ 'active': idx === advertIndex }"
+              @click="setActiveIndex(idx, 'advert')">
           </span>
         </div>
       </div>
@@ -63,9 +63,9 @@
       <div class="notice">
         <div class="notice-slides">
           <div class="notice-slide" v-for="n in notice" :key="n.id"
-               :class="{'active': otherIndex === notice.indexOf(n)}"
-               @mouseenter="clear('other')"
-               @mouseleave="playSlides('other')">
+               :class="{'active': noticeIndex === notice.indexOf(n)}"
+               @mouseenter="clear('notice')"
+               @mouseleave="playSlides('notice')">
             <div class="back" :style="{ 'background-image': `url(${n.cover})` }"></div>
             <span>{{ n.title }}</span>
           </div>
@@ -76,8 +76,8 @@
               v-for="(n, idx) in notice"
               :key="idx"
               class="indicator-dot"
-              :class="{ 'active': idx === otherIndex }"
-              @click="setActiveIndex(idx, 'other')">
+              :class="{ 'active': idx === noticeIndex }"
+              @click="setActiveIndex(idx, 'notice')">
           </span>
         </div>
       </div>
@@ -146,9 +146,6 @@ import Icon from "@/util/common/Icon";
 
 export default {
   name: "MusicMainHome",
-  props: {
-    show: Boolean
-  },
   data() {
     return {
       classify: [
@@ -173,9 +170,11 @@ export default {
     // 清除自动播放定时器
     clear(type) {
       if (type === 'notice') clearInterval(this.intervalNotice);
+      else if (type === 'advert') clearInterval(this.intervalAdvert);
       else if (type === 'other') clearInterval(this.intervalOther);
       else {
         clearInterval(this.intervalNotice);
+        clearInterval(this.intervalAdvert);
         clearInterval(this.intervalOther);
       }
     },
@@ -187,7 +186,7 @@ export default {
           this.noticeIndex = (this.noticeIndex + 1) % this.notice.length;
         }, 3000); // 每3秒自动播放下一张
       } else if (type === 'advert') {
-        this.intervalOther = setInterval(() => {
+        this.intervalAdvert = setInterval(() => {
           this.advertIndex = (this.advertIndex + 1) % this.advert.length;
         }, 3000); // 每3秒自动播放下一张
       } else {
@@ -203,6 +202,7 @@ export default {
     setActiveIndex(index, type) {
       this.noticeIndex = index;
       if (type === 'notice') this.playSlides("notice"); // 重新开始自动播放
+      if (type === 'advert') this.playSlides("advert"); // 重新开始自动播放
       else this.playSlides("other");
     },
     // 获取推荐专辑
@@ -221,6 +221,11 @@ export default {
       const temp = await PublicityService.conditionAndPaged();
       this.notice = temp.data.items;
     },
+    // 获取广告
+    async getAdvert() {
+      const temp = await PublicityService.conditionAndPaged(null, "infomercial");
+      this.advert = temp.data.items;
+    },
     async jumpAlbumDetail(id) {
       await this.$router.push({path: `/music/detail/album/${id}`});
     },
@@ -231,12 +236,8 @@ export default {
       await this.getAlbums();
       await this.getPlaylists();
       await this.getNotice();
+      await this.getAdvert();
       await this.playSlides();
-      if(this.show) {
-        document.getElementById("Home").style.height = "90%"
-      }else {
-        document.getElementById("Home").style.height = "100%"
-      }
     }
   },
   computed: {
@@ -256,7 +257,7 @@ export default {
 <style scoped>
 #Home {
   width: 100%;
-  height: 90%;
+  height: 100%;
   font-size: var(--fontSize);
   overflow: auto;
 }
@@ -472,6 +473,8 @@ export default {
   padding: 2px 2px 5px;
   border-radius: 10px;
   text-align: start;
+  text-indent: 1em;
+  cursor: default;
   background: var(--main-backgroundColor);
 }
 
@@ -545,6 +548,9 @@ export default {
   top: 5%;
   left: 5%;
   border-radius: 5px;
+  height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
+  aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
+  object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
 }
 
 .card > img:nth-of-type(2) {
@@ -558,6 +564,9 @@ export default {
   background-color: rgba(34, 34, 34, 0.58);
   transition: all 0.2s ease;
   z-index: 1;
+  height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
+  aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
+  object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
 }
 
 .card > img:nth-of-type(2):hover {

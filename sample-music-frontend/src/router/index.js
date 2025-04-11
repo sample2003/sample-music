@@ -19,14 +19,13 @@ import UserInfo from "@/pages/user/UserInfo.vue";
 import AdminManage from "@/pages/user/AdminManage.vue";
 import UserMusicDetail from "@/pages/user/UserMusicDetail.vue";
 
-import PlaylistManage from "@/pages/manage/PlaylistManage.vue";
-
 import ErrorPage from "@/pages/common/ErrorPage.vue";
 import ServerClose from "@/pages/common/ServerClose.vue";
 
 import ACCESS_ENUM from "@/util/access/accessEnum";
 import checkAccess from "@/util/access/checkAccess";
 import AIChat from "@/pages/user/AIChat.vue";
+import UserPlaylistManage from "@/pages/music/UserPlaylistManage.vue";
 
 Vue.use(VueRouter);
 
@@ -128,10 +127,11 @@ const router = new VueRouter({
             }, {
               name: "listMusicManage",
               path: '/music/list/manage/playlist/:id',
-              component: PlaylistManage,
+              component: UserPlaylistManage,
               meta: {
                 access: ACCESS_ENUM.USER,
               },
+              props: true
             }
           ]
         },
@@ -151,7 +151,7 @@ const router = new VueRouter({
           component: MusicDetail
         },
         {
-          name: "ai",
+          name: "AI",
           path: "/music/ai",
           component: AIChat
         },

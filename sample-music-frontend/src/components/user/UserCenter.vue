@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="main">
-      <transition name="fade">
+      <transition name="fade" mode="out-in">
         <router-view></router-view>
       </transition>
     </div>
@@ -110,6 +110,12 @@ export default {
         btnID: nanoid(),
         btnName: "music",
         name: "进入音乐",
+        btnIcon: Icon.homeIcon
+      },
+      {
+        btnID: nanoid(),
+        btnName: "enter",
+        name: "进登录页面",
         btnIcon: Icon.homeIcon
       },
     ]
@@ -187,6 +193,9 @@ export default {
         })
       } else if (name === 'play') {
         this.$router.push({path: `/music/play`}, () => {
+        })
+      } else if (name === 'enter') {
+        this.$router.push({path: `/user/enter`}, () => {
         })
       } else {
         this.$router.push({path: `/user/center/${name}`}, () => {

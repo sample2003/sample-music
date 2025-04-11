@@ -113,8 +113,8 @@ export default {
       return to.params.condition !== this.condition ||
           to.params.params !== this.params ||
           to.params.sortType !== this.sortType ||
-          +to.params.pageNum !== this.pageNum ||
-          +to.params.pageSize !== this.pageSize
+          to.params.pageNum !== this.pageNum ||
+          to.params.pageSize !== this.pageSize
     },
     handlePageChange(newPage) {
       this.$router.push({

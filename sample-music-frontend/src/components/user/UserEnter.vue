@@ -2,92 +2,92 @@
   <div id="userEnter">
     <div class="enter">
       <div class="container">
-        <div class="box">
-          <div class="content">
-            <h2>欢迎您</h2>
-            <p style="color: #000">{{ pContent }}</p>
-            <!-- 根据 isHovering 的值显示输入框 -->
+        <div class="box" data-text="Sample -Music">
+          <div v-show="this.isShowLogin1" class="content">
+            <p style="color: #000"><span style="font-size: 1.1em;line-height: 1.4em;">欢迎你</span>，请填写基本信息</p>
+            <TextInput
+                message="请输入账号或邮箱"
+                @loginInput="handleLoginParam"
+                :value="loginParam.text"
+                param-key="text"
+                :user-icon="true"
+                :cancel-icon="true"
+                style="height: 30%"/>
+            <TextInput
+                message="请输入密码"
+                type="password"
+                @loginInput="handleLoginParam"
+                :value="loginParam.password"
+                param-key="password"
+                :password-icon="true"
+                :cancel-icon="true"
+                style="height: 30%"/>
+            <a class="handleButton" @click="handleLogin">登录</a>
+          </div>
+          <div v-show="this.isShowLogin2" class="content qrcode">
+            <p style="color: #000"><span style="font-size: 1.1em;line-height: 1.4em;">欢迎你</span>，请微信扫一扫扫码登录
+            </p>
             <div>
-              <TextInput
-                  message="请输入账号或邮箱"
-                  @inputChange="handleInputParam"
-                  param-key="text"
-                  :user-icon="true"
-                  :cancel-icon="true"
-                  style="height: 30%" />
-              <TextInput
-                  message="请输入密码"
-                  type="password"
-                  @inputChange="handleInputParam"
-                  param-key="password"
-                  :user-icon="true"
-                  :cancel-icon="true"
-                  style="height: 30%" />
-              <!-- 输入框 -->
-<!--              <div class="search flex">
-                <div class="inputBox">
-                  <input
-                      type="password"
-                      required="required"
-                      v-model="UserLoginData.password"
-                  >
-                  <span>请输入密码</span>
-                </div>
-              </div>-->
-              <a @click="handleLogin">{{ aContent }}</a>
+              <img src="../../static/qrcode.png" alt="">
             </div>
-<!--            <div v-show="isRegisterForm">
-              &lt;!&ndash; 输入框 &ndash;&gt;
-              <div class="search flex">
-                <div class="inputBox">
-                  <input
-                      type="text"
-                      required="required"
-                      v-model="UserRegisterData.username"
-                  >
-                  <span>请输入用户名</span>
-                </div>
-              </div>
-              &lt;!&ndash; 输入框 &ndash;&gt;
-              <div class="search flex">
-                <div class="inputBox">
-                  <input
-                      type="text"
-                      required="required"
-                      v-model="UserRegisterData.email"
-                  >
-                  <span>请输入邮箱</span>
-                </div>
-              </div>
-              &lt;!&ndash; 输入框 &ndash;&gt;
-              <div class="search flex">
-                <div class="inputBox">
-                  <input
-                      type="password"
-                      required="required"
-                      v-model="UserRegisterData.password"
-                  >
-                  <span>请输入密码</span>
-                </div>
-              </div>
-              &lt;!&ndash; 输入框 &ndash;&gt;
-              <div class="search flex">
-                <div class="inputBox">
-                  <input
-                      type="text"
-                      required="required"
-                      v-model="UserRegisterData.invitationCode"
-                  >
-                  <span>请输入邀请码</span>
-                </div>
-              </div>
-              <a @click="handleRegister">{{ aContent }}</a>
-            </div>-->
+          </div>
+          <div v-show="this.isShowRegister" class="content">
+            <p style="color: #000"><span style="font-weight: bolder;">欢迎</span>，请填写基本信息</p>
+            <TextInput
+                message="请输入注册邮箱"
+                @registerInput="handleRegisterParam"
+                :value="registerParam.email"
+                param-key="email"
+                :email-icon="true"
+                :cancel-icon="true"
+                style="height: 30%"/>
+            <TextInput
+                message="请输入用户名"
+                @registerInput="handleRegisterParam"
+                :value="registerParam.username"
+                param-key="username"
+                :user-icon="true"
+                :cancel-icon="true"
+                style="height: 30%"/>
+            <TextInput
+                message="请输入密码"
+                type="password"
+                @registerInput="handleRegisterParam"
+                :value="registerParam.password"
+                param-key="password"
+                :password-icon="true"
+                :cancel-icon="true"
+                style="height: 30%"/>
+            <TextInput
+                message="请输入验证码"
+                @registerInput="handleRegisterParam"
+                :value="registerParam.verificationCode"
+                v-show="this.registerParam.email"
+                param-key="verificationCode"
+                :verify-icon="true"
+                style="height: 30%;width: 70%;margin-left: 1.5%;"/>
+            <a class="msg"
+               v-show="this.registerParam.email">{{ msg }}</a>
+            <TextInput
+                message="请输入邀请码"
+                @registerInput="handleRegisterParam"
+                :value="registerParam.invitationCode"
+                param-key="invitationCode"
+                :invitation-icon="true"
+                :cancel-icon="true"
+                style="height: 30%"/>
+            <a class="handleButton" @click="handleRegister">注册</a>
           </div>
         </div>
         <div class="select">
-          <ButtonSelect :button-list="btn"></ButtonSelect>
-
+          <ButtonSelect
+              :button-list="btn"
+              :is-active="(item) => currentBtn === item.btnName"
+              :key-field="'btnID'"
+              :icon-field="'btnIcon'"
+              :click-param-field="'btnName'"
+              @button-click="show"
+          ></ButtonSelect>
         </div>
       </div>
     </div>
@@ -110,32 +110,56 @@ export default {
     const btn = [
       {
         btnID: nanoid(),
-        btnName: "info",
+        btnName: "emailOrAccountLogin",
         name: "邮箱/账号",
         btnIcon: Icon.userIcon
       },
       {
         btnID: nanoid(),
-        btnName: "suggest",
+        btnName: "wechatLogin",
         name: "微信登录",
-        btnIcon: Icon.suggestIcon
+        btnIcon: Icon.wechatIcon
       },
       {
         btnID: nanoid(),
-        btnName: "music",
+        btnName: "emailRegister",
         name: "用户注册",
-        btnIcon: Icon.homeIcon
+        btnIcon: Icon.registerIcon
       },
     ]
     return {
-      // 添加一个标志位来控制是否显示输入框
-      currentBtn: '',
-      btn: btn
+      currentBtn: 'emailOrAccountLogin',
+      btn: btn,
+      msg: "发送",
+      isShowLogin1: true,
+      isShowLogin2: false,
+      isShowRegister: false,
+      loginParam: UserLoginData,
+      registerParam: UserRegisterData
     }
-
   },
+  computed: {},
   methods: {
-    handleInputParam(param, value) {
+    show(param) {
+      if (param === this.currentBtn) return
+      this.currentBtn = param;
+      if (param === this.btn[0].btnName) {
+        this.isShowLogin2 = false;
+        this.isShowRegister = false;
+        this.isShowLogin1 = true;
+      }
+      if (param === this.btn[1].btnName) {
+        this.isShowRegister = false;
+        this.isShowLogin1 = false;
+        this.isShowLogin2 = true;
+      }
+      if (param === this.btn[2].btnName) {
+        this.isShowLogin1 = false;
+        this.isShowLogin2 = false;
+        this.isShowRegister = true;
+      }
+    },
+    handleLoginParam(param, value) {
       UserLoginData[param] = value;
     },
     // 用户登录
@@ -153,6 +177,8 @@ export default {
         } else {
           // 登录成功的处理逻辑
           await store.dispatch('user/getLoginUser')
+          this.loginParam = this.clear(this.loginParam)
+          console.log(this.loginParam)
           this.$message("登录成功")
           // 登录成功的处理逻辑
           await this.$router.push('/music/home');
@@ -162,45 +188,30 @@ export default {
         console.error(error);
       }
     },
+    handleRegisterParam(param, value) {
+      this.$set(this.registerParam, param, value)
+    },
     // 用户注册
     async handleRegister() {
+      console.log(this.registerParam)
       try {
-        await userService.userRegister(UserRegisterData);
-        // 注册成功的处理逻辑
-        this.UserLoginData.text = UserRegisterData.username;
-        this.UserLoginData.password = UserRegisterData.password;
-        this.showLogin();
+        // 使用本地响应式数据提交
+        await userService.userRegister({...this.registerParam})
+
+        // 注册成功后清空数据
+        this.registerParam = this.clear(this.registerParam)
+        this.showLogin()
       } catch (error) {
-        // 注册失败的处理逻辑
-        console.error(error);
+        console.error(error)
       }
+    },
+    clear(params) {
+      Object.keys(params).forEach(key => {
+        params[key] = ''
+      })
+      return params;
     },
   },
-
-  computed: {
-    UserRegisterData() {
-      return UserRegisterData
-    },
-    UserLoginData() {
-      return UserLoginData
-    },
-    pContent() {
-      if (this.isLoginForm || this.isRegisterForm) {
-        return '请填写基本信息';
-      } else {
-        return '祝你有个好的体验';
-      }
-    },
-    aContent() {
-      if (this.isLoginForm) {
-        return '登录'
-      } else if (this.isRegisterForm) {
-        return '注册'
-      } else {
-        return '登录'
-      }
-    }
-  }
 }
 </script>
 
@@ -208,7 +219,7 @@ export default {
 #userEnter {
   width: 100vw;
   height: 100vh;
-  background-color: var(--fourth-color);
+  background-color: var(--second-color);
   overflow: hidden;
 }
 
@@ -238,7 +249,6 @@ export default {
 /*内容部分，层级1*/
 .content {
   width: 400px;
-  height: 60%;
   position: relative;
   left: 0;
   padding: 30px;
@@ -249,73 +259,78 @@ export default {
   z-index: 1;
   transition: 0.5s;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: start;
   align-items: center;
+}
+
+.qrcode img {
+  width: 60%;
 }
 
 .content div {
   width: 100%;
 }
 
-.search {
-  width: 80%;
-  height: 35px;
-  padding-top: 10px;
-
+.msg {
+  width: 25%;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 2%;
+  font-size: 0.8em;
+  background: #222;
+  color: #fff;
+  box-shadow: 0 2px 15px #222;
+  border-radius: 5px;
+  text-decoration: none;
+  padding: 5px 0;
 }
 
-.inputBox {
-  font-size: var(--fontSize);
-}
-
-.content h2 {
-  color: #000;
-  font-size: 1.1em;
-  margin-bottom: 10px;
-  line-height: 1.4em;
-}
-
-.content a {
+.handleButton {
+  width: 100%;
   cursor: pointer;
   display: inline-block;
   font-size: 1.1em;
-  color: #111;
-  background: #fff;
-  border-radius: 4px;
+  background: #222;
+  color: #fff;
+  box-shadow: 0 2px 15px #222;
+  border-radius: 5px;
   text-decoration: none;
   font-weight: 700;
   transition: 0.2s;
-  padding: 5px 10px;
+  padding: 5px 0;
   margin-top: 10px;
 }
 
-/*悬浮在盒子上，内容变化*/
-.box:hover .content {
-  left: -25px;
-  padding: 15px 40px;
-}
-
-.content a:hover {
-  background: #222;
-  color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 15px #222;
+.handleButton:hover {
+  color: #222;
+  background: #fff;
+  box-shadow: 0 2px 15px #fff;
 }
 
 /*创建前面和后面的色带*/
-.box::before,
-.box::after {
-  content: "";
+.box[data-text]::before,
+.box[data-text]::after {
+  content: attr(data-text);
   position: absolute;
   background: #fff;
   top: 0;
-  left: 25%;
+  left: 20px;
   width: 50%;
   height: 100%;
+  /* 新增文字样式 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
+  white-space: nowrap;
+  font-size: 11em;
+  color: #222;
+  letter-spacing: 10px;
+  word-spacing: 2em;
+
   border-radius: 8px;
-  transform: skewX(15deg);
+  transform: skewX(10deg);
   transition: 0.5s ease;
   background-size: 300% 100%;
 }
@@ -328,7 +343,7 @@ export default {
 /*悬浮时使色带旋转*/
 .box:hover::before,
 .box:hover::after {
-  left: 20px;
+  left: 40px;
   width: calc(100% - 90px);
   transform: skewX(0deg);
 }
@@ -340,55 +355,10 @@ export default {
   background-image: linear-gradient(315deg, var(--main-color), var(--second-color));
 }
 
-.inputBox {
-  width: 100%;
-  height: 100%;
-  font-size: 1.1em;
-  position: relative;
-  text-align: center;
-}
 
-.inputBox input {
-  width: 100%;
-  height: 100%;
-  text-indent: 1em;
-  border-radius: 10px;
-  transition: 0.5s;
-  background: var(--second-color);
-  cursor: pointer;
-  outline: none;
-  border: 1px solid var(--fourth-color);
-  box-sizing: border-box;
-  box-shadow: inset 2px 2px 4px #b3b3b3,
-  inset -2px -2px 4px #ffffff;
-}
-
-.inputBox > span {
-  width: 100%;
-  left: 0;
-  top: 0.3em;
-  color: #999999;
-  letter-spacing: 0.1em;
-  border-radius: 3px;
-  transition: all 0.5s ease;
-  position: absolute;
-  pointer-events: none;
-}
-
-.inputBox input:valid ~ span,
-.inputBox input:focus ~ span {
-  line-height: 1.5em;
-  top: -0.6em;
-  letter-spacing: 0.2em;
-  color: var(--main-color);
-  opacity: 0;
-}
-
-.inputBox input:valid,
-.inputBox input:focus {
-  box-shadow: inset 2px 2px 4px #b3b3b3,
-  inset -2px -2px 4px #ffffff;
-  border: 1px solid var(--main-color);
+.select {
+  width: 20%;
+  padding: 10px;
 }
 
 @keyframes changeColor {

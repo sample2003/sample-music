@@ -11,7 +11,7 @@
           @click="handleClick(btn)"
           :class="{ 'it': isButtonActive(btn) }"
       >
-        <img v-if="showIcon && getIcon(btn)" :src="getIcon(btn)" alt="">
+        <img v-if="getIcon(btn)" :src="getIcon(btn)" alt="">
         <span>{{ getLabel(btn) }}</span>
       </button>
     </div>
@@ -47,11 +47,6 @@ export default {
       type: [String, Function],
       default: 'fx'
     },
-    // 是否显示图标
-    showIcon: {
-      type: Boolean,
-      default: false
-    },
     // 唯一键字段名或获取方法
     keyField: {
       type: [String, Function],
@@ -85,6 +80,9 @@ export default {
     handleClick(item) {
       this.$emit('button-click', this.getClickParam(item));
     }
+  },
+  mounted() {
+
   }
 };
 </script>
@@ -92,7 +90,8 @@ export default {
 <style scoped>
 #ButtonSelect {
   display: flex;
-
+  justify-content: center;
+  align-items: center;
 }
 
 .btns {
@@ -117,6 +116,11 @@ export default {
 .btn:hover {
   box-shadow: none;
   border: 1px solid var(--fourth-color);
+}
+
+.btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .it {

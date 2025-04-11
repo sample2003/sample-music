@@ -23,9 +23,7 @@
     </div>
 
     <div id="right">
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -40,9 +38,6 @@ import TextInput from "@/pages/common/TextInput.vue";
 export default {
   name: "MusicMainList",
   components: {TextInput},
-  props: {
-    show: Boolean
-  },
   data() {
     return {
       isEdit: false,
@@ -54,11 +49,6 @@ export default {
     // 添加歌单
     insertPlaylist() {
       this.$addPlaylist();
-      if(this.show) {
-        document.getElementById("List").style.height = "90%"
-      }else {
-        document.getElementById("List").style.height = "100%"
-      }
     },
     // 初始化歌单
     async initPlaylist() {
@@ -146,7 +136,7 @@ export default {
 <style scoped>
 #List {
   width: 100%;
-  height: 89%;
+  height: 99%;
   display: flex;
 }
 
