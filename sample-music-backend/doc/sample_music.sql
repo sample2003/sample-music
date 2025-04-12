@@ -11,7 +11,7 @@
  Target Server Version : 80034 (8.0.34)
  File Encoding         : 65001
 
- Date: 03/04/2025 17:28:29
+ Date: 12/04/2025 20:52:39
 */
 
 SET NAMES utf8mb4;
@@ -100,7 +100,7 @@ CREATE TABLE `comment`  (
   INDEX `target_type`(`target_type` ASC) USING BTREE,
   INDEX `fk_comment_user`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_comment_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '评论信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '评论信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comment
@@ -110,6 +110,7 @@ INSERT INTO `comment` VALUES (49, 5, '好听', 0, 'song', 153, '2025-01-27 12:49
 INSERT INTO `comment` VALUES (50, 5, '好听', 0, 'song', 153, '2025-01-30 12:18:29', '2025-01-30 12:18:29');
 INSERT INTO `comment` VALUES (51, 5, '挺好听', 0, 'album', 1, '2025-01-30 12:19:51', '2025-01-30 12:19:51');
 INSERT INTO `comment` VALUES (52, 5, '豪庭', 1, 'album', 2, '2025-04-01 11:58:36', '2025-04-01 11:58:36');
+INSERT INTO `comment` VALUES (53, 5, '我说好听，你尔多隆吗', 0, 'album', 2, '2025-04-10 16:37:22', '2025-04-10 16:37:22');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -182,11 +183,11 @@ CREATE TABLE `playlist`  (
 -- Records of playlist
 -- ----------------------------
 INSERT INTO `playlist` VALUES (1, 5, '是的方法', 2, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '士大夫', NULL, '2024-12-16 16:21:12', '2025-01-30 12:20:35', 1, 0);
-INSERT INTO `playlist` VALUES (40, 5, '爱', 0, 0, NULL, NULL, NULL, '2024-12-16 16:45:39', '2024-12-16 16:45:39', 1, 0);
-INSERT INTO `playlist` VALUES (41, 13, 'aaaa', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'aaaaaaaaa', NULL, '2024-12-26 14:03:04', '2025-01-02 17:19:59', 0, 0);
-INSERT INTO `playlist` VALUES (42, 13, 'sdf', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/2a42fe72-0ab3-4b5c-9f84-aac1f8006cbf.jpg', 'sdf', NULL, '2024-12-26 14:03:17', '2024-12-27 23:34:16', 0, 0);
-INSERT INTO `playlist` VALUES (43, 5, 'play', 0, 0, NULL, '', NULL, '2025-01-27 12:47:11', '2025-01-27 12:47:11', 0, 0);
-INSERT INTO `playlist` VALUES (44, 5, 'aaa', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/12sexz.jpg', 'aaa', NULL, '2025-01-27 12:47:22', '2025-04-01 15:26:02', 0, 0);
+INSERT INTO `playlist` VALUES (40, 5, 'Hello', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/73e87701-1912-4cde-9367-88b3c3aa15a3.png', '我说Hello，你尔多隆吗', NULL, '2024-12-16 16:45:39', '2025-04-10 16:26:15', 1, 0);
+INSERT INTO `playlist` VALUES (41, 13, 'aaaa', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'aaaaaaaaa', NULL, '2024-12-26 14:03:04', '2025-04-12 14:39:07', 1, 0);
+INSERT INTO `playlist` VALUES (42, 13, 'sdf', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/2a42fe72-0ab3-4b5c-9f84-aac1f8006cbf.jpg', 'sdf', NULL, '2024-12-26 14:03:17', '2024-12-27 23:34:16', 1, 0);
+INSERT INTO `playlist` VALUES (43, 5, '豪庭', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/978b2ce7-7816-48f9-8eec-44c772b151f5.jpg', '丟，啊丟，啊丟手絹', NULL, '2025-01-27 12:47:11', '2025-04-11 17:51:02', 1, 0);
+INSERT INTO `playlist` VALUES (44, 5, '给我一杯忘情水', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '给不给', NULL, '2025-01-27 12:47:22', '2025-04-12 15:26:41', 1, 0);
 
 -- ----------------------------
 -- Table structure for publicity
@@ -206,11 +207,14 @@ CREATE TABLE `publicity`  (
   INDEX `idx_title`(`title` ASC) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `public_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '公告' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '公告' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of publicity
 -- ----------------------------
+INSERT INTO `publicity` VALUES (1, 5, '欢迎你', NULL, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/zjlh1.jpg', 'notice', '2025-04-10 16:07:20', '2025-04-10 16:07:20');
+INSERT INTO `publicity` VALUES (2, 5, 'welcome', NULL, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/c.jpg', 'infomercial', '2025-04-10 16:08:47', '2025-04-10 16:08:47');
+INSERT INTO `publicity` VALUES (3, 5, '祝你有个好体验', NULL, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/R-C.jpg', 'notice', '2025-04-10 16:18:22', '2025-04-10 16:18:22');
 
 -- ----------------------------
 -- Table structure for relate
@@ -230,15 +234,25 @@ CREATE TABLE `relate`  (
 -- Records of relate
 -- ----------------------------
 INSERT INTO `relate` VALUES (41, 1, NULL);
+INSERT INTO `relate` VALUES (44, 1, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (41, 2, NULL);
+INSERT INTO `relate` VALUES (44, 2, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (41, 3, NULL);
+INSERT INTO `relate` VALUES (44, 3, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (41, 4, NULL);
+INSERT INTO `relate` VALUES (44, 4, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (41, 5, NULL);
+INSERT INTO `relate` VALUES (44, 5, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (41, 6, NULL);
+INSERT INTO `relate` VALUES (44, 6, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (41, 7, NULL);
+INSERT INTO `relate` VALUES (44, 7, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (41, 8, NULL);
+INSERT INTO `relate` VALUES (44, 8, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (41, 9, NULL);
+INSERT INTO `relate` VALUES (44, 9, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (41, 10, NULL);
+INSERT INTO `relate` VALUES (44, 10, '2025-04-08 15:15:51');
 INSERT INTO `relate` VALUES (44, 113, '2025-01-30 12:20:11');
 
 -- ----------------------------
@@ -442,7 +456,7 @@ INSERT INTO `song` VALUES (149, 1, 15, '粉色海洋', NULL, 280, 'https://sampl
 INSERT INTO `song` VALUES (150, 1, 15, '倒影', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%80%92%E5%BD%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%80%92%E5%BD%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/15zwddzp.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%80%92%E5%BD%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2022-07-06 00:00:00', '2024-12-11 14:57:33', '2024-12-11 14:57:33');
 INSERT INTO `song` VALUES (151, 1, 15, '我是如此相信', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%88%91%E6%98%AF%E5%A6%82%E6%AD%A4%E7%9B%B8%E4%BF%A1-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%88%91%E6%98%AF%E5%A6%82%E6%AD%A4%E7%9B%B8%E4%BF%A1-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/15zwddzp.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%88%91%E6%98%AF%E5%A6%82%E6%AD%A4%E7%9B%B8%E4%BF%A1-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2022-07-06 00:00:00', '2024-12-11 14:57:33', '2024-12-11 14:57:33');
 INSERT INTO `song` VALUES (152, 1, NULL, '轨迹', NULL, 280, '', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E8%BD%A8%E8%BF%B9-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/xzzjl.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E8%BD%A8%E8%BF%B9-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '抒情', '[\"流行\", \"抒情\"]', 0, 0, '2003-11-13 00:00:00', '2024-12-27 18:13:29', '2024-12-27 18:13:29');
-INSERT INTO `song` VALUES (153, 2, 16, 'Long Kiss Good Bye-《火影忍者疾风传》TV动画第298-310集片尾曲-HALCALI', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.txt', '动画', '[\"动画\",\"火影忍者\"]', 1108, 1, '2008-07-06 00:00:00', '2024-12-19 10:07:19', '2024-12-19 10:07:19');
+INSERT INTO `song` VALUES (153, 2, 16, 'Long Kiss Good Bye-《火影忍者疾风传》TV动画第298-310集片尾曲-HALCALI', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.txt', '动画', '[\"动画\",\"火影忍者\"]', 1110, 1, '2008-07-06 00:00:00', '2024-12-19 10:07:19', '2024-12-19 10:07:19');
 INSERT INTO `song` VALUES (200, 1, NULL, '圣诞星 (feat-杨瑞代)', '[\"杨瑞代\"]', 280, '', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%9C%A3%E8%AF%9E%E6%98%9F%20(feat-%E6%9D%A8%E7%91%9E%E4%BB%A3).flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/%E5%9C%A3%E8%AF%9E%E6%98%9F%20(feat-%E6%9D%A8%E7%91%9E%E4%BB%A3).jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%9C%A3%E8%AF%9E%E6%98%9F%20(feat-%E6%9D%A8%E7%91%9E%E4%BB%A3).txt', '流行', NULL, 0, 0, '2023-12-22 00:00:00', '2024-12-28 10:45:09', '2024-12-28 10:45:09');
 
 -- ----------------------------
