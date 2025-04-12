@@ -1,6 +1,7 @@
 import service from "@/api/request";
 
 const PlaylistService = {
+  // 新增歌单
   insertPlaylist: function (playlist) {
     return service({
       method: 'POST',
@@ -12,6 +13,7 @@ const PlaylistService = {
       return error;
     })
   },
+  // 删除歌单
   deletePlaylist: function (playlistId) {
     return service({
       method: 'DELETE',
@@ -22,6 +24,7 @@ const PlaylistService = {
       return error;
     })
   },
+  // 用户更新歌单
   updatePlaylist: function (playlist) {
     return service({
       method: 'PUT',
@@ -40,6 +43,17 @@ const PlaylistService = {
       url: `/api/playlist/listenersPlusOne/${songId}`,
     }).then(response => {
       return response;
+    }).catch(error => {
+      throw error;
+    })
+  },
+  // 管理员查询歌单
+  selectAll: function () {
+    return service({
+      method: 'GET',
+      url: '/api/playlist/query',
+    }).then(response => {
+      return response.data;
     }).catch(error => {
       throw error;
     })
@@ -75,50 +89,7 @@ const PlaylistService = {
       throw error;
     })
   },
-  // 查询歌单及相关歌曲
-  playlistWithSongs: function (id) {
-    return service({
-      method: "GET",
-      url: `/api/playlist/select/${id}`
-    }).then(response => {
-      return response.data;
-    }).catch(error => {
-      return error;
-    })
-  },
-  // 查询歌单是否属于该用户
-  checkBelongTo: function(id) {
-    return service({
-      method: "GET",
-      url: `/api/playlist/check/${id}`,
-    }).then(response => {
-      return response.data;
-    }).catch(error => {
-      throw error;
-    })
-  },
-  // 查询歌单及相关歌曲
-  selectPlaylists: function () {
-    return service({
-      method: "GET",
-      url: `/api/playlist/select`
-    }).then(response => {
-      return response.data;
-    }).catch(error => {
-      throw error;
-    })
-  },
-  // 查询歌单评论
-  queryCommentPaged: function (targetId) {
-    return service({
-      method: "GET",
-      url: `/api/playlist/query/comment?targetId=${targetId}`,
-    }).then(response => {
-      return response.data;
-    }).catch(error => {
-      throw error;
-    })
-  },
+  // 用户查询歌单
   UserPagedQuery: function (isPublic, condition, pageNum, pageSize) {
     // 创建一个URLSearchParams对象
     const params = new URLSearchParams();
@@ -152,6 +123,40 @@ const PlaylistService = {
       throw error;
     })
   },
+
+  // 查询歌单及相关歌曲
+  playlistWithSongs: function (id) {
+    return service({
+      method: "GET",
+      url: `/api/playlist/select/${id}`
+    }).then(response => {
+      return response.data;
+    }).catch(error => {
+      return error;
+    })
+  },
+  // 查询歌单及相关歌曲
+  selectPlaylists: function () {
+    return service({
+      method: "GET",
+      url: `/api/playlist/select`
+    }).then(response => {
+      return response.data;
+    }).catch(error => {
+      throw error;
+    })
+  },
+  // 查询歌单是否属于该用户
+  checkBelongTo: function(id) {
+    return service({
+      method: "GET",
+      url: `/api/playlist/check/${id}`,
+    }).then(response => {
+      return response.data;
+    }).catch(error => {
+      throw error;
+    })
+  },
   // 评论歌单
   insertPlaylistComment: function (content, targetId) {
     return service({
@@ -159,6 +164,17 @@ const PlaylistService = {
       url: `/api/playlist/insert/comment?content=${content}&targetId=${targetId}`,
     }).then(response => {
       return response;
+    }).catch(error => {
+      throw error;
+    })
+  },
+  // 查询歌单评论
+  queryCommentPaged: function (targetId) {
+    return service({
+      method: "GET",
+      url: `/api/playlist/query/comment?targetId=${targetId}`,
+    }).then(response => {
+      return response.data;
     }).catch(error => {
       throw error;
     })

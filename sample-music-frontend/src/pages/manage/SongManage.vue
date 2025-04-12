@@ -1,70 +1,133 @@
 <template>
-  <div>
-    <h3>歌曲管理</h3>
-    <div>
-      <!-- 渲染传入的表单 -->
-      <form @submit.prevent="handleSubmit">
-        <div v-for="(field, index) in fields" :key="index">
-          <label :for="field">{{ field }}</label>
-          <input v-if="!field?.endsWith('Files')" :id="field" v-model="formData[field]"/>
-          <input v-else type="file" :id="field" @change="handleFileChange($event, field)"/>
-        </div>
-        <button type="submit">提交</button>
-      </form>
+  <div id="songManagement">
+    <div class="top">
+      <TextInput></TextInput>
     </div>
-    <div>
-      <!-- 渲染列表 -->
-      <h4>歌曲列表</h4>
+    <!-- 数据表格 -->
+    <div class="table-container">
+      <table>
+        <thead>
+        <tr>
+          <th v-for="cc in currentColumns" :key="cc.key">
+            {{cc.key}}
+          </th>
+          <th>操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr v-for="cd in currentData" :key="`cd-${cd.id}`">
+          <td v-for="(c, index) in cd" :key="`c-${index}`">
+            {{ c }}
+          </td>
+          <td>
+            <button  @click="handleEdit(item)">编辑</button>
+            <button @click="handleDelete(item.id)">删除</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="foot">
+      <page-nation total-items=""></page-nation>
     </div>
   </div>
 </template>
 
 <script>
-
+import TextInput from "@/pages/common/TextInput.vue";
+import PageNation from "@/pages/common/PageNation.vue";
 import SongService from "@/api/service/SongService";
 
 export default {
-  props: {
-    title: String,
-    fields: Array, // 字段名称
-    items: Array, // 数据列表
-  },
+  components: {PageNation, TextInput},
+  props: {},
   data() {
     return {
-      formData: {}, // 表单数据
-    };
+      total: 0,
+      currentData: [],
+    }
+  },
+  computed: {
+    currentColumns() {
+      if (this.currentData.length === 0) return []
+
+      // 从第一条数据提取所有字段
+      const fields = Object.keys(this.currentData[0])
+
+      return fields.map(key => ({
+        key: key,
+        title: this.currentData[key]
+      }))
+    }
   },
   methods: {
-    handleFileChange(event, field) {
-      const file = event.target.files[0];
-      if (file) {
-        this.formData[field] = file;
-      }
+    async fetchData() {
+      const data = await SongService.conditionAndPaged();
+      this.currentData = data.items;
+      this.total = data.total;
+      console.log(this.currentData)
     },
-    async handleSubmit() {
-      const formData = new FormData();
-      for (const [key, value] of Object.entries(this.formData)) {
-        if (value instanceof File || value instanceof FileList) {
-          if (value instanceof FileList) {
-            for (let i = 0; i < value.length; i++) {
-              formData.append(key, value[i]);
-            }
-          } else {
-            formData.append(key, value);
-          }
-        } else {
-          formData.append(key, value);
-        }
-      }
-
-      try {
-        await SongService.insertSong(formData);
-        // 处理响应
-        this.$message("上传歌曲成功")
-      } catch (error) {
-        console.error('上传失败:', error);
-      }
+    handleEdit(item) {
+      console.log(item)
+    },
+    handleDelete(id) {
+      console.log(id)
     },
   },
+  mounted() {
+    this.fetchData();
+  }
 };
 </script>
+
+<style scoped>
+#songManagement {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.top {
+  height: 5%;
+}
+
+.top:nth-child(1) {
+  width: 10%;
+}
+
+.table-container {
+  height: 88%;
+
+  overflow-x: auto;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+.foot {
+  height: 5%;
+}
+</style>

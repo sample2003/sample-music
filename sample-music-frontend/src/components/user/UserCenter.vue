@@ -115,8 +115,8 @@ export default {
       {
         btnID: nanoid(),
         btnName: "enter",
-        name: "进登录页面",
-        btnIcon: Icon.homeIcon
+        name: "退出登录",
+        btnIcon: Icon.getOutIcon
       },
     ]
     // 如果用户是管理员，添加数据管理按钮
@@ -224,11 +224,12 @@ export default {
   height: 100px;
   position: fixed;
   right: 1%;
-  bottom: 1%;
+  top: 1%;
   z-index: 99;
   border-radius: 60px 10px 10px 60px;
   border: 1px solid var(--fourth-color);
-  box-shadow: inset 2px 2px 4px #b3b3b3, inset -2px -2px 4px #ffffff;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .player > img:nth-child(1) {
@@ -277,7 +278,7 @@ export default {
 }
 
 .text {
-  width: 65%;
+  width: 70%;
   position: absolute;
   right: 0;
   top: 0;
@@ -307,7 +308,7 @@ export default {
 }
 
 .icon {
-  width: 65%;
+  width: 70%;
   position: absolute;
   right: 0;
   bottom: 30%;
@@ -316,7 +317,7 @@ export default {
 }
 
 .icon img {
-  width: 8%;
+  width: 6%;
   padding: 1%;
   cursor: pointer;
   border-radius: 5px;
@@ -333,7 +334,7 @@ export default {
 }
 
 .progress-container {
-  width: 65%;
+  width: 70%;
   position: absolute;
   bottom: 2%;
   right: 0;
@@ -402,8 +403,8 @@ export default {
 
 .main {
   width: 96%;
-  height: 90%;
-  margin-top: 1%;
+  height: calc( 93% - 1em );
+  margin-top: 1em;
   margin-left: 2%;
   overflow: scroll;
 }

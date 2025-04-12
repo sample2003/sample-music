@@ -28,7 +28,7 @@
             <p style="color: #000"><span style="font-size: 1.1em;line-height: 1.4em;">欢迎你</span>，请微信扫一扫扫码登录
             </p>
             <div>
-              <img src="../../static/qrcode.png" alt="">
+              <img src="../../assets/static/qrcode.png" alt="">
             </div>
           </div>
           <div v-show="this.isShowRegister" class="content">

@@ -1,6 +1,6 @@
 const Icon = {
   // 首页
-  homeIcon: require("../../assets/icon/home.svg"),
+  homeIcon: require("@/assets/icon/home.svg"),
   // 列表
   listIcon: require("../../assets/icon/list.svg"),
   // 搜索
@@ -119,6 +119,8 @@ const Icon = {
   deepseekTIcon: require("../../assets/icon/deepseek_t.svg"),
   // 验证码
   verifyIcon: require("../../assets/icon/verify.svg"),
+  // 退出
+  getOutIcon: require("../../assets/icon/getout.svg"),
   // 唱片
   diskPng: require("../../assets/icon/disk.png"),
   // 唱针

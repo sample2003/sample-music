@@ -85,7 +85,7 @@ const router = new VueRouter({
           meta: {
             access: ACCESS_ENUM.ADMIN,
           },
-          component: AdminManage,
+          component: AdminManage
         }
       ]
     },

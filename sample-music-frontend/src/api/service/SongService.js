@@ -16,20 +16,22 @@ const SongService = {
   // 分页查询歌曲
   conditionAndPaged: function (params) {
     const urlSearchParams = new URLSearchParams();
-    if (params.condition) {
-      urlSearchParams.append('condition', params.condition);
-    }
-    if (params.params) {
-      urlSearchParams.append('params', params.params);
-    }
-    if (params.sortType) {
-      urlSearchParams.append('sortType', params.sortType);
-    }
-    if (params.pageNum) {
-      urlSearchParams.append('pageNum', params.pageNum);
-    }
-    if (params.pageSize) {
-      urlSearchParams.append('pageSize', params.pageSize);
+    if(params) {
+      if (params.condition) {
+        urlSearchParams.append('condition', params.condition);
+      }
+      if (params.params) {
+        urlSearchParams.append('params', params.params);
+      }
+      if (params.sortType) {
+        urlSearchParams.append('sortType', params.sortType);
+      }
+      if (params.pageNum) {
+        urlSearchParams.append('pageNum', params.pageNum);
+      }
+      if (params.pageSize) {
+        urlSearchParams.append('pageSize', params.pageSize);
+      }
     }
     const url = `/api/song/select/conditionAndPaged?${urlSearchParams}`;
     return service({
