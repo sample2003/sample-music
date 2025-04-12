@@ -100,19 +100,19 @@ public class PlaylistController {
         return Result.success(playlists);
     }
 
-    /**
-     * 查询一个歌单（游客）
+/*    *//**
+     * 查询全部歌单（管理员）
      *
-     * @param id 歌单id
      * @return Result<PlayList>
-     */
-    /*@GetMapping("select/{id}")
-    public Result<Playlist> selectPlayListById(@PathVariable("id") Long id) {
-        Playlist playList = playlistService.selectPlayListById(id);
-        if (playList == null) {
-            return Result.error("歌单不存在");
-        }
-        return Result.success(playList);
+     *//*
+    @AdminOnly
+    @GetMapping("select/admin")
+    public Result<PageBean<Playlist>> selectAll(
+            @RequestParam(required = false) String condition,
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageBean<Playlist> pb = playlistService.selectAll(condition, pageNum, pageSize);
+        return Result.success(pb);
     }*/
 
     /**
