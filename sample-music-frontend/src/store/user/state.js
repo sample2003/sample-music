@@ -4,10 +4,13 @@ const state = {
     userToken: '',
     userDetail: {
         id: 0,
+        nickname: accessEnum.NOT_LOGIN,
         username: accessEnum.NOT_LOGIN,
         phone: "",
         email: "",
         sex: "",
+        description: "",
+        exp: 0,
         idNumber: "",
         avatar: "",
         likes: 0,

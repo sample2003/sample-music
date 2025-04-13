@@ -112,7 +112,11 @@ export default {
   components: {SongList},
   props: {
     title: String,
-    fields: Array,
+    fields: Object,
+    isVisible: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -132,7 +136,7 @@ export default {
       immediate: true,
       handler(fields) {
         const newFormData = {};
-        fields.forEach(field => {
+        fields.toArray().forEach(field => {
           if (field.includes('url') || field.includes('cover') || field.includes('lyric')) {
             this.$set(newFormData, field, null);
           } else {

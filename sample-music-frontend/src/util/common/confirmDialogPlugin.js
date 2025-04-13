@@ -3,6 +3,7 @@ import ChangeDialog from '@/dialog/changeDialog.vue';
 import MessageDialog from '@/dialog/messageDialog.vue';
 import UpdateDialog from '@/dialog/updateDialog.vue';
 import AddPlaylist from "@/dialog/AddPlaylist.vue";
+import DynamicCrudTemp from "@/temp/DynamicCrudTemp.vue";
 
 const ConfirmDialogPlugin = {
     install(Vue) {
@@ -118,6 +119,31 @@ const ConfirmDialogPlugin = {
             document.body.appendChild(instance.$el);
             const eventBus = new Vue();
             instance.$once('confirm', () => {
+                eventBus.$emit('close-dialog');
+                instance.$destroy();
+            });
+
+            instance.$once('cancel', () => {
+                eventBus.$emit('close-dialog');
+                instance.$destroy();
+            });
+            eventBus.$on('close-dialog', () => {
+                document.body.removeChild(instance.$el); // 从DOM中移除对话框
+            });
+        }
+        // todo
+        Vue.prototype.$temp = function (title, field, callback) {
+            const Temp = Vue.extend(DynamicCrudTemp);
+            const instance = new Temp({
+                propsData: {
+                    title: title,
+                    fields: field,
+                    isVisible: true,
+                }
+            }).$mount();
+            document.body.appendChild(instance.$el);
+            const eventBus = new Vue();
+            instance.$once('temp', () => {
                 eventBus.$emit('close-dialog');
                 instance.$destroy();
             });
