@@ -46,11 +46,15 @@ public class UserVO {
     /**
      * 身份证号
      */
-    private String idNumber;
+    private String nickname;
     /**
      * 头像
      */
     private String avatar;
+    /**
+     * 个人简介
+     */
+    private String description;
     /**
      * 关注数
      */

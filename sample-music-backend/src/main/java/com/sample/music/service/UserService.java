@@ -92,7 +92,11 @@ public class UserService {
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer id = (Integer) map.get("id");
         Long userId = id.longValue();
-        userMapper.updateUser(user, userId);
+        if (user.getId().equals(userId)) {
+            userMapper.updateUser(user, userId);
+        }else {
+            throw new BusinessException(404, "该用户不存在");
+        }
     }
     
     public void updatePwd(String newPassword, String email) {

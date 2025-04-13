@@ -50,7 +50,7 @@ public class User extends FilesType {
     /**
      * 身份证号
      */
-    private String idNumber;
+    private String nickname;
     /**
      * 头像
      */
@@ -60,9 +60,17 @@ public class User extends FilesType {
      */
     private Integer likes;
     /**
+     * 经验
+     */
+    private Integer exp;
+    /**
      * 状态 0:登录，1:启用，2:禁用
      */
     private Integer status;
+    /**
+     * 简介
+     */
+    private String description;
     /**
      * 创建时间
      */

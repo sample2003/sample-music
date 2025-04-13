@@ -3,20 +3,17 @@ package com.sample.music.pojo.vo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
 public class UserRegisterVO {
     private Long id;
     @NotEmpty
-    @Pattern(regexp = "^\\S{1,10}")
-    private String username;
+    @Email
+    private String email;
     // 转化为json数据时忽略该项
     @JsonIgnore
     private String password;
-    @Email
-    private String email;
     private String InvitationCode;
     private String VerificationCode;
 }

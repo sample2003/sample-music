@@ -57,7 +57,6 @@ public class UserController {
         if (userRegisterVO == null) {
             return Result.error("请填写相关信息");
         }
-        if (userService.findUserByName(userRegisterVO.getUsername()) != null) return Result.error("该用户名已被注册");
         if (userService.findUserByEmail(userRegisterVO.getEmail()) != null) return Result.error("该邮箱已被注册");
         Long id = userService.registerUser(userRegisterVO);
         return Result.success(id + "注册成功");
@@ -135,6 +134,7 @@ public class UserController {
     @GetMapping("info")
     public Result<UserVO> userInfo() {
         Map<String, Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
         String username = (String) map.get("username");
 
         User user = userService.findUserByNameOrEmail(username);

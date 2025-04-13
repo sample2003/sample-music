@@ -17,7 +17,7 @@ public class UserUpdateVO {
     // 值不能为null，并且非空
     @NotEmpty
     @Pattern(regexp = "^\\S{1,10}")
-    private String username;
+    private String nickname;
     // 满足邮箱格式
     @Email
     private String email;

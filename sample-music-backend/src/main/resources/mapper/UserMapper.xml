@@ -23,7 +23,7 @@
     <!-- 用户修改个人信息 -->
     <update id="updateUser">
         UPDATE user
-        SET username=#{user.username},
+        SET nickname=#{user.nickname},
             email=#{user.email},
             phone=#{user.phone},
             avatar=#{user.avatar},
