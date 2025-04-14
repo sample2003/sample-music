@@ -6,7 +6,7 @@
         v-model="area"
     ></textarea>
     <span>{{ message }}</span>
-    <button v-if="area && type !=='text'" @click="submitFx">发布</button>
+    <button v-if="area && type !=='text'" @click="submitFx">Shoot!</button>
     <p v-show="maxLimit !== '0' && area.length !== 0"><span style="color: var(--main-color)">{{
         area.length
       }}</span>/{{ this.maxLimit }}</p>

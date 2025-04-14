@@ -1,7 +1,7 @@
 import service from "@/api/request";
 import axios from "axios";
 
-const AIService = {
+const ChatService = {
     getChat: function(content) {
         return axios.post('http://localhost:11434/api/chat', {
             model: "deepseek-r1:8b",
@@ -21,7 +21,7 @@ const AIService = {
                 throw error;
             });
     },
-    streamChat: async function() {
+    streamChat: async function(content) {
         try {
             const response = await fetch('http://localhost:11434/api/chat', {
                 method: 'POST',
@@ -29,7 +29,7 @@ const AIService = {
                 body: JSON.stringify({
                     model: "deepseek-r1:8b",
                     messages: [
-                        { role: "user", content: "why is the sky blue?" }
+                        { role: "user", content: content }
                     ],
                     stream: true
                 })
@@ -52,4 +52,4 @@ const AIService = {
     }
 };
 
-export default AIService;
+export default ChatService;

@@ -27,10 +27,15 @@
                 v-if="isImageField(cc.key) && cd[cc.key]"
                 :src="cd[cc.key]"
                 class="thumbnail"
+                @click="yulan(cd[cc.key])"
                 @error="handleImageError"
              alt="图片">
             <!-- 普通字段显示 -->
-            <p v-else>
+            <p v-else
+               @click.stop="copyToClipboard(formatValue(cd[cc.key], cc.key))"
+               :title="'点击复制 ' + formatValue(cd[cc.key], cc.key)"
+               class="copyable"
+            >
               {{ formatValue(cd[cc.key], cc.key) }}
             </p>
           </td>
@@ -75,6 +80,29 @@ export default {
     }
   },
   methods: {
+    // 复制到剪贴板
+    async copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text)
+        this.$message('复制成功')
+      } catch (err) {
+        // 降级方案
+        const textarea = document.createElement('textarea')
+        textarea.value = text
+        document.body.appendChild(textarea)
+        textarea.select()
+        try {
+          document.execCommand('copy')
+          this.$message('复制成功')
+        } catch (err) {
+          this.$message('复制失败，请手动复制')
+        }
+        document.body.removeChild(textarea)
+      }
+    },
+    async yulan(text) {
+      this.$message(text)
+    },
     async fetchData() {
       if (this.param === "song") await this.songData()
       else if (this.param === "playlist") await this.playlistData()
@@ -195,7 +223,12 @@ td:hover {
   max-width: 80px;
 }
 
+img {
+  cursor: pointer;
+}
+
 p {
+  cursor: default;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;

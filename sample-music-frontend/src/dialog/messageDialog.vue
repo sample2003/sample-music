@@ -2,10 +2,6 @@
   <div class="confirm-dialog" v-if="isVisible">
     <div class="dialog-content">
       <p>{{ message }}</p>
-      <!-- <div class="actions">
-          <button v-for="sl in song_lists" :key="sl.id" @click="handleConfirm(sl.id)">{{ sl.title }}</button>
-          <button @click="handleCancel()">取消</button>
-      </div> -->
     </div>
   </div>
 </template>
@@ -27,7 +23,10 @@ export default {
       default: false
     }
   },
-  methods: {},
+  watch: {
+  },
+  methods: {
+  },
   mounted() {
   }
 };

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import AIService from "@/api/service/AIService";
+import ChatService from "@/api/service/AIService";
 import TextInput from "@/pages/common/TextInput.vue";
 import TextArea from "@/pages/common/TextArea.vue";
 
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     aa(content) {
-      AIService.getChat(content)
+      ChatService.getChat(content)
           .then(content => {
             console.log(content);
             this.chat = content;
