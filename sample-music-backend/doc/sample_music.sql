@@ -11,7 +11,7 @@
  Target Server Version : 80034 (8.0.34)
  File Encoding         : 65001
 
- Date: 12/04/2025 20:52:39
+ Date: 14/04/2025 23:23:54
 */
 
 SET NAMES utf8mb4;
@@ -82,6 +82,28 @@ CREATE TABLE `artist`  (
 -- ----------------------------
 INSERT INTO `artist` VALUES (1, '周杰伦', '男', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/m.jpg', 0, '周杰伦（Jay Chou），1979年1月18日出生于台湾省新北市，祖籍福建省永春县，华语流行乐男歌手、音乐人、演员、导演、编剧，毕业于淡江中学。', NULL, '1979-01-18 00:00:00', '2024-11-28 21:43:51', '2024-11-28 21:43:51');
 INSERT INTO `artist` VALUES (2, '未知', '未知', NULL, 0, '未知', NULL, '2024-12-19 10:06:24', '2024-12-19 10:06:32', '2024-12-19 10:06:32');
+
+-- ----------------------------
+-- Table structure for chat
+-- ----------------------------
+DROP TABLE IF EXISTS `chat`;
+CREATE TABLE `chat`  (
+  `id` bigint NOT NULL COMMENT 'id',
+  `user_id` bigint NOT NULL COMMENT '用户id',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标题',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '内容',
+  `response` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `create_time` datetime NULL DEFAULT NULL COMMENT '开始日期',
+  `message_type` tinyint NULL DEFAULT NULL COMMENT '消息类型',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_chat_user`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `fk_chat_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of chat
+-- ----------------------------
+INSERT INTO `chat` VALUES (1, 5, '你是谁', '我是', NULL, '2025-04-14 14:14:58', 1);
 
 -- ----------------------------
 -- Table structure for comment
@@ -187,7 +209,7 @@ INSERT INTO `playlist` VALUES (40, 5, 'Hello', 0, 0, 'https://sample2003.oss-cn-
 INSERT INTO `playlist` VALUES (41, 13, 'aaaa', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'aaaaaaaaa', NULL, '2024-12-26 14:03:04', '2025-04-12 14:39:07', 1, 0);
 INSERT INTO `playlist` VALUES (42, 13, 'sdf', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/2a42fe72-0ab3-4b5c-9f84-aac1f8006cbf.jpg', 'sdf', NULL, '2024-12-26 14:03:17', '2024-12-27 23:34:16', 1, 0);
 INSERT INTO `playlist` VALUES (43, 5, '豪庭', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/978b2ce7-7816-48f9-8eec-44c772b151f5.jpg', '丟，啊丟，啊丟手絹', NULL, '2025-01-27 12:47:11', '2025-04-11 17:51:02', 1, 0);
-INSERT INTO `playlist` VALUES (44, 5, '给我一杯忘情水', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '给不给', NULL, '2025-01-27 12:47:22', '2025-04-12 15:26:41', 1, 0);
+INSERT INTO `playlist` VALUES (44, 5, '给我一杯忘情水', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '给不给', NULL, '2025-01-27 12:47:22', '2025-04-14 15:44:33', 1, 0);
 
 -- ----------------------------
 -- Table structure for publicity
@@ -484,10 +506,10 @@ CREATE TABLE `user`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
   `username` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT '用户名',
   `password` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT '密码',
+  `nickname` varchar(18) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '昵称',
   `phone` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '手机号',
   `email` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '邮箱',
   `sex` varchar(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '性别',
-  `id_number` varchar(18) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '身份证号',
   `avatar` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '头像',
   `likes` int NOT NULL DEFAULT 0 COMMENT '关注数',
   `exp` int NOT NULL DEFAULT 0 COMMENT '等级',
@@ -504,10 +526,27 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (5, 'user2', 'e10adc3949ba59abbe56e057f20f883e', NULL, '1381231231@qq.com', '未知', NULL, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/wuk.jpg', 0, 0, NULL, 0, '什么都没留下哦~', '2024-11-24 22:19:17', '2024-11-24 22:19:17', 0);
-INSERT INTO `user` VALUES (6, 'user2', 'e10adc3949ba59abbe56e057f20f883e', NULL, '1381231231@qq.com', '未知', NULL, NULL, 0, 0, NULL, 1, '什么都没留下哦~', '2024-11-25 09:35:06', '2024-11-25 09:35:06', 1);
-INSERT INTO `user` VALUES (7, 's', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'fdfdf', '未知', NULL, NULL, 0, 0, NULL, 0, '什么都没留下哦~', '2024-11-26 10:58:04', '2024-11-26 10:58:04', 0);
-INSERT INTO `user` VALUES (13, 'sample', 'e10adc3949ba59abbe56e057f20f883e', NULL, '123456', '未知', NULL, NULL, 0, 0, NULL, 0, '什么都没留下哦~', '2024-12-24 10:06:54', '2024-12-24 10:06:54', 0);
+INSERT INTO `user` VALUES (5, 'user2', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, '1381231231@qq.com', '未知', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/wuk.jpg', 0, 0, NULL, 0, '什么都没留下哦~', '2024-11-24 22:19:17', '2024-11-24 22:19:17', 0);
+INSERT INTO `user` VALUES (6, 'user2', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, '1381231231@qq.com', '未知', NULL, 0, 0, NULL, 1, '什么都没留下哦~', '2024-11-25 09:35:06', '2024-11-25 09:35:06', 1);
+INSERT INTO `user` VALUES (7, 's', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, 'fdfdf', '未知', NULL, 0, 0, NULL, 0, '什么都没留下哦~', '2024-11-26 10:58:04', '2024-11-26 10:58:04', 0);
+INSERT INTO `user` VALUES (13, 'sample', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, '123456', '未知', NULL, 0, 0, NULL, 0, '什么都没留下哦~', '2024-12-24 10:06:54', '2024-12-24 10:06:54', 0);
+
+-- ----------------------------
+-- Table structure for user_config
+-- ----------------------------
+DROP TABLE IF EXISTS `user_config`;
+CREATE TABLE `user_config`  (
+  `user_id` bigint NOT NULL COMMENT '用户id',
+  `role` enum('user','admin','master') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'user' COMMENT '用户身份',
+  `status` int NOT NULL COMMENT '状态 0:登录，1:启用，2:禁用',
+  `deleted` int NOT NULL DEFAULT 1 COMMENT '是否被删除 0:否，1:是',
+  INDEX `fk_user_config`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `fk_user_config` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_config
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for user_role
