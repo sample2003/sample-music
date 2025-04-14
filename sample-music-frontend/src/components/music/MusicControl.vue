@@ -12,10 +12,10 @@
     <!-- 播放栏中间 -->
     <div id="middle">
       <div class="control_m flex">
-        <img :src="Icon.lastIcon" alt="" @click="playPrevious">
-        <img class="anm" v-show="isPlay" :src="Icon.pauseIcon" alt="" @click="PlayOrPause">
-        <img class="anm" v-show="!isPlay" :src="Icon.playIcon" alt="" @click="PlayOrPause">
-        <img :src="Icon.nextIcon" alt="" @click="playNext">
+        <img :src="Icon.lastIcon" alt="" @click="playPrevious" title="上一首">
+        <img class="anm" v-show="isPlay" :src="Icon.pauseIcon" alt="" @click="PlayOrPause" title="暂停">
+        <img class="anm" v-show="!isPlay" :src="Icon.playIcon" alt="" @click="PlayOrPause" title="开始">
+        <img :src="Icon.nextIcon" alt="" @click="playNext" title="下一首">
       </div>
     </div>
     <div class="temp"></div>
@@ -25,8 +25,8 @@
         <div class="control_icon" @click="toggleSongMode">
           <img :src="songMode === 'mp3' ? Icon.mp3Icon : Icon.flacIcon" alt="">
         </div>
-        <div class="control_icon" @click="togglePlayMode">
-          <img :src="returnPlayIcon" alt="">
+        <div class="control_icon" @click="togglePlayMode" :title="returnPlayIcon.prompt">
+          <img :src="returnPlayIcon.icon" alt="">
         </div>
         <div class="control_icon">
           <img :src="volume > 0 ? Icon.soundOnIcon : Icon.soundOnIcon" alt=""/>

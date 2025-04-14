@@ -121,6 +121,14 @@ const Icon = {
   verifyIcon: require("../../assets/icon/verify.svg"),
   // 退出
   getOutIcon: require("../../assets/icon/getout.svg"),
+  // 更多
+  moreIcon: require("../../assets/icon/more.svg"),
+  // 展开
+  toggleRightIcon: require("../../assets/icon/toggle-right.svg"),
+  // 收起
+  toggleLeftIcon: require("../../assets/icon/toggle-left.svg"),
+  // 个性化
+  gexingIcon: require("../../assets/icon/gexing.svg"),
   // 唱片
   diskPng: require("../../assets/icon/disk.png"),
   // 唱针

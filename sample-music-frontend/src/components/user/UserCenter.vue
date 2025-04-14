@@ -82,6 +82,7 @@ export default {
       if (this.playMode === 'loop') return Icon.loopIcon
       else if (this.playMode === 'random') return Icon.randomIcon
       else if (this.playMode === 'single') return Icon.singleIcon
+      else if (this.playMode === 'gexing') return Icon.gexingIcon
       else return Icon.loopIcon
     },
   },

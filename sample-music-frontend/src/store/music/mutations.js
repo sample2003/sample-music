@@ -17,18 +17,6 @@ export default {
     state.songsByRecent = payload;
     saveToLocalStorage(state);
   },
-  setCheckedSongs(state, payload) {
-    state.checked.checkedSongs = payload;
-    saveToLocalStorage(state);
-  },
-  setCheckedPlaylist(state, payload) {
-    state.checked.checkedPlaylist = payload;
-    saveToLocalStorage(state);
-  },
-  setIsCheckedAll(state, payload) {
-    state.checked.isCheckedAll = payload;
-    saveToLocalStorage(state);
-  },
   setSongPlaying(state, payload) {
     state.play.songPlaying = payload;
     saveToLocalStorage(state);
@@ -88,7 +76,6 @@ function saveToLocalStorage() {
     playlistDetail: state.playlistDetail,
     albumDetail: state.albumDetail,
     songsBySearch: state.songsBySearch,
-    checked: state.checked,
     play: state.play,
   };
   window.localStorage.setItem('sampleMusic', JSON.stringify(musicState));

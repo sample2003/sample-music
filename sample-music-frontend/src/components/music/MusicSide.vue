@@ -54,15 +54,15 @@ export default {
         },
         {
           btnID: nanoid(),
-          btnName: "set",
-          btnR: "set",
-          btnIcon: Icon.noteIcon
+          btnName: "聊天",
+          btnR: "AI",
+          btnIcon: Icon.deepseekIcon
         },
         {
           btnID: nanoid(),
-          btnName: "AI",
-          btnR: "AI",
-          btnIcon: Icon.deepseekIcon
+          btnName: "设置",
+          btnR: "set",
+          btnIcon: Icon.noteIcon
         },
       ]
     }

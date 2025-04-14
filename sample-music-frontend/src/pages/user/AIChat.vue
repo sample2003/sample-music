@@ -1,20 +1,36 @@
 <template>
   <div id="AIChat" class="flex">
-    <div class="message-list" :class="{ collapsed: isCollapsed }">
-      <img class="kik" :src="isCollapsed ? Icon.nextIcon : Icon.lastIcon" alt="" @click="toggleCollapse">
-      <div class="history">
-
+    <div class="left" :class="{ collapsed: isCollapsed }">
+      <div class="control flex">
+        <img class="kik" :src="isCollapsed ? Icon.toggleRightIcon : Icon.toggleLeftIcon" alt="" @click="toggleCollapse">
+        <img class="kik" :src="Icon.addIcon" alt="" @click="toggleCollapse">
+      </div>
+      <div class="message-list">
+        <div class="message flex">
+          <p>你是谁</p>
+          <img :src="Icon.moreIcon" alt="">
+        </div>
+        <div class="message flex">
+          <p>复述aaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+          <img :src="Icon.moreIcon" alt="">
+        </div>
       </div>
     </div>
-    <div class="content flex">
-      <div class="welcome flex">
+    <div class="right flex">
+      <div v-if="streamingText === ''" class="welcome flex">
         <img :src="Icon.deepseekTIcon" alt="">
         <p>你的聊天数据将被收集哦，开始聊天将视为同意</p>
       </div>
 
-      <div>
-        <p>{{  }}</p>
-        <p>{{ streamingText }}</p>
+      <div v-else class="content">
+        <div class="user-info info flex">
+          <p>{{ value }}</p>
+          <img :src="userDetail.avatar" alt="">
+        </div>
+        <div class="chat-info info flex">
+          <img :src="Icon.deepseekIcon" alt="">
+          <p>{{ streamingText }}</p>
+        </div>
       </div>
 
       <div class="input">
@@ -54,6 +70,7 @@ export default {
   data() {
     return {
       isCollapsed: false,
+      value: '复述aaaaaaaaaaaaaaaaaaaaaaaaaaa',
       streamingText: '',   // 实时流式文本
     }
   },
@@ -116,7 +133,7 @@ export default {
   height: 100%;
 }
 
-.message-list {
+.left {
   width: 15%;
   height: 100%;
   transition: 0.2s all ease;
@@ -128,28 +145,90 @@ export default {
   background-color: var(--second-color);
 }
 
-.kik {
-  width: 40px;
-  display: block;
-}
-
-.history {
-  width: 100%;
-  height: 80%;
-  transition: 0.1s all ease;
-}
-
-.message-list.collapsed .history {
+.left.collapsed .message-list {
   width: 0;
   opacity: 0;
   pointer-events: none;
 }
 
-.message-list.collapsed {
-  width: 40px;
+.left.collapsed .control {
+  flex-direction: column;
 }
 
-.content {
+.kik {
+  width: 40px;
+  display: block;
+  cursor: pointer;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.kik:hover {
+  background-color: var(--fourth-color);
+}
+
+.left.collapsed {
+  width: 50px;
+}
+
+.message-list {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  transition: 0.2s width ease;
+}
+
+.message {
+  width: 94%;
+  height: 50px;
+  margin: 3%;
+  border-radius: 10px;
+  transition: 0.2s all ease;
+  border: 1px solid #0000;
+  box-shadow: var(--boxShadow);
+  background-color: var(--second-color);
+  cursor: pointer;
+}
+
+.message:hover {
+  box-shadow: none;
+  border: 1px solid var(--fourth-color);
+}
+
+.message:hover img {
+  opacity: 1;
+}
+
+.message p {
+  width: 85%;
+  text-indent: 1em;
+  text-align: left;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message img {
+  width: 9%;
+  margin: 1%;
+  padding: 5px;
+  opacity: 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  transition: 0.1s all ease;
+}
+
+.message img:hover {
+  background-color: var(--fourth-color);
+}
+
+.right {
   height: 100%;
   flex-grow: 1;
   flex-direction: column;
@@ -170,25 +249,56 @@ export default {
   padding: 10px;
 }
 
+.content {
+  width: 80%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.info {
+  width: 94%;
+  align-items: start;
+  margin: 1em;
+  text-align: left;
+}
+
+.info p {
+  max-width: calc(89% - 1em);
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: var(--boxShadow);
+  white-space: wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.info img {
+  width: 50px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  user-select: none;
+  pointer-events: none;
+}
+
+.user-info {
+  justify-content: end;
+}
+
+.user-info p {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.chat-info {
+  justify-content: start;
+}
+
 .input {
   flex-grow: 1;
   width: 80%;
 }
 
-.message {
-  margin: 10px;
-  padding: 15px;
-  border-radius: 8px;
-  max-width: 80%;
-}
-
-.message.user {
-  background: #e3f2fd;
-  margin-left: auto;
-}
-
-.message.assistant {
-  background: #f5f5f5;
-  margin-right: auto;
-}
 </style>

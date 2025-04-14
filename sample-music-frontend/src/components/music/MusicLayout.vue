@@ -173,6 +173,7 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 40px;
+  user-select: none;
   background-size: 300% 100%;
   animation: changeColor 4s ease infinite running;
   background-image: linear-gradient(315deg, var(--main-color), var(--second-color));

@@ -21,7 +21,6 @@
       </div>
 
     </div>
-
     <div id="right">
       <router-view></router-view>
     </div>
@@ -165,20 +164,6 @@ export default {
 
 .cra img:hover {
   background-color: var(--main-color);
-}
-
-/* 搜索框 */
-.search {
-  width: 96%;
-  height: 5%;
-  margin: 2% auto;
-}
-
-.inputBox {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  text-align: center;
 }
 
 /* 歌单设计 */

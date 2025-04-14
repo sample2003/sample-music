@@ -520,6 +520,7 @@ export default {
   width: 100%;
   height: 9%;
   display: flex;
+  user-select: none;
 }
 
 .card {

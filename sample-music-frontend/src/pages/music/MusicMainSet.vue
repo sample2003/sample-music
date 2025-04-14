@@ -1,17 +1,6 @@
 <template>
   <div id="musicMainSet">
-    <div class="text">
-      <TextArea @submit="startStream"></TextArea>
-    </div>
-    <button @click="aa(content)">按钮</button>
-
-    <p>{{chat}}</p>
-
-    <!-- 实时流式输出展示区域 -->
-    <div class="stream-output">
-      {{ streamingText }}
-    </div>
-
+    <h2>还在测试阶段，敬请期待</h2>
   </div>
 </template>
 
