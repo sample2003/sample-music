@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import static com.sample.music.constant.HttpStatusCode.UNAUTHORIZED;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -58,6 +60,7 @@ public class UserService {
         String password = user.getPassword();
         String verificationCode = user.getVerificationCode();
         String invitationCode = user.getInvitationCode();
+        if(findUserByEmail(user.getEmail()) != null) throw new BusinessException(UNAUTHORIZED, "该邮箱已被注册");
         // 验证验证码或邀请码是否存在
         boolean isValidCode = verificationCode != null && emailService.validateVerifyCode(email, verificationCode);
         boolean hasInvitationCode = invitationCode.equals("cqt123");

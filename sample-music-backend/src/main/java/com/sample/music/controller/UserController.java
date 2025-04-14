@@ -57,7 +57,7 @@ public class UserController {
         if (userRegisterVO == null) {
             return Result.error("请填写相关信息");
         }
-        if (userService.findUserByEmail(userRegisterVO.getEmail()) != null) return Result.error("该邮箱已被注册");
+//        if (userService.findUserByEmail(userRegisterVO.getEmail()) != null) return Result.error("该邮箱已被注册");
         Long id = userService.registerUser(userRegisterVO);
         return Result.success(id + "注册成功");
     }
