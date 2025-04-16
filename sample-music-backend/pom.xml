@@ -18,15 +18,16 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
-        <!-- Spring Data JPA -->
+        <!-- OpenAI -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>group.springframework.ai</groupId>
+            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+            <version>1.1.0</version>
         </dependency>
-        <!-- WebClient (用于调用Ollama API) -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
+            <groupId>group.springframework.ai</groupId>
+            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
+            <version>1.1.0</version>
         </dependency>
         <!-- Validation -->
         <dependency>
@@ -38,7 +39,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!---->
+        <!-- 敏感词词库 -->
         <dependency>
             <groupId>com.github.houbb</groupId>
             <artifactId>sensitive-word</artifactId>
@@ -184,7 +185,6 @@
             <version>4.0.1</version> <!-- Use the version compatible with your application -->
             <scope>provided</scope> <!-- If you are using a Servlet container like Tomcat -->
         </dependency>
-
         <!--slf4j依赖-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -204,7 +204,6 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
