@@ -2,12 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- Spring Boot 父级依赖管理 -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.11</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/> <!-- 从仓库查找父级依赖 -->
     </parent>
+
     <groupId>com.sample</groupId>
     <artifactId>sampleMusic</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -16,9 +19,130 @@
 
     <properties>
         <java.version>17</java.version>
+        <!-- 统一管理第三方依赖版本 -->
+        <sensitive-word.version>0.12.0</sensitive-word.version>
+        <redisson.version>3.27.2</redisson.version>
+        <hutool.version>5.8.25</hutool.version>
+        <jwt.version>4.4.0</jwt.version>
+        <pagehelper.version>1.4.6</pagehelper.version>
+        <mybatis.version>3.0.3</mybatis.version>
+        <aliyun-oss.version>3.17.4</aliyun-oss.version>
+        <httpclient.version>5.3.1</httpclient.version>
+        <fastjson2.version>2.0.25</fastjson2.version>
     </properties>
+
     <dependencies>
-        <!-- OpenAI -->
+        <!-- ======================= Spring 官方 Starter ======================= -->
+        <!-- Web 支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- 参数校验 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- AOP 支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- ======================= 数据层依赖 ======================= -->
+        <!-- MySQL 驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
+        </dependency>
+
+        <!-- MyBatis 集成 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+
+        <!-- 分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.version}</version>
+        </dependency>
+
+        <!-- ======================= 中间件 ======================= -->
+        <!-- Redis 集成 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- Redisson 分布式锁 -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>${redisson.version}</version>
+        </dependency>
+
+        <!-- RabbitMQ 消息队列 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!-- ======================= 工具类库 ======================= -->
+        <!-- Hutool 工具包 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+
+        <!-- JWT 支持 -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${jwt.version}</version>
+        </dependency>
+
+        <!-- 阿里云 OSS -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${aliyun-oss.version}</version>
+        </dependency>
+
+        <!-- Apache 公共工具 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <!-- ======================= 业务功能依赖 ======================= -->
+        <!-- 敏感词过滤 -->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>sensitive-word</artifactId>
+            <version>${sensitive-word.version}</version>
+        </dependency>
+
+        <!-- 邮件支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <!-- 音频元数据处理 -->
+<!--        <dependency>
+            <groupId>org.jaudiotagger</groupId>
+            <artifactId>jaudiotagger</artifactId>
+            <version>2.0.3</version>
+        </dependency>-->
+
+        <!-- ======================= AI 集成 ======================= -->
         <dependency>
             <groupId>group.springframework.ai</groupId>
             <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
@@ -29,183 +153,35 @@
             <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
             <version>1.1.0</version>
         </dependency>
-        <!-- Validation -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <!-- web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- 敏感词词库 -->
-        <dependency>
-            <groupId>com.github.houbb</groupId>
-            <artifactId>sensitive-word</artifactId>
-            <version>0.12.0</version>
-        </dependency>
-        <!-- RabbitMQ -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-        <!-- Mysql -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.29</version>
-        </dependency>
-        <!--  Redis  -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <!-- redisson -->
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.27.2</version>
-        </dependency>
-        <!-- 使用 Lettuce 连接池（默认） -->
-        <dependency>
-            <groupId>io.lettuce</groupId>
-            <artifactId>lettuce-core</artifactId>
-        </dependency>
-        <!--  Email  -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-        <!--  Hutool  -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.8.25</version>
-        </dependency>
-        <!--  JWT  -->
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>4.4.0</version>
-        </dependency>
-        <!--  PageHelper  -->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.4.6</version>
-        </dependency>
-        <!--  Mybatis  -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-        <!--  Mybatis Test  -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter-test</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-        <!-- jaudiotagger -->
-        <dependency>
-            <groupId>org</groupId>
-            <artifactId>jaudiotagger</artifactId>
-            <version>2.0.3</version>
-        </dependency>
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- Java对象和XML数据之间转换 -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <!-- no more than 2.3.3-->
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.3</version>
-        </dependency>
 
-        <!--  Aliyun Oss  -->
-        <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <version>3.17.4</version>
-        </dependency>
-        <!-- Httpclient -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
-        </dependency>
-        <!-- fastjson2 -->
-        <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2</artifactId>
-            <version>2.0.25</version>
-        </dependency>
-        <!-- Common -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
-        </dependency>
-        <!--  AOP  -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-            <version>6.1.5</version>
-        </dependency>
-        <!-- test -->
+        <!-- ======================= 测试相关 ======================= -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- knife4j接口测试 -->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-            <version>4.4.0</version>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter-test</artifactId>
+            <version>${mybatis.version}</version>
+            <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version> <!-- Use the version compatible with your application -->
-            <scope>provided</scope> <!-- If you are using a Servlet container like Tomcat -->
-        </dependency>
-        <!--slf4j依赖-->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <!--log4j2依赖-->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-        </dependency>
-        <!-- 桥接：告诉Slf4j使用Log4j2 -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-        </dependency>
-    </dependencies>
 
+        <!-- ======================= 其他必要依赖 ======================= -->
+        <!-- Lombok 编译时注解 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Log4j2 日志 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -223,4 +199,12 @@
         </plugins>
     </build>
 
+    <!-- ======================= 移除冗余依赖说明 ======================= -->
+    <!--
+        1. 移除 javax.servlet-api：Spring Boot 3.x 使用 Jakarta EE 9+
+        2. 移除显式定义的 lettuce-core：已通过 spring-boot-starter-data-redis 管理
+        3. 移除 jaxb-* 依赖：JDK 11+ 已内置或通过其他方式管理
+        4. 移除冗余的 httpclient 版本定义：使用 Spring Boot 管理的版本
+        5. 移除 knife4j 旧版依赖：建议使用 SpringDoc OpenAPI
+    -->
 </project>
