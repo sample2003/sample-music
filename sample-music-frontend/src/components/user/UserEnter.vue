@@ -195,11 +195,21 @@ export default {
       console.log(this.registerParam)
       try {
         // 使用本地响应式数据提交
-        await userService.userRegister({...this.registerParam})
-
-        // 注册成功后清空数据
-        this.registerParam = this.clear(this.registerParam)
-        this.showLogin()
+        const res = await userService.userRegister({...this.registerParam})
+        console.log(res)
+        if (res === '404') {
+          this.$message("请完整填写登录信息")
+        } else if (res === 401) {
+          this.$message("该邮箱已被注册")
+        } else if (res === 403) {
+          this.$message("该用户已被封禁")
+        } else if (res === 404) {
+          this.$message("该用户未注册")
+        } else {
+          // 注册成功后清空数据
+          this.registerParam = this.clear(this.registerParam)
+          this.showLogin()
+        }
       } catch (error) {
         console.error(error)
       }

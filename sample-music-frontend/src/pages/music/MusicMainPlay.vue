@@ -48,7 +48,7 @@
       <div class="pl_control">
         <ScrollText :max-width="'100%'" :font-size="'2em'" style="margin: 10px;"></ScrollText>
         <div class="control-button flex">
-          <img :src="returnPlayIcon" alt="" @click="togglePlayMode">
+          <img :src="returnPlayIcon.icon" alt="" @click="togglePlayMode" :title="returnPlayIcon.prompt">
           <img :src="Icon.backward10sIcon" alt="" @click="backward10s">
           <img :src="Icon.lastIcon" alt="" @click="playPrevious">
           <img class="anm" v-show="isPlay" :src="Icon.pauseIcon" alt="" @click="PlayOrPause">
