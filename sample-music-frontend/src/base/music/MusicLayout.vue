@@ -61,7 +61,7 @@ import Side from './MusicSide.vue'
 import Control from './MusicControl.vue'
 import Main from './MusicMain.vue'
 import Icon from "@/util/common/Icon";
-import TextInput from "@/pages/common/TextInput.vue";
+import TextInput from "@/components/TextInput.vue";
 import accessEnum from "../../util/access/accessEnum";
 
 export default {

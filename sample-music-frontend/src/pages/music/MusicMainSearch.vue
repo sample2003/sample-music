@@ -44,10 +44,10 @@
 
 <script>
 import {mapState} from 'vuex'
-import PageNation from "@/pages/common/PageNation.vue";
+import PageNation from "@/components/PageNation.vue";
 import SongList from "@/pages/music/SongList.vue";
 import Icon from "@/util/common/Icon";
-import ButtonSelect from "@/pages/common/ButtonSelect.vue";
+import ButtonSelect from "@/components/ButtonSelect.vue";
 
 export default {
   name: "MusicMainSearch",

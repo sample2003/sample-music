@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import ButtonSelect from "@/pages/common/ButtonSelect.vue";
+import ButtonSelect from "@/components/ButtonSelect.vue";
 import {nanoid} from "nanoid";
-import DataManagement from "@/pages/common/DataManagement.vue";
+import DataManagement from "@/components/DataManagement.vue";
 
 export default {
   name: "AdminManage",

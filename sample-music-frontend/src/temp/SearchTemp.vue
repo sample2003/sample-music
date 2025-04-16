@@ -42,7 +42,7 @@
 
 <script>
 import {mapState} from 'vuex'
-import PageNation from "@/pages/common/PageNation.vue";
+import PageNation from "@/components/PageNation.vue";
 import SongService from "@/api/service/SongService";
 import SongList from "@/pages/music/SongList.vue";
 import RelateService from "@/api/service/RelateService";

@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import TextInput from "@/pages/common/TextInput.vue";
+import TextInput from "@/components/TextInput.vue";
 import PlaylistService from "@/api/service/PlaylistService";
 import Icon from "@/util/common/Icon";
 

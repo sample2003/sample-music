@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import DynamicCrud from "@/pages/common/DataManagement.vue";
+import DynamicCrud from "@/components/DataManagement.vue";
 import {nanoid} from "nanoid";
 import User from "@/api/pojo/User";
 import SongUpload from "@/api/pojo/upload/SongUpload";

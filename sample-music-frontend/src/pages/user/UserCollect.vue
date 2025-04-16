@@ -18,7 +18,7 @@
 
 <script>
 import {nanoid} from "nanoid";
-import ButtonSelect from "@/pages/common/ButtonSelect.vue";
+import ButtonSelect from "@/components/ButtonSelect.vue";
 
 export default {
   name: 'UserCollect',

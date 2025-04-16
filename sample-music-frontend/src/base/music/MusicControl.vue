@@ -65,7 +65,7 @@
 
 <script>
 import Icon from "@/util/common/Icon";
-import ScrollText from "@/pages/common/ScrollText.vue";
+import ScrollText from "@/components/ScrollText.vue";
 
 export default {
   name: 'MusicControl',

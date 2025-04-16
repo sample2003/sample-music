@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import TextInput from "@/pages/common/TextInput.vue";
-import PageNation from "@/pages/common/PageNation.vue";
+import TextInput from "@/components/TextInput.vue";
+import PageNation from "@/components/PageNation.vue";
 import SongService from "@/api/service/SongService";
 import PlaylistService from "@/api/service/PlaylistService";
 import FIELD_TRANSLATIONS from "@/api/enum";

@@ -57,7 +57,7 @@
 
 <script>
 import Icon from "@/util/common/Icon";
-import TextArea from "@/pages/common/TextArea.vue";
+import TextArea from "@/components/TextArea.vue";
 
 export default {
   name: 'AiChat',

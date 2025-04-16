@@ -31,8 +31,8 @@
 
 <script>
 import PlaylistService from "@/api/service/PlaylistService";
-import TextInput from "@/pages/common/TextInput.vue";
-import TextArea from "@/pages/common/TextArea.vue";
+import TextInput from "@/components/TextInput.vue";
+import TextArea from "@/components/TextArea.vue";
 
 export default {
   name: "UserPlaylistManage",

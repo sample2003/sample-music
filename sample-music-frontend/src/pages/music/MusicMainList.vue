@@ -32,7 +32,7 @@ import PlaylistService from "@/api/service/PlaylistService";
 import playlistUpload from "@/api/pojo/upload/PlaylistUpload";
 import RelateService from "@/api/service/RelateService";
 import Icon from "@/util/common/Icon";
-import TextInput from "@/pages/common/TextInput.vue";
+import TextInput from "@/components/TextInput.vue";
 
 export default {
   name: "MusicMainList",

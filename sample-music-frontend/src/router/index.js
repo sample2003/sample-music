@@ -7,20 +7,20 @@ import MusicMainSearch from "@/pages/music/MusicMainSearch.vue";
 import MusicMainList from "@/pages/music/MusicMainList.vue";
 import MusicMainPlay from "@/pages/music/MusicMainPlay.vue";
 import MusicMainSet from "@/pages/music/MusicMainSet.vue";
-import MusicLayout from "@/components/music/MusicLayout.vue";
+import MusicLayout from "@/base/music/MusicLayout.vue";
 import MusicDetail from "@/pages/music/MusicDetail.vue";
 
-import UserEnter from "@/components/user/UserEnter.vue";
+import UserEnter from "@/base/user/UserEnter.vue";
 import UserCollect from "@/pages/user/UserCollect.vue";
-import UserCenter from "@/components/user/UserCenter.vue";
+import UserCenter from "@/base/user/UserCenter.vue";
 import userCollectMusic from "@/pages/user/UserCollectMusic.vue";
 import UserSuggest from "@/pages/user/UserSuggest.vue";
 import UserInfo from "@/pages/user/UserInfo.vue";
 import AdminManage from "@/pages/user/AdminManage.vue";
 import UserMusicDetail from "@/pages/user/UserMusicDetail.vue";
 
-import ErrorPage from "@/pages/common/ErrorPage.vue";
-import ServerClose from "@/pages/common/ServerClose.vue";
+import ErrorPage from "@/components/ErrorPage.vue";
+import ServerClose from "@/components/ServerClose.vue";
 
 import ACCESS_ENUM from "@/util/access/accessEnum";
 import checkAccess from "@/util/access/checkAccess";

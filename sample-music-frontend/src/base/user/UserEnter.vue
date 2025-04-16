@@ -100,8 +100,8 @@ import {UserLoginData, UserRegisterData} from "@/api/pojo/UserSubmit";
 import store from "@/store";
 import {nanoid} from "nanoid";
 import Icon from "@/util/common/Icon";
-import ButtonSelect from "@/pages/common/ButtonSelect.vue";
-import TextInput from "@/pages/common/TextInput.vue";
+import ButtonSelect from "@/components/ButtonSelect.vue";
+import TextInput from "@/components/TextInput.vue";
 
 export default {
   name: "UserEnter",

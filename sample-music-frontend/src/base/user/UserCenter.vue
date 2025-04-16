@@ -53,8 +53,8 @@ import {nanoid} from "nanoid";
 import ACCESS_ENUM from "@/util/access/accessEnum";
 import Icon from "@/util/common/Icon";
 import accessEnum from "@/util/access/accessEnum";
-import ScrollText from "@/pages/common/ScrollText.vue";
-import ButtonSelect from "@/pages/common/ButtonSelect.vue";
+import ScrollText from "@/components/ScrollText.vue";
+import ButtonSelect from "@/components/ButtonSelect.vue";
 
 export default {
   name: "UserCenter",

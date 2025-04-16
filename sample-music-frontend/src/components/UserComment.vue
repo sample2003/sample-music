@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import TextArea from "@/pages/common/TextArea.vue";
+import TextArea from "@/components/TextArea.vue";
 import AlbumService from "@/api/service/AlbumService";
 import FavoriteService from "@/api/service/FavoriteService";
 import PlaylistService from "@/api/service/PlaylistService";

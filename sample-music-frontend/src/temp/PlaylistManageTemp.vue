@@ -49,7 +49,7 @@
 
 <script>
 import PlaylistService from "@/api/service/PlaylistService";
-import TextInput from "@/pages/common/TextInput.vue";
+import TextInput from "@/components/TextInput.vue";
 
 export default {
   components: {TextInput},

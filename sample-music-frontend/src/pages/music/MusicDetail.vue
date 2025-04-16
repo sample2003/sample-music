@@ -239,7 +239,7 @@ import SongList from "@/pages/music/SongList.vue";
 import PlaylistService from "@/api/service/PlaylistService";
 import RelateService from "@/api/service/RelateService";
 import FavoriteService from "@/api/service/FavoriteService";
-import UserComment from "@/pages/common/UserComment.vue";
+import UserComment from "@/components/UserComment.vue";
 import ArtistService from "@/api/service/ArtistService";
 import Icon from "@/util/common/Icon";
 

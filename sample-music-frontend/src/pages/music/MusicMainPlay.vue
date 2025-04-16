@@ -114,9 +114,9 @@
 <script>
 import SongService from "@/api/service/SongService";
 import FavoriteService from "@/api/service/FavoriteService";
-import UserComment from "@/pages/common/UserComment.vue";
+import UserComment from "@/components/UserComment.vue";
 import Icon from "@/util/common/Icon";
-import ScrollText from "@/pages/common/ScrollText.vue";
+import ScrollText from "@/components/ScrollText.vue";
 
 export default {
   name: "MusicMainPlay",
