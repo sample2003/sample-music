@@ -1,5 +1,6 @@
 package com.sample.music.service;
 
+import com.google.protobuf.Empty;
 import com.sample.music.exception.BusinessException;
 import com.sample.music.pojo.dto.EmailVerify;
 import com.sample.music.pojo.entity.User;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import static com.sample.music.constant.HttpStatusCode.NOT_FOUND;
 import static com.sample.music.constant.HttpStatusCode.UNAUTHORIZED;
 
 @Service
@@ -60,7 +62,8 @@ public class UserService {
         String password = user.getPassword();
         String verificationCode = user.getVerificationCode();
         String invitationCode = user.getInvitationCode();
-        if(findUserByEmail(user.getEmail()) != null) throw new BusinessException(UNAUTHORIZED, "该邮箱已被注册");
+        if (user.equals(new UserRegisterVO())) throw new BusinessException(NOT_FOUND, "未填写注册信息");
+        if (findUserByEmail(user.getEmail()) != null) throw new BusinessException(UNAUTHORIZED, "该邮箱已被注册");
         // 验证验证码或邀请码是否存在
         boolean isValidCode = verificationCode != null && emailService.validateVerifyCode(email, verificationCode);
         boolean hasInvitationCode = invitationCode.equals("cqt123");
@@ -68,6 +71,7 @@ public class UserService {
         // 如果没有有效的验证码或邀请码，抛出异常
         if (!isValidCode && !hasInvitationCode) {
             throw new BusinessException(401, "注册失败");
+
         }
 
         // 如果有有效的验证码，删除验证码
