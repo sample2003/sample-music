@@ -92,6 +92,7 @@ knife4j:
           - com.sample.music.controller
 #          - com.sample.music.recommended
 
+# 日志配置
 logging:
   level:
     org.mybatis: DEBUG
