@@ -5,6 +5,7 @@ import com.sample.music.pojo.entity.Favorites;
 import com.sample.music.pojo.vo.favorite.*;
 import com.sample.music.service.FavoriteService;
 import com.sample.music.utils.ThreadLocalUtil;
+import com.sample.music.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +27,7 @@ public class FavoriteController {
      */
     @PostMapping("/add")
     public Result<String> AddToFavorites(@RequestParam String targetType, @RequestParam Long targetId) {
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        Long userId = Long.valueOf(id);
+        Long userId = UserContext.getUser();
         Favorites favorites = new Favorites();
         // targetType是个常量，只能在song, playlist, album, work, publicity, user, comment里选
         favorites.setTargetType(targetType);

@@ -8,6 +8,7 @@ import com.sample.music.pojo.dto.UserDTO;
 import com.sample.music.pojo.entity.Comment;
 import com.sample.music.pojo.vo.CommentWithUser;
 import com.sample.music.utils.ThreadLocalUtil;
+import com.sample.music.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -29,9 +30,7 @@ public class CommentService {
      * @param comment 评论内容
      */
     public void insertComment(Comment comment) {
-        Map<String, Object> map = ThreadLocalUtil.get();
-        Integer id = (Integer) map.get("id");
-        long userId = id.longValue();
+        long userId = UserContext.getUser();
         comment.setUserId(userId);
         comment.setLikes(0);
         commentMapper.insertComment(comment);

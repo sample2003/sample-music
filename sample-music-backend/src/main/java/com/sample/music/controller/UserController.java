@@ -4,31 +4,23 @@ import cn.hutool.core.lang.UUID;
 import com.sample.music.annotation.RateLimit;
 import com.sample.music.pojo.dto.EmailVerify;
 import com.sample.music.common.FilesType;
-import com.sample.music.pojo.entity.User;
+import com.sample.music.pojo.dto.UserDTO;
 import com.sample.music.common.Result;
-import com.sample.music.pojo.vo.UserRegisterVO;
+import com.sample.music.pojo.dto.UserRegister;
 import com.sample.music.pojo.vo.UserUpdateVO;
-import com.sample.music.mapper.UserMapper;
 import com.sample.music.pojo.vo.UserVO;
-import com.sample.music.service.UserService;
 import com.sample.music.service.EmailService;
 import com.sample.music.service.FileManageService;
-import com.sample.music.utils.JwtUtil;
-import com.sample.music.utils.Md5Util;
-import com.sample.music.utils.ThreadLocalUtil;
+import com.sample.music.service.UserService;
+import com.sample.music.utils.UserContext;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URLEncoder;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.sample.music.constant.HttpStatusCode.*;
@@ -38,28 +30,37 @@ import static com.sample.music.constant.HttpStatusCode.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 public class UserController {
-    private final JwtUtil jwtUtil;
     private final UserService userService;
-    private final UserMapper userMapper;
     private final EmailService emailService;
     private final FileManageService fileManageService;
-    private final StringRedisTemplate stringRedisTemplate;
     private final RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 用户注册
      *
-     * @param userRegisterVO 注册用户信息
+     * @param userRegister 注册用户信息
      * @return Result
      */
     @PostMapping("register")
-    public Result<String> registerUser(UserRegisterVO userRegisterVO) {
-        if (userRegisterVO == null) {
+    public Result<String> registerUser(UserRegister userRegister) {
+        if (userRegister == null) {
             return Result.error("请填写相关信息");
         }
-//        if (userService.findUserByEmail(userRegisterVO.getEmail()) != null) return Result.error("该邮箱已被注册");
-        Long id = userService.registerUser(userRegisterVO);
+        Long id = userService.registerUser(userRegister);
         return Result.success(id + "注册成功");
+    }
+
+    /**
+     * 发送验证码
+     *
+     * @param emailVerify 邮箱和验证码
+     * @return Result
+     */
+    @PostMapping("sendVerifyCode")
+    public Result<?> sendVerifyCode(@RequestBody EmailVerify emailVerify) {
+        return userService.sendVerifyCode(emailVerify)
+                .map(Result::success)
+                .orElseGet(() -> Result.error("发送验证码失败"));
     }
 
     /**
@@ -78,30 +79,34 @@ public class UserController {
         if (text == null || password == null) {
             return Result.error(BAD_REQUEST, "请填写完整登录信息");
         }
-        User loginUser = userService.findUserByNameOrEmail(text);
-        if (loginUser == null) {
-            return Result.error(NOT_FOUND, "用户未注册");
-        }
+        String token = userService.loginUser(text, password);
+        return Result.success(token);
+    }
 
-        ValueOperations<String, String> operation = stringRedisTemplate.opsForValue();
-        // token_
-        String redisKey = "token_" + loginUser.getId();
+    /**
+     * 生成二维码
+     *
+     * @param type 登录方式
+     * @return Result
+     */
+    @GetMapping("/qrcode")
+    public Result<String> generateQrcode(@RequestParam String type) {
+        String state = UUID.randomUUID().toString();
+        String redirectUrl = "";
 
-        String barredToken = operation.get("jwt:blacklist:" + redisKey);
-        if (barredToken != null) {
-            return Result.error(FORBIDDEN, "该用户被封禁");
-        }
-        if (Md5Util.checkPassword(password, loginUser.getPassword())) {
-            Map<String, Object> claims = new HashMap<>();
-            claims.put("id", loginUser.getId());
-            claims.put("username", loginUser.getUsername());
-            String token = jwtUtil.genToken(claims);
-            // 把token存入redis
-            operation.set("token:" + redisKey, token, 7, TimeUnit.DAYS);
-            userMapper.changeStatus(loginUser.getId(), 0);
-            return Result.success(OK, "登录成功", token);
-        }
-        return Result.error(UNAUTHORIZED, "密码错误");
+/*        if ("wechat".equals(type)) {
+            redirectUrl = String.format(
+                    "https://open.weixin.qq.com/connect/qrconnect?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_login&state=%s",
+                    WX_APP_ID, URLEncoder.encode(WX_REDIRECT_URI), state);
+        } else if ("qq".equals(type)) {
+            redirectUrl = String.format(
+                    "https://graph.qq.com/oauth2.0/show?which=Login&display=pc&response_type=code&client_id=%s&redirect_uri=%s&state=%s",
+                    QQ_CLIENT_ID, URLEncoder.encode(QQ_REDIRECT_URI), state);
+        }*/
+
+        // 存储state到Redis（有效期300秒）
+        redisTemplate.opsForValue().set("qrcode:"+state, "unscathed", 300, TimeUnit.SECONDS);
+        return Result.success(redirectUrl);
     }
 
     /**
@@ -127,28 +132,6 @@ public class UserController {
     }
 
     /**
-     * 用户查询个人信息
-     *
-     * @return Result<User>
-     */
-    @GetMapping("info")
-    public Result<UserVO> userInfo() {
-        Map<String, Object> map = ThreadLocalUtil.get();
-        Integer id = (Integer) map.get("id");
-        String username = (String) map.get("username");
-
-        User user = userService.findUserByNameOrEmail(username);
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO);
-        if (userService.isAdmin(user.getId())) {
-            userVO.setRole("admin");
-        } else {
-            userVO.setRole("user");
-        }
-        return Result.success(OK, "查询成功", userVO);
-    }
-
-    /**
      * 用户更新个人信息
      *
      * @param user 用户信息
@@ -162,39 +145,6 @@ public class UserController {
     }
 
     /**
-     * 发送验证码
-     *
-     * @param emailVerify 邮箱和验证码
-     * @return Result
-     */
-    @PostMapping("sendVerifyCode")
-    public Result<?> sendVerifyCode(@RequestBody EmailVerify emailVerify) {
-        return userService.registerCode(emailVerify)
-                .map(Result::success)
-                .orElseGet(() -> Result.error("发送验证码失败"));
-    }
-
-    @GetMapping("/qrcode")
-    public Result<String> generateQrcode(@RequestParam String type) {
-        String state = UUID.randomUUID().toString();
-        String redirectUrl = "";
-
-/*        if ("wechat".equals(type)) {
-            redirectUrl = String.format(
-                    "https://open.weixin.qq.com/connect/qrconnect?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_login&state=%s",
-                    WX_APP_ID, URLEncoder.encode(WX_REDIRECT_URI), state);
-        } else if ("qq".equals(type)) {
-            redirectUrl = String.format(
-                    "https://graph.qq.com/oauth2.0/show?which=Login&display=pc&response_type=code&client_id=%s&redirect_uri=%s&state=%s",
-                    QQ_CLIENT_ID, URLEncoder.encode(QQ_REDIRECT_URI), state);
-        }*/
-
-        // 存储state到Redis（有效期300秒）
-        redisTemplate.opsForValue().set("qrcode:"+state, "unscathed", 300, TimeUnit.SECONDS);
-        return Result.success(redirectUrl);
-    }
-
-    /**
      * 用户更新密码
      *
      * @param email       邮箱
@@ -203,7 +153,7 @@ public class UserController {
      * @return Result
      */
     @PatchMapping("updateUserPwd")
-    public Result<?> updateUserPwd(String email, String code, String newPassword) {
+    public Result<?> updateUser(String email, String code, String newPassword) {
 
         if (email == null) {
             return Result.error("邮箱不可为空");
@@ -229,7 +179,7 @@ public class UserController {
      * @return Result
      */
     @PatchMapping("updateUserAvatar")
-    public Result<?> updateUserAvatar(FilesType image) {
+    public Result<?> updateUser(FilesType image) {
         if (image == null) {
             return Result.error("提交失败");
         }
@@ -244,11 +194,32 @@ public class UserController {
      * @return Result
      */
     @PatchMapping("updateUserExp")
-    public Result<?> updateUserExp(Integer expAdd) {
+    public Result<?> updateUser(Integer expAdd) {
         if (expAdd == 0) {
             return Result.error("经验为0");
         }
         userService.updateUserExp(expAdd);
         return Result.success("新增经验：" + expAdd);
     }
+
+    /**
+     * 用户查询个人信息
+     *
+     * @return Result<User>
+     */
+    @GetMapping("info")
+    public Result<UserVO> userInfo() {
+        Long userId = UserContext.getUser();
+
+        UserDTO user = userService.findUserById(userId);
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO);
+        if (userService.isAdmin(user.getId())) {
+            userVO.setRole("admin");
+        } else {
+            userVO.setRole("user");
+        }
+        return Result.success(OK, "查询成功", userVO);
+    }
+
 }

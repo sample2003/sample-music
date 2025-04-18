@@ -26,10 +26,11 @@ public class JwtUtil {
 
     /**
      * 接受业务数据，生成token并返回
+     *
      * @param claims 用户信息
      * @return 是否操作成功
      */
-    public String genToken(Map<String, Object> claims){
+    public String genToken(Map<String, Object> claims) {
         Date expire = this.expireTime();
         return JWT.create()
                 .withClaim("claims", claims)
@@ -37,40 +38,52 @@ public class JwtUtil {
                 .sign(Algorithm.HMAC256(key));
     }
 
+
+    public String genToken(String id) {
+        Date expire = this.expireTime();
+        return JWT.create()
+                .withKeyId(id)
+                .withExpiresAt(expire)
+                .sign(Algorithm.HMAC256(key));
+    }
+
     /**
      * 接受token，验证token，并返回业务数据
+     *
      * @param token 令牌
      * @return 是否操作成功
      */
-    public Map<String, Object> parseToken(String token){
+    public Long parseToken(String token) {
         try {
-            return JWT.require(Algorithm.HMAC256(key))
+            String id = JWT.require(Algorithm.HMAC256(key))
                     .build()
                     .verify(token)
-                    .getClaim("claims")
-                    .asMap();
-        } catch (JWTVerificationException e) {
-            // 令牌无效时，返回 null 或抛出异常
+                    .getKeyId();
+            return Long.parseLong(id);
+        } catch (JWTVerificationException | NumberFormatException e) {
             return null;
         }
     }
+
     /**
      * 让指定Jwt令牌失效
+     *
      * @return 过期时间：7天
      */
-    public Date expireTime(){
+    public Date expireTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, expire * 24);
         return calendar.getTime();
     }
 
     /**
-     * 使Jwt令牌去掉Bearer
+     * 去掉Jwt令牌头部的Bearer
+     *
      * @param headToken 请求头中携带的令牌
      * @return Jwt令牌
      */
-    public String convertToken(String headToken){
-        if(headToken == null || !headToken.startsWith("Bearer ")){
+    public String convertToken(String headToken) {
+        if (headToken == null || !headToken.startsWith("Bearer ")) {
             return null;
         }
         return headToken.substring(7);
@@ -78,22 +91,24 @@ public class JwtUtil {
 
     /**
      * 让指定Jwt令牌失效
+     *
      * @param headToken 请求头中携带的令牌
      * @return 是否操作成功
      */
-    public boolean invalidateJwt(String headToken){
+    public boolean invalidateJwt(String headToken) {
         String token = this.convertToken(headToken);
-        Map<String, Object> claims = parseToken(token);
-        if (claims == null || !claims.containsKey("id")) {
+        Long userId = parseToken(token);
+        if (userId == null) {
             return false;
         }
         // 使用从令牌中解析出的 ID 来构造黑名单键
-        String userToken = "token_" + claims.get("id");
+        String userToken = "token_" + userId;
         return banToken(userToken);
     }
 
     /**
      * 将Token列入Redis黑名单中
+     *
      * @param userToken 令牌ID
      * @return 是否操作成功
      */
@@ -111,10 +126,11 @@ public class JwtUtil {
 
     /**
      * 验证Token是否被列入Redis黑名单
+     *
      * @param userToken 令牌ID
      * @return 是否操作成功
      */
-    private boolean isInvalidToken(String userToken){
+    private boolean isInvalidToken(String userToken) {
         return Boolean.TRUE.equals(template.hasKey("jwt:blacklist:" + userToken));
     }
 }

@@ -64,8 +64,8 @@ public class EmailService {
     private void saveVerifyCode(EmailVerify emailVerify){
         String code = emailVerify.getCode();
         String email = emailVerify.getEmail();
-        // 过期时间：5分钟
-        long expire = TimeUnit.MINUTES.toMillis(5);
+        // 过期时间：1分钟
+        long expire = TimeUnit.MINUTES.toMillis(1);
         // 存入redis：verify/email
         stringRedisTemplate.opsForValue().set("verify:"+email, code, expire, TimeUnit.MILLISECONDS);
     }

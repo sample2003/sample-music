@@ -2,7 +2,6 @@ package com.sample.music.mapper;
 
 import com.sample.music.pojo.entity.User;
 import com.sample.music.pojo.dto.UserDTO;
-import com.sample.music.pojo.vo.UserRegisterVO;
 import com.sample.music.pojo.vo.UserUpdateVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,15 +9,13 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
     Long registerUser(User user);
 
-    void addUserRole(Long roleId, Long userId);
+    void addUserConfig(Long userIdLong, Integer role);
 
     User findUserByUserName(String username);
 
     User findUserByEmail(String email);
 
-    Long findUserRole(Long userId);
-
-    String findRoleName(Long roleId);
+    Integer findUserRole(Long userId);
 
     void updateUser(UserUpdateVO user, Long userId);
 

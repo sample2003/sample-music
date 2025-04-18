@@ -14,15 +14,13 @@ import com.sample.music.mapper.PlaylistMapper;
 import com.sample.music.pojo.entity.Song;
 import com.sample.music.pojo.vo.PlaylistWithSongs;
 import com.sample.music.pojo.vo.view.SongView;
-import com.sample.music.utils.ThreadLocalUtil;
+import com.sample.music.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -54,9 +52,7 @@ public class PlaylistService {
         } else {
             playlist.setCover(null);
         }
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        Long userId = Long.valueOf(id);
+        Long userId = UserContext.getUser();
         playlist.setUserId(userId);
         playlistMapper.insertPlaylist(playlist);
     }
@@ -76,9 +72,8 @@ public class PlaylistService {
      * @param playlist 歌单信息与图片文件
      */
     public void updatePlaylistById(Playlist playlist) {
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        if(playlist.getId().equals(id.longValue())){
+        Long userId = UserContext.getUser();
+        if(playlist.getId().equals(userId)){
             throw new BusinessException(HttpStatusCode.UNAUTHORIZED, "无权修改该歌单");
         }
         if(playlist.getImageFiles() != null) {
@@ -142,9 +137,8 @@ public class PlaylistService {
         PageHelper.startPage(pageNum, pageSize);
         if(!isPublic) {
             // 获取登录用户
-            Map<String, Object> claims = ThreadLocalUtil.get();
-            Integer id = (Integer) claims.get("id");
-            userId = Long.valueOf(id);
+
+            userId = UserContext.getUser();
             // 查询歌单
             if(condition == null) playlists = playlistMapper.PagedQuery(userId);
             else playlists = playlistMapper.conditionAndPagedQuery(condition, userId);
@@ -245,6 +239,7 @@ public class PlaylistService {
         // 添加用户信息
         UserDTO u = userService.findUserById(playlist.getUserId());
         playlistWithSongs.setUserId(u.getId());
+        playlistWithSongs.setTags(JSONUtil.toList(playlist.getTags(), String.class));
         playlistWithSongs.setUsername(u.getUsername());
         playlistWithSongs.setUserAvatar(u.getAvatar());
         return playlistWithSongs;

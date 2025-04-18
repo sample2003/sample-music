@@ -6,6 +6,7 @@ import com.sample.music.pojo.dto.PageBean;
 import com.sample.music.pojo.entity.Publicity;
 import com.sample.music.pojo.vo.view.PublicityView;
 import com.sample.music.utils.ThreadLocalUtil;
+import com.sample.music.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +26,7 @@ public class PublicityService {
         }else {
             publicity.setCover(null);
         }
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        Long userId = Long.valueOf(id);
+        Long userId = UserContext.getUser();
         publicity.setUserId(userId);
         publicity.setViewers(0);
         publicityMapper.insertPublicity(publicity);

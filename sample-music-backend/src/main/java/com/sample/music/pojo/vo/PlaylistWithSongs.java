@@ -45,7 +45,7 @@ public class PlaylistWithSongs {
     /**
      * 相关标签
      */
-    private String tags;
+    private List<String> tags;
     /**
      * 是否公开：0 私密，1 公开
      */

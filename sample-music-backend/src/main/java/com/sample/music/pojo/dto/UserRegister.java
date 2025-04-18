@@ -1,4 +1,4 @@
-package com.sample.music.pojo.vo;
+package com.sample.music.pojo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class UserRegisterVO {
+public class UserRegister {
     private Long id;
     @NotEmpty
     @Email

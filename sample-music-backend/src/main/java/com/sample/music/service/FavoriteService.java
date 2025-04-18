@@ -3,8 +3,10 @@ package com.sample.music.service;
 import com.sample.music.exception.BusinessException;
 import com.sample.music.mapper.*;
 import com.sample.music.pojo.entity.Favorites;
+import com.sample.music.pojo.entity.User;
 import com.sample.music.pojo.vo.favorite.*;
 import com.sample.music.utils.ThreadLocalUtil;
+import com.sample.music.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -73,9 +75,7 @@ public class FavoriteService {
      * @param targetId 收藏id
      */
     public void RemoveByFavorites(String targetType, Long targetId) {
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        Long userId = Long.valueOf(id);
+        Long userId = UserContext.getUser();
         if(Objects.equals(targetType, "album")) {
             albumMapper.favoriteSubtract(targetId);
         }else if(Objects.equals(targetType, "playlist")) {
@@ -91,9 +91,7 @@ public class FavoriteService {
      *
      */
     public List<FavoriteSong> queryFavoritesSong() {
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        Long userId = Long.valueOf(id);
+        Long userId = UserContext.getUser();
         String targetType = "song";
         return favoriteMapper.queryFavoritesSong(targetType, userId);
     }
@@ -103,9 +101,7 @@ public class FavoriteService {
      *
      */
     public List<FavoritePlaylist> queryFavoritePlaylist() {
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        Long userId = Long.valueOf(id);
+        Long userId = UserContext.getUser();
         String targetType = "playlist";
         return favoriteMapper.queryFavoritePlaylist(targetType, userId);
     }
@@ -115,9 +111,7 @@ public class FavoriteService {
      *
      */
     public List<FavoriteAlbum> queryFavoriteAlbum() {
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        Long userId = Long.valueOf(id);
+        Long userId = UserContext.getUser();
         String targetType = "album";
         return favoriteMapper.queryFavoriteAlbum(targetType, userId);
     }
@@ -127,9 +121,7 @@ public class FavoriteService {
      *
      */
     public List<FavoriteUser> queryFavoriteUser() {
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        Long userId = Long.valueOf(id);
+        Long userId = UserContext.getUser();
         String targetType = "user";
         return favoriteMapper.queryFavoriteUser(targetType, userId);
     }
@@ -139,9 +131,7 @@ public class FavoriteService {
      *
      */
     public List<FavoriteComment> queryFavoriteComment() {
-        Map<String, Object> claims = ThreadLocalUtil.get();
-        Integer id = (Integer) claims.get("id");
-        Long userId = Long.valueOf(id);
+        Long userId = UserContext.getUser();
         String targetType = "comment";
         return favoriteMapper.queryFavoriteComment(targetType, userId);
     }
