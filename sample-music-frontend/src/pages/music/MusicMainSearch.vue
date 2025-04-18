@@ -3,7 +3,7 @@
     <div class="exist">
       <div class="title flex">
         <div class="flex">
-          <h2 style="margin: 0 10px;">{{ condition }}</h2><span>的搜索结果如下</span>
+          <h2 style="margin: 0 10px;box-sizing: border-box">{{ condition ? condition : "综合"}}</h2><p>搜索结果如下</p>
         </div>
         <div class="nav">
           <ButtonSelect
@@ -34,7 +34,7 @@
       <h2 v-else>未搜索出歌曲</h2>
     </div>
 <!--    <div class="e1" v-if="!isExistC && isExistS">
-      <h1>暂未搜索到歌曲</h1>
+      <h1>未搜索到歌曲</h1>
     </div>
     <div class="e1" v-else-if="isExistC && isExistS">
       <h1>暂未搜索歌曲</h1>
@@ -45,7 +45,7 @@
 <script>
 import {mapState} from 'vuex'
 import PageNation from "@/components/PageNation.vue";
-import SongList from "@/pages/music/SongList.vue";
+import SongList from "@/components/SongList.vue";
 import Icon from "@/util/common/Icon";
 import ButtonSelect from "@/components/ButtonSelect.vue";
 
@@ -58,8 +58,8 @@ export default {
   },
   props: {
     show: {},
-    condition: { type: String, required: true },
-    params: { type: String, required: true },
+    condition: { type: String },
+    params: { type: String },
     sortType: { type: String, default: 'LISTENERS_DESC' },
     pageNum: { type: Number, default: 1 },
     pageSize: { type: Number, default: 10 }

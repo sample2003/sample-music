@@ -102,12 +102,12 @@ const router = new VueRouter({
         },
         {
           name: 'search',
-          path: '/music/search/:condition/:params/:sortType/:pageNum/:pageSize',
+          path: '/music/search/:condition?/:params?/:sortType?/:pageNum?/:pageSize?',
           component: MusicMainSearch,
           props: route => ({
-            condition: route.params.condition,
-            params: route.params.params,
-            sortType: route.params.sortType,
+            condition: route.params.condition || '',
+            params: route.params.params || '',
+            sortType: route.params.sortType || '',
             pageNum: Number(route.params.pageNum) || 1,
             pageSize: Number(route.params.pageSize) || 10
           }) // 启用路由参数传递为props
@@ -119,7 +119,14 @@ const router = new VueRouter({
           children: [
             {
               name: "listMusicDetail",
-              path: '/music/list/detail/:detailType/:id',
+              path: '/music/list/detail/:detailType/:id/:condition?/:params?/:sortType?/:pageNum?/:pageSize?',
+              props: route => ({
+                condition: route.params.condition || '',
+                params: route.params.params || '',
+                sortType: route.params.sortType || '',
+                pageNum: Number(route.params.pageNum) || 1,
+                pageSize: Number(route.params.pageSize) || 10
+              }), // 启用路由参数传递为props
               component: UserMusicDetail,
               meta: {
                 access: ACCESS_ENUM.USER,

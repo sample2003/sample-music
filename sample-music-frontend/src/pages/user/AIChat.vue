@@ -6,13 +6,13 @@
         <img class="kik" :src="Icon.addIcon" alt="" @click="toggleCollapse">
       </div>
       <div class="message-list">
-        <div class="message flex">
-          <p>你是谁</p>
+        <div class="message flex" v-for="c in chatList" :key="c.id">
+          <p>{{ c.title }}</p>
           <img :src="Icon.moreIcon" alt="">
-        </div>
-        <div class="message flex">
-          <p>复述aaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-          <img :src="Icon.moreIcon" alt="">
+          <div class="change">
+            <button class="change-button">重命名</button>
+            <button class="change-button">删除</button>
+          </div>
         </div>
       </div>
     </div>
@@ -72,6 +72,7 @@ export default {
       isCollapsed: false,
       value: '复述aaaaaaaaaaaaaaaaaaaaaaaaaaa',
       streamingText: '',   // 实时流式文本
+      chatList: []
     }
   },
   methods: {
@@ -120,6 +121,7 @@ export default {
         }
       }
     },
+
   },
   mounted() {
 
@@ -137,7 +139,6 @@ export default {
   width: 15%;
   height: 100%;
   transition: 0.2s all ease;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -193,6 +194,32 @@ export default {
   box-shadow: var(--boxShadow);
   background-color: var(--second-color);
   cursor: pointer;
+  position: relative;
+}
+
+.change {
+  width: 100px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  display: flex;
+  right: -100px;
+}
+
+.change-button {
+  white-space: nowrap;
+  border-radius: 10px;
+  margin: 0 2px;
+  padding: 10px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  border: 1px solid #0000;
+  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
+}
+
+.change-button:hover {
+  box-shadow: none;
+  border: 1px solid var(--fourth-color);
 }
 
 .message:hover {
@@ -203,6 +230,7 @@ export default {
 .message:hover img {
   opacity: 1;
 }
+
 
 .message p {
   width: 85%;

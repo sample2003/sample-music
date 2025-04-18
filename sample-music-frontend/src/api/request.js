@@ -19,11 +19,7 @@ service.interceptors.response.use(
     (response) => {
         // 任何 HTTP 状态码为 2xx 的响应数据都会触发此函数
         // 对响应数据做点什么
-        if (response.data.code === 200) {
-            return response.data; // 返回数据部分
-        } else {
-            return response.data.code;
-        }
+        return response.data;
     },
     (error) => {
         if (

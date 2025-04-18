@@ -72,7 +72,6 @@ export default {
   bottom: 50%;
   color: #999999;
   letter-spacing: 0.1em;
-  border-radius: 3px;
   transition: all 0.5s ease;
   position: absolute;
   pointer-events: none;

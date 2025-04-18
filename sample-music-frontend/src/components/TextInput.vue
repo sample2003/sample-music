@@ -116,6 +116,8 @@ export default {
   font-size: 1.1em;
   transition: 0.2s all;
   position: relative;
+  justify-content: start;
+  gap: 5px;
   text-align: center;
   background: var(--second-color);
   border-radius: 10px;
@@ -124,11 +126,12 @@ export default {
 }
 
 .inputBox img {
-  width: 10%;
+  width: 30px;
   font-size: 1.1em;
+  margin: 5px;
   padding: 2px;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 8px;
   transition: 0.2s all;
   text-align: center;
 }
@@ -172,7 +175,6 @@ export default {
   font-size: 0.9em;
   white-space: nowrap;
   letter-spacing: 0.1em;
-  border-radius: 3px;
   transition: all 0.5s ease;
   pointer-events: none;
 }

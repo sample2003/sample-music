@@ -67,81 +67,75 @@
           <img :src="Icon.diskPng" alt="">
         </div>
         <div class="detail-message">
-          <div class="dt dt1">
-            <div class="box">
-              <p class="cl">{{ this.classify }}</p>
-              <h3 style="text-align: start;overflow: hidden;text-overflow: ellipsis">{{ playlistWithSongs?.title }}</h3>
+          <div class="dt d1">
+            <div class="title1">
+              <span>{{ this.classify }}</span>
+              <h2>{{ playlistWithSongs?.title }}</h2>
             </div>
+            <img :src="Icon.updateIcon" alt="" @click="updatePlaylist(playlistWithSongs?.id)">
           </div>
 
-          <div class="dt dt2">
-            <div class="box">
+          <div class="dt d2">
+            <div class="artist1 flex">
               <img :src="playlistWithSongs?.userAvatar" alt="">
-              <p style="padding: 10px">{{ playlistWithSongs?.username }}</p>
+              <span style="padding: 10px">{{ playlistWithSongs?.username }}</span>
+            </div>
+            <div class="artist2 flex">
+              <img :src="Icon.calendarIcon" alt="">
+              <span style="color: #888888">{{ playlistWithSongs?.createTime }}发布</span>
             </div>
           </div>
 
-          <div class="kick flex">
-            <p>发布日期</p>
-            <span class="tag">
-              <img :src="Icon.calendarIcon" alt="">
-              {{ playlistWithSongs?.createTime }}
-            </span>
-          </div>
-
-          <div class="kick flex">
-            <p>收听数</p>
-            <span class="tag">
-              <img :src="Icon.headsetIcon" alt="">
-              {{ playlistWithSongs?.listeners }}
-            </span>
-          </div>
-
-          <div class="kick flex">
-            <p>收藏人数</p>
-            <span class="tag">
-              <img :src="Icon.notLoveIcon" alt="">
-              {{ playlistWithSongs?.likes }}
-            </span>
-          </div>
-
-          <div class="kick flex" v-show="playlistWithSongs?.tags">
-            <p>标签</p>
-            <span class="tag" v-for="t in playlistWithSongs?.tags" :key="t">{{ t }}</span>
+          <div class="dt d3">
+            <div class="kick flex">
+              <p>收听数</p>
+              <span class="tag">
+                <img :src="Icon.headsetIcon" alt="">
+                {{ playlistWithSongs?.listeners }}
+              </span>
+            </div>
+            <div class="kick flex">
+              <p>收藏人数</p>
+              <span class="tag">
+                <img :src="Icon.notLoveIcon" alt="">
+                {{ playlistWithSongs?.likes }}
+              </span>
+            </div>
+            <div class="kick flex" v-show="playlistWithSongs?.tags">
+              <p>标签</p>
+              <span class="tag" v-for="t in playlistWithSongs?.tags" :key="t">{{ t }}</span>
+            </div>
           </div>
 
           <div class="dt d4">
-            <div class="change-button flex" @click="showSongList" :class="{'it' : this.isShowSongList}">
+            <div class="select-button" @click="playAllSongs('playlist', playlistWithSongs)">
+              <img :src="Icon.playIcon" alt="">
+              <p style="white-space: nowrap;">播放全部</p>
+            </div>
+            <div class="select-button" @click="changeFavoritesPlaylist(playlistWithSongs.id)">
+              <img :src="isFavorite ? Icon.loveColorIcon : Icon.notLoveIcon" alt="">
+              <p style="white-space: nowrap;">{{ isFavorite ? '取消收藏' : `收藏${this.classify}` }}</p>
+            </div>
+            <div class="change-button flex" @click="showSongList" :class="{'itt' : this.isShowSongList}">
               <span style="white-space: nowrap;">歌曲<span style="margin-left: 5px;">{{
                   playlistWithSongs?.songs?.length || 0
                 }}</span></span>
             </div>
-            <div class="change-button flex" @click="showComment" :class="{'it' : this.isShowComment}">
+            <div class="change-button flex" @click="showComment" :class="{'itt' : this.isShowComment}">
               <span style="white-space: nowrap;">评论<span style="margin-left: 5px;">{{
                   user_comment?.length || 0
                 }}</span></span>
             </div>
           </div>
-
-          <div class="kick flex">
-            <p class="sp">{{ classify }}介绍</p>
-            <span class="tag">{{ playlistWithSongs?.description ? playlistWithSongs?.description : "暂无介绍" }}</span>
-          </div>
-
+        </div>
+        <div class="detail-description">
+          <span class="sp">{{ classify }}介绍</span>
+          <span>{{ playlistWithSongs?.description }}</span>
         </div>
       </div>
       <div v-if="isShowSongList && playlistWithSongs?.songs?.length > 0" class="detail-right ">
         <div class="dt-top">
           <TextInput class="dt-text-input" message="搜索歌单中的歌曲"></TextInput>
-          <div class="change-button" @click="playAllSongs('playlist', playlistWithSongs)">
-            <img :src="Icon.playIcon" alt="">
-            <p>播放全部</p>
-          </div>
-
-          <div class="change-button" @click="changeFavoritesPlaylist(playlistWithSongs.id)">
-            <img :src="isFavorite ? Icon.loveColorIcon : Icon.notLoveIcon" alt="">
-            <p>{{ isFavorite ? '取消收藏' : `收藏${this.classify}` }}</p>
-          </div>
         </div>
         <SongList
             class="dt-song-list"
@@ -150,17 +144,13 @@
             @add="handleAdd"
             @delete="handleDelete"
         ></SongList>
-        <PageNation
-          class="dt-page-nation"
-          :totalItems="playlistWithSongs?.songs?.length || 0"
-          :pageSize.sync="pageSize"
-          :currentPage.sync="pageNum"
-          @update:pageSize="handlePageSizeChange"
-          @update:currentPage="handlePageChange">
-        </PageNation>
+        <PageNation class="dt-page-nation" total-items="'11'"></PageNation>
       </div>
-      <div v-else class="detail-right">
-        <UserComment class="dt-comment" :detailType="detailType" :targetId="targetId"></UserComment>
+      <div v-else-if="isShowComment" class="detail-right dt-comment">
+        <UserComment :detailType="detailType" :targetId="targetId"></UserComment>
+      </div>
+      <div v-else>
+        <p>暂无歌曲</p>
       </div>
     </div>
   </div>
@@ -397,7 +387,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  height: 90%;
+  height: 95%;
   z-index: 1;
   width: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
@@ -406,46 +396,43 @@ export default {
 }
 
 .detail-cover > img:nth-of-type(1) {
-  z-index: 2;
-  background-color: var(--main-color);
-}
-
-.detail-cover > img:nth-of-type(2) {
   left: 25%;
+  z-index: 2;
+  box-shadow: 4px 4px 8px #b3b3b3;
+  background-color: var(--main-color);
 }
 
 .detail-message {
   max-width: 100%;
   height: 30%;
   padding: 1%;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   box-sizing: border-box;
-  justify-content: start;
+  justify-content: space-between;
   align-items: start;
+  display: flex;
+  flex-wrap: wrap;
   user-select: none;
   border-radius: 5px;
+  box-shadow: inset 2px 2px 4px #b3b3b3, inset -2px -2px 4px #ffffff;
 }
 
 .dt {
   width: 100%;
+  height: 20%;
   display: flex;
-}
-
-.box {
-  display: flex;
+  flex-wrap: wrap;
   justify-content: start;
   align-items: center;
-  max-width: 100%;
-  border-radius: 8px;
-  padding: 5px;
-  box-sizing: border-box;
-  box-shadow: var(--boxShadow);
 }
 
-.cl {
+.title1 {
+  display: flex;
+  border-radius: 8px;
+  padding: 5px;
+  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
+}
+
+.title1 > span:nth-of-type(1) {
   padding: 5px 8px;
   background-color: var(--main-color);
   border-radius: 8px;
@@ -454,13 +441,52 @@ export default {
   align-self: center;
 }
 
-.dt2 {
-  max-width: 100%;
+.title1 h1 {
+  max-width: 80%;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
+  white-space: nowrap;
 }
 
-.dt2 img{
-  height: 40px;
-  border-radius: 8px;
+.d1 > img {
+  width: 6%;
+  cursor: pointer;
+}
+
+.d2 > span img {
+  height: 6%;
+}
+
+.artist1 {
+  height: 100%;
+  cursor: pointer;
+  border-radius: 50px;
+  margin-right: 10px;
+  transition: all 0.2s;
+  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
+}
+
+.artist1:hover {
+  box-shadow: none;
+}
+
+.artist1 img {
+  height: 100%;
+  border-radius: 50%;
+}
+
+.artist2 {
+  height: 80%;
+}
+
+.artist2 img {
+  height: 70%;
+}
+
+.d3 {
+  white-space: nowrap;
 }
 
 .kick {
@@ -471,8 +497,6 @@ export default {
 
 .kick p {
   padding: 5px;
-  align-self: flex-start; /* 确保顶部对齐 */
-  white-space: nowrap; /* 禁止换行 */
 }
 
 .tag {
@@ -482,7 +506,6 @@ export default {
   padding: 2px;
   margin: 2px;
   font-size: 12px;
-  text-align: left;
   border: 1px solid var(--main-color);
   border-radius: 5px;
   background-color: #8b80af80;
@@ -494,41 +517,58 @@ export default {
   width: 15px;
 }
 
-.change-button {
+.d4 img {
+  height: 60%;
+}
+
+.select-button {
+  height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 2%;
+  margin-right: 1%;
+  border-radius: 5px;
   cursor: pointer;
-  border-radius: 10px;
-  margin: 0 5px;
-  padding: 10px;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-  border: 1px solid #0000;
+  transition: all 0.2s;
+  border: 1px solid var(--main-color);
   box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
 }
 
-.change-button:hover {
+.select-button:hover {
   box-shadow: none;
-  border: 1px solid var(--fourth-color);
 }
 
-.change-button span {
-  overflow: hidden;
-  text-overflow: ellipsis;
+.change-button {
+  height: 80%;
+  padding: 0 2%;
+  cursor: pointer;
+  position: relative;
+  justify-content: center;
+  border-radius: 5px;
+  transition: all 0.2s;
+  box-shadow: none;
 }
 
-.change-button img{
-  width: 20px;
+.change-button::after {
+  content: '';
+  background: var(--main-color);
+  width: 0;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transition: all 0.2s;
 }
 
-
-.it {
-  box-shadow: inset 2px 2px 4px #b3b3b3, inset -2px -2px 4px #ffffff;
+.change-button:hover::after {
+  width: 100%;
+  left: 0;
 }
 
-.it span {
-  color: var(--main-color);
+.itt {
+  background: var(--main-color);
+  box-shadow: none;
 }
 
 .detail-description {

@@ -235,7 +235,7 @@
 
 <script>
 import AlbumService from "@/api/service/AlbumService";
-import SongList from "@/pages/music/SongList.vue";
+import SongList from "@/components/SongList.vue";
 import PlaylistService from "@/api/service/PlaylistService";
 import RelateService from "@/api/service/RelateService";
 import FavoriteService from "@/api/service/FavoriteService";

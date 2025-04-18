@@ -41,10 +41,16 @@
           <img :src="Icon.historyIcon" alt="" :class="{'isShow':this.showList}">
           <div class="historyList" v-show="showList">
             <div class="historySong" v-for="s in playlistPlaying" :key="s.id" :class="{'hoi': s.id === songPlaying.id}">
-              <img :src="s.cover" alt="">
-              <div>
-                <span style="font-weight: 600;">{{ s.title }}</span>
-                <span style="opacity: 0.75">{{ s.artist }}</span>
+              <img :src="s.cover" alt="" >
+              <div style="flex-direction: column">
+                <div class="flex" style="justify-content: start; width: 100%; gap: 5px; margin-bottom: 5px;">
+                  <p style="font-weight: 600;max-width: 75%">{{ s.title }}</p>
+                  <p style="opacity: 0.55">{{ s.artist }}</p>
+                </div>
+                <div class="song flex" style="justify-content: start; width: 100%;"
+                     :class="{ 'songPlayed': songPl(s.title) }">
+                  <p v-for="tag in s.tags" :key="`tag-${s.tags}`"> {{tag}} </p>
+                </div>
               </div>
               <img :src="Icon.playIcon" alt="" @click="playBySong(s)">
               <img :src="Icon.closeIcon" alt="" @click="removeFromHistory(s.id, $event)">
@@ -89,38 +95,9 @@ export default {
     },
   },
   methods: {
-    // 检测滚动显示
-    /*checkScroll() {
-      const container = this.$refs.container
-      const text = this.$refs.text
-      if (!container || !text) return
-
-      // 清除旧动画
-      if (this.animation) {
-        this.animation.cancel()
-        this.animation = null
-      }
-
-      // 重置位置
-      text.style.transform = 'none'
-
-      const isOverflow = text.scrollWidth > container.clientWidth
-      if (isOverflow) {
-        container.style.textAlign = 'left'
-        const scrollDistance = text.scrollWidth - container.clientWidth
-
-        // 创建滚动动画
-        this.animation = text.animate([
-          { transform: 'translateX(0)' },
-          { transform: `translateX(-${scrollDistance}px)` }
-        ], {
-          duration: (scrollDistance / 50) * 1000,
-          iterations: Infinity
-        })
-      } else {
-        container.style.textAlign = 'center'
-      }
-    },*/
+    songPl(title) {
+      return this.songPlaying.title === title
+    },
     // 跳转到播放页面
     jumpPlay() {
       this.$router.push({
@@ -359,12 +336,30 @@ span {
   transition: 0.2s all ease;
 }
 
-.historySong span {
+.historySong p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: black;
 }
 
 .historySong:hover {
   background-color: var(--fourth-color);
+}
+
+.song p {
+  font-size: 0.6em;
+  border: 1px solid var(--main-color);
+  padding: 1px 2px 2px 1px;
+  margin-right: 2px;
+  border-radius: 3px;
+  color: #48435a;
+  cursor: pointer;
+}
+
+.songPlayed p {
+  border: 1px solid var(--second-color);
+  color: var(--second-color);
 }
 
 .hoi {
@@ -381,8 +376,8 @@ span {
 }
 
 .historySong img:nth-of-type(1) {
-  width: 12%;
-  border-radius: 5px;
+  width: 10%;
+  border-radius: 10px;
 }
 
 .historySong img:nth-of-type(2), .historySong img:nth-of-type(3) {
@@ -390,10 +385,9 @@ span {
 }
 
 .historySong div {
-  width: 65%;
+  width: 70%;
   display: flex;
   transition: 0.2s all ease;
-  flex-direction: column;
 }
 
 .historySong div span {

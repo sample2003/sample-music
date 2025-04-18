@@ -97,7 +97,7 @@
 
 <script>
 import SongService from "@/api/service/SongService";
-import SongList from "@/pages/music/SongList.vue";
+import SongList from "@/components/SongList.vue";
 import PlaylistService from "@/api/service/PlaylistService";
 import {parseBlob} from "music-metadata";
 import Icon from "@/util/common/Icon";

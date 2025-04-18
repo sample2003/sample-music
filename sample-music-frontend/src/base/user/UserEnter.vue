@@ -65,9 +65,11 @@
                 v-show="this.registerParam.email"
                 param-key="verificationCode"
                 :verify-icon="true"
-                style="height: 30%;width: 70%;margin-left: 1.5%;"/>
+                style="height: 30%;width: 70%;margin: 2%;"/>
             <a class="msg"
-               v-show="this.registerParam.email">{{ msg }}</a>
+               @click="handleSendVerifyCode"
+               :class="{'disabled' : countdown > 0}"
+               v-show="registerParam.email">{{ countdownText }}</a>
             <TextInput
                 message="请输入邀请码"
                 @registerInput="handleRegisterParam"
@@ -102,6 +104,7 @@ import {nanoid} from "nanoid";
 import Icon from "@/util/common/Icon";
 import ButtonSelect from "@/components/ButtonSelect.vue";
 import TextInput from "@/components/TextInput.vue";
+import UserService from "@/api/service/userService";
 
 export default {
   name: "UserEnter",
@@ -130,7 +133,8 @@ export default {
     return {
       currentBtn: 'emailOrAccountLogin',
       btn: btn,
-      msg: "发送",
+      countdown: 0,
+      timer: null,
       isShowLogin1: true,
       isShowLogin2: false,
       isShowRegister: false,
@@ -138,7 +142,11 @@ export default {
       registerParam: UserRegisterData
     }
   },
-  computed: {},
+  computed: {
+    countdownText() {
+      return this.countdown > 0 ? `${this.countdown}s` : '发送验证码'
+    }
+  },
   methods: {
     show(param) {
       if (param === this.currentBtn) return
@@ -165,7 +173,7 @@ export default {
     // 用户登录
     async handleLogin() {
       try {
-        const res = await userService.userLogin(this.loginParam);
+        const res = await userService.loginUser(this.loginParam);
         if (res === 'empty') {
           this.$message("请完整填写登录信息")
         } else if (res === 401) {
@@ -195,7 +203,7 @@ export default {
       console.log(this.registerParam)
       try {
         // 使用本地响应式数据提交
-        const res = await userService.userRegister({...this.registerParam})
+        const res = await userService.registerUser({...this.registerParam})
         console.log(res)
         if (res === '404') {
           this.$message("请完整填写登录信息")
@@ -214,13 +222,41 @@ export default {
         console.error(error)
       }
     },
+    // 发送验证码
+    async handleSendVerifyCode() {
+      // 如果正在倒计时，阻止操作
+      if (this.countdown > 0) return
+
+      try {
+        // 调用发送验证码接口
+        this.$message("验证码已发送")
+        await this.sendVerifyCode()
+
+        // 开始倒计时
+        this.countdown = 60
+        this.timer = setInterval(() => {
+          this.countdown--
+          if (this.countdown <= 0) {
+            clearInterval(this.timer)
+          }
+        }, 1000)
+      } catch (error) {
+        console.error('发送失败:', error)
+      }
+    },
+    async sendVerifyCode() {
+      const emailVerify = {
+        email: this.registerParam.email
+      }
+      await UserService.sendVerifyCode(emailVerify);
+    },
     clear(params) {
       Object.keys(params).forEach(key => {
         params[key] = ''
       })
       return params;
     },
-  },
+  }
 }
 </script>
 
@@ -264,7 +300,7 @@ export default {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 5px;
   z-index: 1;
   transition: 0.5s;
   display: flex;
@@ -282,17 +318,25 @@ export default {
 }
 
 .msg {
-  width: 25%;
+  width: 23%;
   cursor: pointer;
   display: inline-block;
-  margin-left: 2%;
   font-size: 0.8em;
   background: #222;
   color: #fff;
   box-shadow: 0 2px 15px #222;
+  transition: 0.2s all ease;
   border-radius: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-decoration: none;
   padding: 5px 0;
+}
+
+.msg:hover {
+  color: #222;
+  background: #fff;
+  box-shadow: 0 2px 15px #fff;
 }
 
 .handleButton {
@@ -306,7 +350,7 @@ export default {
   border-radius: 5px;
   text-decoration: none;
   font-weight: 700;
-  transition: 0.2s;
+  transition: 0.2s all ease;
   padding: 5px 0;
   margin-top: 10px;
 }
@@ -364,10 +408,15 @@ export default {
   background-image: linear-gradient(315deg, var(--main-color), var(--second-color));
 }
 
-
 .select {
   width: 20%;
   padding: 10px;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none; /* 禁用鼠标事件 */
 }
 
 @keyframes changeColor {

@@ -129,7 +129,7 @@ export default {
   width: calc(100% - 20px);
   grid-row: 2 / span 1;
   display: grid;
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 5px 0;
   margin-left: 10px;
   grid-template-rows: repeat(6, 1fr);

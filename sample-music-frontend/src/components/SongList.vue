@@ -26,6 +26,7 @@
 
         </div>
       </div>
+
       <!-- 歌曲列表 -->
       <div
           class="song flex"
@@ -44,7 +45,7 @@
           <div class="first">
             <img :src="s.cover" alt="">
             <div>
-              <span>{{ s.title }}</span>
+              <span style="margin-bottom: 5px;">{{ s.title }}</span>
               <span v-if="s.permission !== 0" class="tag"> VIP </span>
               <span v-for="(t, index) in s.tags" :key="index" class="tag"> {{ t }}</span>
             </div>
@@ -280,10 +281,10 @@ export default {
 }
 
 .tag {
-  font-size: 8px;
-  border-radius: 2px;
+  font-size: 0.6em;
+  border-radius: 3px;
   border: 1px solid var(--main-color);
-  padding: 1px;
+  padding: 1px 2px 2px 2px;
   margin-right: 2px;
   color: #48435a;
 }

@@ -12,7 +12,7 @@
           :class="{ 'it': isButtonActive(btn) }"
       >
         <img v-if="getIcon(btn)" :src="getIcon(btn)" alt="">
-        <span>{{ getLabel(btn) }}</span>
+        <p>{{ getLabel(btn) }}</p>
       </button>
     </div>
   </div>
@@ -96,7 +96,6 @@ export default {
 
 .btns {
   white-space: nowrap;
-  margin: 0 1%;
 }
 
 .btns img {
@@ -106,6 +105,7 @@ export default {
 .btn {
   cursor: pointer;
   border-radius: 10px;
+  margin: 5px;
   padding: 10px;
   transition: all 0.2s;
   box-sizing: border-box;
@@ -118,7 +118,7 @@ export default {
   border: 1px solid var(--fourth-color);
 }
 
-.btn span {
+.btn p {
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -127,7 +127,7 @@ export default {
   box-shadow: inset 2px 2px 4px #b3b3b3, inset -2px -2px 4px #ffffff;
 }
 
-.it span {
+.it p {
   color: var(--main-color);
 }
 </style>
