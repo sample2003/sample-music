@@ -11,7 +11,7 @@
  Target Server Version : 80034 (8.0.34)
  File Encoding         : 65001
 
- Date: 14/04/2025 23:23:54
+ Date: 18/04/2025 16:39:22
 */
 
 SET NAMES utf8mb4;
@@ -95,6 +95,8 @@ CREATE TABLE `chat`  (
   `response` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `create_time` datetime NULL DEFAULT NULL COMMENT '开始日期',
   `message_type` tinyint NULL DEFAULT NULL COMMENT '消息类型',
+  `prompt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '提示词',
+  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '模型',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_chat_user`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_chat_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -103,7 +105,7 @@ CREATE TABLE `chat`  (
 -- ----------------------------
 -- Records of chat
 -- ----------------------------
-INSERT INTO `chat` VALUES (1, 5, '你是谁', '我是', NULL, '2025-04-14 14:14:58', 1);
+INSERT INTO `chat` VALUES (1, 5, '你是谁', '我是', NULL, '2025-04-14 14:14:58', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for comment
@@ -122,7 +124,7 @@ CREATE TABLE `comment`  (
   INDEX `target_type`(`target_type` ASC) USING BTREE,
   INDEX `fk_comment_user`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_comment_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '评论信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '评论信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comment
@@ -133,6 +135,7 @@ INSERT INTO `comment` VALUES (50, 5, '好听', 0, 'song', 153, '2025-01-30 12:18
 INSERT INTO `comment` VALUES (51, 5, '挺好听', 0, 'album', 1, '2025-01-30 12:19:51', '2025-01-30 12:19:51');
 INSERT INTO `comment` VALUES (52, 5, '豪庭', 1, 'album', 2, '2025-04-01 11:58:36', '2025-04-01 11:58:36');
 INSERT INTO `comment` VALUES (53, 5, '我说好听，你尔多隆吗', 0, 'album', 2, '2025-04-10 16:37:22', '2025-04-10 16:37:22');
+INSERT INTO `comment` VALUES (54, 5, '牛', 0, 'playlist', 44, '2025-04-17 17:40:35', '2025-04-17 17:40:35');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -148,7 +151,7 @@ CREATE TABLE `favorite`  (
   UNIQUE INDEX `unique_favorite`(`user_id` ASC, `target_type` ASC, `target_id` ASC) USING BTREE,
   INDEX `target_type`(`target_type` ASC) USING BTREE,
   CONSTRAINT `fk_favorite_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 112 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of favorite
@@ -204,12 +207,12 @@ CREATE TABLE `playlist`  (
 -- ----------------------------
 -- Records of playlist
 -- ----------------------------
-INSERT INTO `playlist` VALUES (1, 5, '是的方法', 2, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '士大夫', NULL, '2024-12-16 16:21:12', '2025-01-30 12:20:35', 1, 0);
+INSERT INTO `playlist` VALUES (1, 5, '是的方法', 2, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '士大夫', '[\"流行\"]', '2024-12-16 16:21:12', '2025-01-30 12:20:35', 1, 0);
 INSERT INTO `playlist` VALUES (40, 5, 'Hello', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/73e87701-1912-4cde-9367-88b3c3aa15a3.png', '我说Hello，你尔多隆吗', NULL, '2024-12-16 16:45:39', '2025-04-10 16:26:15', 1, 0);
-INSERT INTO `playlist` VALUES (41, 13, 'aaaa', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'aaaaaaaaa', NULL, '2024-12-26 14:03:04', '2025-04-12 14:39:07', 1, 0);
+INSERT INTO `playlist` VALUES (41, 13, 'aaaa', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'aaaaaaaaa', NULL, '2024-12-26 14:03:04', '2025-04-17 15:42:52', 1, 0);
 INSERT INTO `playlist` VALUES (42, 13, 'sdf', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/2a42fe72-0ab3-4b5c-9f84-aac1f8006cbf.jpg', 'sdf', NULL, '2024-12-26 14:03:17', '2024-12-27 23:34:16', 1, 0);
 INSERT INTO `playlist` VALUES (43, 5, '豪庭', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/978b2ce7-7816-48f9-8eec-44c772b151f5.jpg', '丟，啊丟，啊丟手絹', NULL, '2025-01-27 12:47:11', '2025-04-11 17:51:02', 1, 0);
-INSERT INTO `playlist` VALUES (44, 5, '给我一杯忘情水', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '给不给', NULL, '2025-01-27 12:47:22', '2025-04-14 15:44:33', 1, 0);
+INSERT INTO `playlist` VALUES (44, 5, '给我一杯忘情水', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '', '[\"流行\"]', '2025-01-27 12:47:22', '2025-04-18 13:59:55', 1, 0);
 
 -- ----------------------------
 -- Table structure for publicity
@@ -518,7 +521,7 @@ CREATE TABLE `user`  (
   `description` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL DEFAULT '什么都没留下哦~' COMMENT '个人简介',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否被删除 0:否，1:是',
+  `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '是否被删除 0:否，1:是',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_username`(`username` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '用户信息' ROW_FORMAT = DYNAMIC;
@@ -526,10 +529,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (5, 'user2', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, '1381231231@qq.com', '未知', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/wuk.jpg', 0, 0, NULL, 0, '什么都没留下哦~', '2024-11-24 22:19:17', '2024-11-24 22:19:17', 0);
-INSERT INTO `user` VALUES (6, 'user2', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, '1381231231@qq.com', '未知', NULL, 0, 0, NULL, 1, '什么都没留下哦~', '2024-11-25 09:35:06', '2024-11-25 09:35:06', 1);
-INSERT INTO `user` VALUES (7, 's', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, 'fdfdf', '未知', NULL, 0, 0, NULL, 0, '什么都没留下哦~', '2024-11-26 10:58:04', '2024-11-26 10:58:04', 0);
-INSERT INTO `user` VALUES (13, 'sample', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, '123456', '未知', NULL, 0, 0, NULL, 0, '什么都没留下哦~', '2024-12-24 10:06:54', '2024-12-24 10:06:54', 0);
+INSERT INTO `user` VALUES (5, 'admin', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, '1381231231@qq.com', '未知', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/wuk.jpg', 0, 0, NULL, 0, '什么都没留下哦~', '2024-11-24 22:19:17', '2024-11-24 22:19:17', 0);
+INSERT INTO `user` VALUES (13, 'user', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, '123456', '未知', NULL, 0, 0, NULL, 0, '什么都没留下哦~', '2024-12-24 10:06:54', '2024-12-24 10:06:54', 0);
 
 -- ----------------------------
 -- Table structure for user_config
@@ -537,9 +538,9 @@ INSERT INTO `user` VALUES (13, 'sample', 'e10adc3949ba59abbe56e057f20f883e', NUL
 DROP TABLE IF EXISTS `user_config`;
 CREATE TABLE `user_config`  (
   `user_id` bigint NOT NULL COMMENT '用户id',
-  `role` enum('user','admin','master') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'user' COMMENT '用户身份',
-  `status` int NOT NULL COMMENT '状态 0:登录，1:启用，2:禁用',
-  `deleted` int NOT NULL DEFAULT 1 COMMENT '是否被删除 0:否，1:是',
+  `role` tinyint NOT NULL DEFAULT 2 COMMENT '用户身份 0：最高权限，1：管理员，2：用户',
+  `status` tinyint NOT NULL DEFAULT 1 COMMENT '状态 0：禁用，1：启用',
+  `deleted` tinyint NOT NULL DEFAULT 1 COMMENT '是否已注销 0：是，1：否',
   INDEX `fk_user_config`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_user_config` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
@@ -547,6 +548,8 @@ CREATE TABLE `user_config`  (
 -- ----------------------------
 -- Records of user_config
 -- ----------------------------
+INSERT INTO `user_config` VALUES (5, 1, 1, 1);
+INSERT INTO `user_config` VALUES (13, 2, 1, 1);
 
 -- ----------------------------
 -- Table structure for user_role
@@ -565,8 +568,6 @@ CREATE TABLE `user_role`  (
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES (1, 5);
-INSERT INTO `user_role` VALUES (2, 6);
-INSERT INTO `user_role` VALUES (2, 7);
 INSERT INTO `user_role` VALUES (2, 13);
 
 SET FOREIGN_KEY_CHECKS = 1;
