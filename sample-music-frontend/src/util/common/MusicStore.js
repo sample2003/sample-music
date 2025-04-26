@@ -23,7 +23,6 @@ export default {
     }),
   }, methods: {
     ...mapActions({
-      // getPlaylists: 'music/getPlaylists',
       getSongsByCondition: 'music/getSongsByCondition',
     }), ...mapMutations({
       setPlaylistDetail: 'music/setPlaylistDetail',

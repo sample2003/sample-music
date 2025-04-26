@@ -70,9 +70,30 @@ export default {
   text-align: center;
 }
 
-::-webkit-scrollbar {
-  width: 0; /* 横向滚动条的宽度 */
+/*::-webkit-scrollbar {
+  width: 0;  横向滚动条的宽度
   height: 0;
+}*/
+
+/* */
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+  transition: 0.2s all ease;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--second-color);
+  transition: 0.2s all ease;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fourth-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--main-color);
 }
 
 .flex {
