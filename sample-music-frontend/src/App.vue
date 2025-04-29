@@ -83,7 +83,7 @@ export default {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--second-color);
+  background-color: #0000;
   transition: 0.2s all ease;
 }
 
@@ -94,6 +94,10 @@ export default {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--main-color);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #0000;
 }
 
 .flex {

@@ -19,7 +19,7 @@
     <div class="right flex">
       <div v-if="streamingText === ''" class="welcome flex">
         <img :src="Icon.deepseekTIcon" alt="">
-        <p>你的聊天数据将被收集哦，开始聊天将视为同意</p>
+        <p>欢迎使用由样本音乐提供的聊天服务，你的聊天数据将只会存储不会被分析使用</p>
       </div>
 
       <div v-else class="content">

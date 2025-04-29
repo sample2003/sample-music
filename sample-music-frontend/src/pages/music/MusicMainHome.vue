@@ -263,7 +263,7 @@ export default {
 }
 
 .first {
-  width: 100%;
+  width: 95%;
   height: 20%;
   margin: 2%;
   display: flex;
