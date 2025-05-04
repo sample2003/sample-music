@@ -26,6 +26,7 @@ import ACCESS_ENUM from "@/util/access/accessEnum";
 import checkAccess from "@/util/access/checkAccess";
 import AIChat from "@/pages/user/AIChat.vue";
 import UserPlaylistManage from "@/pages/music/UserPlaylistManage.vue";
+import AdminUpload from "@/pages/user/AdminUpload.vue";
 
 Vue.use(VueRouter);
 
@@ -86,6 +87,16 @@ const router = new VueRouter({
             access: ACCESS_ENUM.ADMIN,
           },
           component: AdminManage
+        }, {
+          name: "upload",
+          path: "/user/center/upload",
+          props: (route) => ({
+            arrayParam: route.query.arrayParam // 从 query 映射到 props
+          }),
+          meta: {
+            access: ACCESS_ENUM.ADMIN,
+          },
+          component: AdminUpload
         }
       ]
     },

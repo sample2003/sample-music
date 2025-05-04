@@ -75,7 +75,7 @@ export default {
   height: 0;
 }*/
 
-/* */
+/* 滚动条 */
 ::-webkit-scrollbar {
   width: 10px !important;
   height: 10px !important;

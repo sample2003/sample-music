@@ -225,7 +225,7 @@ export default {
   height: 100px;
   position: fixed;
   right: 1%;
-  top: 1%;
+  bottom: 1%;
   z-index: 99;
   border-radius: 60px 10px 10px 60px;
   border: 1px solid var(--fourth-color);
@@ -398,7 +398,6 @@ export default {
 }
 
 .nav {
-  width: 45%;
   height: 100%;
 }
 

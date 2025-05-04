@@ -10,7 +10,7 @@ export default {
       this.$router.push({
         name: 'search',
         params: this.getRouteParams({pageSize: newSize, pageNum: 1})
-      }).then(r => {})
+      }).then(() => {})
      },
     handlePageChange(newPage) {
       this.$router.push({

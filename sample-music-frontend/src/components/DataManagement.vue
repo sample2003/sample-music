@@ -1,7 +1,8 @@
 <template>
   <div id="DataManagement">
-    <div class="top">
+    <div class="top flex">
       <TextInput message="搜索"></TextInput>
+      <button @click="handelUpload()">aa</button>
     </div>
     <!-- 数据表格 -->
     <div class="table-container">
@@ -133,12 +134,25 @@ export default {
       return value || '-';
     },
     handleEdit(item) {
-      // this.$temp("编辑歌曲", item)
-      console.log(item)
+      this.$router.push({
+        path: '/user/center/update',
+        query: { // 通过query传递参数
+          type: this.param,  // 类型：song/playlist
+          id: item.id          // 数据ID（编辑时传入）
+        }
+      });
     },
     handleDelete(id) {
       console.log(id)
     },
+    handelUpload() {
+      this.$router.push({
+        path: '/user/center/upload',
+        query: {
+          arrayParam: JSON.stringify(this.currentColumns),
+        },
+      });
+    }
   },
   mounted() {
     this.fetchData();

@@ -99,14 +99,15 @@ export default {
 }
 
 .btns img {
-  width: 20%;
+  width: 30px;
+  max-width: 25%;
 }
 
 .btn {
   cursor: pointer;
   border-radius: 10px;
-  margin: 5px;
-  padding: 10px;
+  margin: 0 5px;
+  padding: 5px;
   transition: all 0.2s;
   box-sizing: border-box;
   border: 1px solid #0000;

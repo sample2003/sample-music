@@ -409,7 +409,6 @@ export default {
 }
 
 .select {
-  width: 20%;
   padding: 10px;
 }
 
