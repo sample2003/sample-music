@@ -37,12 +37,12 @@ public class SongUpload {
      * 歌曲文件
      */
     @JsonIgnore
-    private MultipartFile mp3AudioFiles;
+    private MultipartFile mp3Url;
     /**
      * 无损歌曲文件
      */
     @JsonIgnore
-    private MultipartFile flacAudioFiles;
+    private MultipartFile flacUrl;
     /**
      * 歌曲封面文件
      */
@@ -52,7 +52,7 @@ public class SongUpload {
      * 歌曲歌词文件
      */
     @JsonIgnore
-    private MultipartFile textFiles;
+    private MultipartFile lyric;
     /**
      * 风格
      */
