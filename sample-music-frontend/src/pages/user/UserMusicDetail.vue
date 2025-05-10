@@ -142,6 +142,16 @@
             <img :src="isFavorite ? Icon.loveColorIcon : Icon.notLoveIcon" alt="">
             <p>{{ isFavorite ? '取消收藏' : `收藏${this.classify}` }}</p>
           </div>
+
+          <div class="change-button" @click="updatePlaylist(playlistWithSongs.id)">
+            <img :src="Icon.updateIcon" alt="">
+            <p>修改歌单</p>
+          </div>
+
+          <div class="change-button" @click="deletePlaylist(playlistWithSongs.id, playlistWithSongs.title)">
+            <img :src="Icon.deleteIcon" alt="">
+            <p>删除歌单</p>
+          </div>
         </div>
         <SongList
             class="dt-song-list"
@@ -205,6 +215,15 @@ export default {
   methods: {
     updatePlaylist(id) {
       this.$router.push({path: `/music/list/manage/playlist/${id}`});
+    },
+    // 删除歌单
+    deletePlaylist(id, title) {
+      this.$confirm(`是否删除歌单：${title}？`, async (confirm) => {
+        if (confirm) {
+          await PlaylistService.deletePlaylist(id)
+          await this.initPlaylist(); // 重新加载歌单列表
+        }
+      })
     },
     // 展示歌曲
     showSongList() {

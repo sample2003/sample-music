@@ -88,14 +88,14 @@ public class SongController {
     @PutMapping("update")
     public Result<Song> updateSong(SongUpload songUpdate) {
         if (songUpdate == null) return Result.error("歌曲为空");
-        // 上传歌词文件到OSS
-        String lyricUrl = fileManageService.uploadFile(songUpdate.getTextFiles(), "lyric");
+        // 上传歌词文件到OSSd
+        String lyricUrl = fileManageService.uploadFile(songUpdate.getLyric(), "lyric");
         // 上传图片文件到OSS
         String coverUrl = fileManageService.uploadFile(songUpdate.getImageFiles(), "cover");
         // 上传无损歌曲文件到OSS
-        String flacSongUrl = fileManageService.uploadFile(songUpdate.getFlacAudioFiles(), "song");
+        String flacSongUrl = fileManageService.uploadFile(songUpdate.getFlacUrl(), "song");
         // 上传歌曲文件到OSS
-        String mp3SongUrl = fileManageService.uploadFile(songUpdate.getMp3AudioFiles(), "song");
+        String mp3SongUrl = fileManageService.uploadFile(songUpdate.getMp3Url(), "song");
 
         if (!lyricUrl.equals("error") && !coverUrl.equals("error") && !mp3SongUrl.equals("error") && !flacSongUrl.equals("error")) {
             Song song = new Song();

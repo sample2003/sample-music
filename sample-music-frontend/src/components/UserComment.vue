@@ -22,6 +22,7 @@
           <img :src="isGoodArray.includes(c.id) ? Icon.likeIcon : Icon.notLikeIcon" alt=""
                @click="changeFavoritesComment(c.id)">
           <span>{{ c.likes }}</span>
+          <img v-show="userDetail.username === c.username" :src="Icon.deleteIcon" alt="" @click="deleteComment(c.id)">
         </div>
       </div>
     </div>
@@ -120,6 +121,16 @@ export default {
           }
         }
       }
+    },
+    // 确认是否删除评论
+    async deleteComment(id) {
+        this.$confirm(`是否删除评论`, async (confirm) => {
+          if (confirm) {
+            // todo
+            await Comment.deletePlaylist(id)
+            await this.initPlaylist(); // 重新加载歌单列表
+          }
+        })
     },
   },
   mounted() {

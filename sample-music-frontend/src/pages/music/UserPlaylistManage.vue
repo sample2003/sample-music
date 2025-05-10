@@ -14,16 +14,16 @@
           <button class="handleButton" @click="handleCancel">取消</button>
         </div>
       </div>
-      <div  class="cover">
+      <div class="cover">
         <img
             :src="coverPreview || playlistUpdate.cover"
-            @click="triggerFileInput"
             alt="">
         <input
             type="file"
             ref="field"
             @change="handleFileChange($event)"
             style="display: none;"/>
+        <span @click="triggerFileInput">修改图片</span>
       </div>
     </form>
   </div>
@@ -170,7 +170,7 @@ form {
 
 .title {
   width: 90%;
-  height: 60px;
+  height: 40px;
 }
 
 /* 描述区域高度自适应 */
@@ -188,18 +188,47 @@ form {
 /* 右侧封面样式 */
 .cover {
   flex: 1;                /* 与左侧宽度相等 */
-  position: sticky;       /* 可选：实现滚动时固定 */
-  top: 20px;
+  position: relative;
 }
 
 .cover img {
-  width: 70%;
+  width: 90%;
   border-radius: 5px;
   box-shadow: var(--boxShadow);
   height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
   object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
   max-height: 300px; /* 限制最大高度 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.cover span {
+  width: 90%;
+  position: absolute;
+  height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
+  aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
+  object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
+  max-height: 300px; /* 限制最大高度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--second-color);
+  background-color: #0007;
+  border-radius: 5px;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: underline;
+}
+
+.cover span:hover {
+  opacity: 1;
 }
 
 .handleButton {

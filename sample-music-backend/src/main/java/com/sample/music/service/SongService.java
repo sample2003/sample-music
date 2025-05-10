@@ -148,10 +148,10 @@ public class SongService {
         Song song = new Song();
 
         // 上传歌词文件到OSS
-        if (songUpload.getTextFiles().isEmpty()) {
+        if (songUpload.getLyric().isEmpty()) {
             song.setLyric(null);
         } else {
-            String lyricUrl = fileManageService.uploadFile(songUpload.getTextFiles(), "lyric");
+            String lyricUrl = fileManageService.uploadFile(songUpload.getLyric(), "lyric");
             if (!lyricUrl.equals("error")) song.setLyric(lyricUrl);
             else throw new BusinessException(INTERNAL_SERVER_ERROR, "歌词文件上传失败");
         }
@@ -166,19 +166,19 @@ public class SongService {
         }
 
         // 上传mp3歌曲文件到OSS
-        if (songUpload.getMp3AudioFiles().isEmpty()) {
+        if (songUpload.getMp3Url().isEmpty()) {
             song.setMp3Url(null);
         } else {
-            String mp3SongUrl = fileManageService.uploadFile(songUpload.getMp3AudioFiles(), "song");
+            String mp3SongUrl = fileManageService.uploadFile(songUpload.getMp3Url(), "song");
             if (!mp3SongUrl.equals("error")) song.setMp3Url(mp3SongUrl);
             else throw new BusinessException(INTERNAL_SERVER_ERROR, "mp3格式歌曲文件上传失败");
         }
 
         // 上传无损歌曲文件到OSS
-        if (songUpload.getFlacAudioFiles().isEmpty()) {
+        if (songUpload.getFlacUrl().isEmpty()) {
             song.setFlacUrl(null);
         } else {
-            String flacSongUrl = fileManageService.uploadFile(songUpload.getFlacAudioFiles(), "song");
+            String flacSongUrl = fileManageService.uploadFile(songUpload.getFlacUrl(), "song");
             if (!flacSongUrl.equals("error")) song.setFlacUrl(flacSongUrl);
             else throw new BusinessException(INTERNAL_SERVER_ERROR, "flac格式歌曲文件上传失败");
         }

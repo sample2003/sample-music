@@ -8,21 +8,15 @@
           param-key="playlistTitle"
           message="请输入歌单标题"></TextInput>
       <div style="width: 100%;">
-        <TextInput
-          @inputChange="handleInput"
-          style="width: 300px;height: 40px;"
-          method="input"
-          param-key="newTag"
-          @enter="addTag"
-          :value="newTag"
-          v-model="newTag"
-          message="回车新增标签"
-        ></TextInput>
-        <div class="tags">
-                    <span v-for="tag in tags" :key="tag" class="tag">
-                        {{ tag }}
-                        <img :src="Icon.closeIcon" alt="" @click="removeTag(tag)">
-                    </span>
+        <div style="display: flex;flex-wrap: wrap;">
+          <input v-model="newTag" placeholder="回车新增标签" class="input" style="width: 100%;">
+          <button @click="addTag($event)" style="display: none">add</button>
+          <div class="tags">
+              <span v-for="tag in tags" :key="tag" class="tag">
+                  {{ tag }}
+                  <img :src="Icon.closeIcon" alt="" @click="removeTag(tag)">
+              </span>
+          </div>
         </div>
       </div>
       <div class="in flex">
