@@ -116,15 +116,15 @@
           <img v-once :src="Icon.detailWhiteIcon" alt="">
           <span>{{ pl.title }}</span>
           <div class="kik flex">
-            <img v-once :src="Icon.peopleIcon" alt="">
-            <span>{{ pl.username || '未知' }}</span>
-          </div>
-          <div class="kik flex">
             <img v-once :src="Icon.headsetIcon" alt="">
             <span>{{ pl.listeners }}</span>
           </div>
+          <div class="kik flex">
+            <img v-once :src="Icon.calendarIcon" alt="">
+            <span>{{ pl.createTime }}</span>
+          </div>
           <span>{{ pl.description || '暂无描述' }}</span>
-          <span style="display: inline-flex;white-space: nowrap;"><img :src="Icon.calendarIcon" alt="" style="width: 10%;padding-left: 5px;">{{ pl.createTime }}</span>
+          <span style="display: inline-flex;white-space: nowrap;"><img :src="Icon.diskIcon" alt="" style="width: 10%;padding-left: 5px;">{{ pl.title }} - <span style="display: inline-flex">{{ pl.username }}</span></span>
         </div>
       </div>
     </div>
@@ -142,14 +142,6 @@ export default {
   name: "MusicMainHome",
   data() {
     return {
-      classify: [
-        {id: "11", img: Icon.addIcon, msg: "流行"},
-        {id: "22", img: Icon.addIcon, msg: "摇滚"},
-        {id: "33", img: Icon.addIcon, msg: "伤感"},
-        {id: "44", img: Icon.addIcon, msg: "r&b"},
-        {id: "55", img: Icon.addIcon, msg: "日推"},
-        {id: "66", img: Icon.addIcon, msg: "动漫"},
-      ],
       playlists: [],
       albumsAndSongs: [],
       playlistsAndSongs: [],
