@@ -14,4 +14,6 @@ public interface PublicityMapper {
     List<PublicityView> PagedQuery(String publicityType);
 
     List<PublicityView> conditionAndPagedQuery(String condition, String publicityType);
+
+    PublicityView query(Long id);
 }

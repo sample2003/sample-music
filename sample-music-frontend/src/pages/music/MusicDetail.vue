@@ -1,159 +1,210 @@
 <template>
   <div id="musicDetail">
     <div v-if="detailType === 'album'" class="detail">
-      <div class="detail-top">
-        <img :src="albumDetail.cover ?? Icon.musicColorIcon" alt="" class="blurry-image">
-        <img v-once :src="Icon.diskPng" alt="">
+      <div class="detail-left">
+        <div class="detail-cover">
+          <img :src="albumDetail?.cover ?? Icon.musicColorIcon" alt="" class="blurry-image">
+          <img :src="Icon.diskPng" alt="">
+        </div>
         <div class="detail-message">
-          <div class="dt d1">
-            <div class="title1">
-              <span>{{ classify }}</span>
-              <h1>{{ albumDetail.title }}</h1>
+          <div class="dt dt1">
+            <div class="box">
+              <p class="cl">{{ this.classify }}</p>
+              <h3 style="text-align: start;overflow: hidden;text-overflow: ellipsis">{{ albumDetail?.title }}</h3>
             </div>
           </div>
 
-          <div class="dt d2">
-            <div class="artist1 flex" @click="jumpArtist(albumDetail.artistId)">
-              <img :src="albumDetail.artistAvatar ?? Icon.musicColorIcon" alt="">
-              <span style="padding: 10px">{{ albumDetail.artist }}</span>
+          <div class="dt dt2">
+            <div class="box">
+              <img :src="albumDetail?.artistAvatar" alt="">
+              <p style="padding: 10px">{{ albumDetail?.artist }}</p>
             </div>
-            <div class="artist2 flex">
+          </div>
+
+          <div class="kick flex">
+            <p>发布日期</p>
+            <span class="tag">
               <img :src="Icon.calendarIcon" alt="">
-              <span style="color: #888888">{{ albumDetail.releaseDate }}发布</span>
-            </div>
+              {{ albumDetail?.createTime }}
+            </span>
           </div>
 
-          <div class="dt d3">
-            <div class="kick flex">
-              <p>收听数</p>
-              <span class="tag"><img :src="Icon.headsetIcon" alt="">
-                                {{ albumDetail.listeners }}
-                            </span>
-            </div>
-            <div class="kick flex">
-              <p>收藏人数</p>
-              <span class="tag"><img :src="Icon.notLoveIcon" alt="">
-                                {{ albumDetail.likes }}
-                            </span>
-            </div>
-            <div class="kick flex">
-              <p>标签</p>
-              <span class="tag" v-for="t in tags" :key="t">{{ t }}</span>
-            </div>
+          <div class="kick flex">
+            <p>收听数</p>
+            <span class="tag">
+              <img :src="Icon.headsetIcon" alt="">
+              {{ albumDetail?.listeners }}
+            </span>
+          </div>
+
+          <div class="kick flex">
+            <p>收藏人数</p>
+            <span class="tag">
+              <img :src="Icon.notLoveIcon" alt="">
+              {{ albumDetail?.likes }}
+            </span>
+          </div>
+
+          <div class="kick flex" v-show="albumDetail?.tags">
+            <p>标签</p>
+            <span class="tag" v-for="t in albumDetail?.tags" :key="t">{{ t }}</span>
           </div>
 
           <div class="dt d4">
-            <div class="select-button" @click="playAllSongs('album', albumDetail)">
-              <img :src="Icon.playIcon" alt="">
-              <p>播放全部</p>
+            <div class="change-button flex" @click="showSongList" :class="{'it' : this.isShowSongList}">
+              <span style="white-space: nowrap;">歌曲<span style="margin-left: 5px;">{{
+                  albumDetail?.songs?.length || 0
+                }}</span></span>
             </div>
-            <div class="select-button" @click="changeFavoritesAlbum(albumDetail.id)">
-              <img :src="isFavorite ? Icon.loveColorIcon : Icon.notLoveIcon" alt="">
-              <p>{{ isFavorite ? '取消收藏' : `收藏${this.classify}` }}</p>
-            </div>
-            <div class="change-button flex" @click="showSongList" :class="{'itt' : this.isShowSongList}">
-              <span>歌曲<span class="nsp">{{ albumDetail.songs.length }}</span></span>
-            </div>
-            <div class="change-button flex" @click="showComment" :class="{'itt' : this.isShowComment}">
-              <span>评论<span class="nsp">{{ user_comment.length }}</span></span>
+            <div class="change-button flex" @click="showComment" :class="{'it' : this.isShowComment}">
+              <span style="white-space: nowrap;">评论<span style="margin-left: 5px;">{{
+                  user_comment?.length || 0
+                }}</span></span>
             </div>
           </div>
-        </div>
-        <div class="detail-description">
-          <span class="sp">{{ classify }}介绍</span>
-          <span>{{ albumDetail.description }}</span>
+
+          <div class="kick flex">
+            <p class="sp">{{ classify }}介绍</p>
+            <span class="tag">{{ albumDetail?.description ? albumDetail?.description : "暂无介绍" }}</span>
+          </div>
+
         </div>
       </div>
-      <div v-if="isShowSongList" class="detail-bottom dt-songList">
+      <div v-if="isShowSongList && albumDetail?.songs?.length > 0" class="detail-right ">
+        <div class="dt-top">
+          <TextInput class="dt-text-input" message="搜索专辑中的歌曲"></TextInput>
+          <div class="change-button" @click="playAllSongs('playlist', albumDetail)">
+            <img :src="Icon.playIcon" alt="">
+            <p>播放全部</p>
+          </div>
+
+          <div class="change-button" @click="changeFavoritesPlaylist(albumDetail.id)">
+            <img :src="isFavorite ? Icon.loveColorIcon : Icon.notLoveIcon" alt="">
+            <p>{{ isFavorite ? '取消收藏' : `收藏${this.classify}` }}</p>
+          </div>
+        </div>
         <SongList
-            :songs="songs(albumDetail.songs)"
-            :operator="'album'"
+            class="dt-song-list"
+            :songs="songs(albumDetail?.songs)"
+            :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
         ></SongList>
+        <PageNation
+            class="dt-page-nation"
+            :totalItems="albumDetail?.songs?.length || 0"
+            :pageSize.sync="pageSize"
+            :currentPage.sync="pageNum"
+            @update:pageSize="handlePageSizeChange"
+            @update:currentPage="handlePageChange">
+        </PageNation>
       </div>
-      <div v-else-if="isShowComment" class="detail-bottom dt-comment">
-        <UserComment :detailType="detailType" :targetId="targetId"></UserComment>
+      <div v-else class="detail-right">
+        <UserComment class="dt-comment" :detailType="detailType" :targetId="targetId"></UserComment>
       </div>
     </div>
 
     <div v-else-if="detailType === 'playlist'" class="detail">
-      <div class="detail-top">
-        <img :src="this.playlist.cover ?? Icon.musicColorIcon" alt="">
-        <img :src="Icon.diskPng" alt="">
+      <div class="detail-left">
+        <div class="detail-cover">
+          <img :src="this.playlist?.cover ?? Icon.musicColorIcon" alt="">
+          <img :src="Icon.diskPng" alt="">
+        </div>
         <div class="detail-message">
-          <div class="dt d1">
-            <div class="title1">
-              <span>{{ this.classify }}</span>
-              <h1>{{ this.playlist.title }}</h1>
+          <div class="dt dt1">
+            <div class="box">
+              <p class="cl">{{ this.classify }}</p>
+              <h3 style="text-align: start;overflow: hidden;text-overflow: ellipsis">{{ this.al?.title }}</h3>
             </div>
           </div>
 
-          <div class="dt d2">
-            <div class="artist1 flex" @click="jumpUser(playlist.userId)">
-              <img :src="this.playlist.userAvatar ?? Icon.musicColorIcon" alt="">
-              <span style="padding: 10px">{{ this.playlist.username }}</span>
+          <div class="dt dt2">
+            <div class="box">
+              <img :src="this.playlist?.userAvatar" alt="">
+              <p style="padding: 10px">{{ this.playlist?.username }}</p>
             </div>
-            <div class="artist2 flex">
+          </div>
+
+          <div class="kick flex">
+            <p>发布日期</p>
+            <span class="tag">
               <img :src="Icon.calendarIcon" alt="">
-              <span style="color: #888888">{{ this.playlist.createTime }}发布</span>
-            </div>
+              {{ this.playlist?.createTime }}
+            </span>
           </div>
 
-          <div class="dt d3">
-            <div class="kick flex">
-              <p>收听数</p>
-              <span class="tag"><img :src="Icon.headsetIcon" alt="">
-                                {{ this.playlist.listeners }}
-                            </span>
-            </div>
-            <div class="kick flex">
-              <p>收藏人数</p>
-              <span class="tag"><img :src="Icon.notLoveIcon" alt="">
-                                {{ this.playlist.likes }}
-                            </span>
-            </div>
-            <div class="kick flex">
-              <p>标签</p>
-              <span class="tag" v-for="t in tags" :key="t">{{ t }}</span>
-            </div>
+          <div class="kick flex">
+            <p>收听数</p>
+            <span class="tag">
+              <img :src="Icon.headsetIcon" alt="">
+              {{ this.playlist?.listeners }}
+            </span>
+          </div>
+
+          <div class="kick flex">
+            <p>收藏人数</p>
+            <span class="tag">
+              <img :src="Icon.notLoveIcon" alt="">
+              {{ this.playlist?.likes }}
+            </span>
+          </div>
+
+          <div class="kick flex" v-show="this.playlist?.tags">
+            <p>标签</p>
+            <span class="tag" v-for="t in this.playlist?.tags" :key="t">{{ t }}</span>
           </div>
 
           <div class="dt d4">
-            <div class="select-button" @click="playAllSongs('playlist', playlist)">
-              <img :src="Icon.playIcon" alt="">
-              <p style="white-space: nowrap;">播放全部</p>
+            <div class="change-button flex" @click="showSongList" :class="{'it' : this.isShowSongList}">
+              <span style="white-space: nowrap;">歌曲<span style="margin-left: 5px;">{{
+                  this.playlist?.songs?.length || 0
+                }}</span></span>
             </div>
-            <div class="select-button" @click="changeFavoritesPlaylist(playlist.id)">
-              <img :src="isFavorite ? Icon.loveColorIcon : Icon.notLoveIcon" alt="">
-              <p style="white-space: nowrap;">{{ isFavorite ? '取消收藏' : `收藏${this.classify}` }}</p>
-            </div>
-            <div class="select-button" @click="showSongList" :class="{'it' : this.isShowSongList}">
-              <span style="white-space: nowrap;">歌曲<span class="nsp">{{ albumDetail.songs.length }}</span></span>
-            </div>
-            <div class="select-button" @click="showComment" :class="{'it' : this.isShowComment}">
-              <span style="white-space: nowrap;">评论<span class="nsp">{{ user_comment.length }}</span></span>
+            <div class="change-button flex" @click="showComment" :class="{'it' : this.isShowComment}">
+              <span style="white-space: nowrap;">评论<span style="margin-left: 5px;">{{
+                  user_comment?.length || 0
+                }}</span></span>
             </div>
           </div>
-        </div>
-        <div class="detail-description">
-          <span class="sp">{{ classify }}介绍</span>
-          <span>{{ this.playlist.description }}</span>
+
+          <div class="kick flex">
+            <p class="sp">{{ classify }}介绍</p>
+            <span class="tag">{{ this.playlist?.description ? this.playlist?.description : "暂无介绍" }}</span>
+          </div>
+
         </div>
       </div>
-      <div v-if="isShowSongList" class="detail-bottom dt-songList">
+      <div v-if="isShowSongList && this.playlist?.songs?.length > 0" class="detail-right ">
+        <div class="dt-top">
+          <TextInput class="dt-text-input" message="搜索歌单中的歌曲"></TextInput>
+          <div class="change-button" @click="playAllSongs('playlist', this.playlist)">
+            <img :src="Icon.playIcon" alt="">
+            <p>播放全部</p>
+          </div>
+
+          <div class="change-button" @click="changeFavoritesPlaylist(this.playlist.id)">
+            <img :src="isFavorite ? Icon.loveColorIcon : Icon.notLoveIcon" alt="">
+            <p>{{ isFavorite ? '取消收藏' : `收藏${this.classify}` }}</p>
+          </div>
+        </div>
         <SongList
-            :songs="songs(this.playlist.songs)"
-            :operator="'album'"
+            class="dt-song-list"
+            :songs="songs(this.playlist?.songs)"
+            :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
         ></SongList>
+        <PageNation
+            class="dt-page-nation"
+            :totalItems="this.playlist?.songs?.length || 0"
+            :pageSize.sync="pageSize"
+            :currentPage.sync="pageNum"
+            @update:pageSize="handlePageSizeChange"
+            @update:currentPage="handlePageChange">
+        </PageNation>
       </div>
-      <div v-else-if="isShowComment" class="detail-bottom dt-comment">
-        <UserComment
-            :detailType="detailType"
-            :targetId="targetId"
-        ></UserComment>
+      <div v-else class="detail-right">
+        <UserComment class="dt-comment" :detailType="detailType" :targetId="targetId"></UserComment>
       </div>
     </div>
 
@@ -242,10 +293,12 @@ import FavoriteService from "@/api/service/FavoriteService";
 import UserComment from "@/components/UserComment.vue";
 import ArtistService from "@/api/service/ArtistService";
 import Icon from "@/util/common/Icon";
+import TextInput from "@/components/TextInput.vue";
+import PageNation from "@/components/PageNation.vue";
 
 export default {
   name: "MusicDetail",
-  components: {UserComment, SongList},
+  components: {PageNation, TextInput, UserComment, SongList},
   data() {
     return {
       detailType: "",
@@ -444,28 +497,9 @@ export default {
 <style scoped>
 #musicDetail {
   width: 98%;
-  height: 88%;
+  height: 98%;
   margin-top: 1%;
   margin-left: 1%;
-}
-
-.detail {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-}
-
-.detail-top {
-  width: 100%;
-  padding-top: 15%;
-  position: relative;
-}
-
-.blurry-image {
-  transition: filter 1s ease-in-out; /* 过渡效果 */
-  animation: filter-animate 1s ease-in-out;
 }
 
 @keyframes filter-animate {
@@ -477,57 +511,83 @@ export default {
   }
 }
 
-.detail-top > img {
+.blurry-image {
+  transition: filter 1s ease-in-out; /* 过渡效果 */
+  animation: filter-animate 1s ease-in-out;
+}
+
+.detail {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.detail-left {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-cover {
+  width: 100%;
+  height: 30%;
+  position: relative;
+}
+
+.detail-cover > img {
   position: absolute;
   top: 0;
   left: 0;
-  width: 15%;
+  height: 100%;
   z-index: 1;
-  height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
+  width: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
   object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
   border-radius: 5px;
 }
 
-.detail-top > img:nth-of-type(1) {
-  left: 5%;
+.detail-cover > img:nth-of-type(1) {
   z-index: 2;
-  box-shadow: 4px 4px 8px #b3b3b3;
   background-color: var(--main-color);
 }
 
+.detail-cover > img:nth-of-type(2) {
+  left: 25%;
+}
+
 .detail-message {
-  max-width: 40%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 22%;
+  max-width: 100%;
+  height: 30%;
   padding: 1%;
-  box-sizing: border-box;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 10px;
+  box-sizing: border-box;
+  justify-content: start;
   align-items: start;
+  user-select: none;
   border-radius: 5px;
-  box-shadow: inset 2px 2px 4px #b3b3b3, inset -2px -2px 4px #ffffff;
 }
 
 .dt {
   width: 100%;
-  height: 20%;
+  display: flex;
+}
+
+.box {
   display: flex;
   justify-content: start;
   align-items: center;
-}
-
-.title1 {
-  display: flex;
+  max-width: 100%;
   border-radius: 8px;
   padding: 5px;
-  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
+  box-sizing: border-box;
+  box-shadow: var(--boxShadow);
 }
 
-.title1 > span:nth-of-type(1) {
+.cl {
   padding: 5px 8px;
   background-color: var(--main-color);
   border-radius: 8px;
@@ -536,69 +596,25 @@ export default {
   align-self: center;
 }
 
-.title1 h1 {
-  max-width: 80%;
-  max-height: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: start;
-  white-space: nowrap;
+.dt2 {
+  max-width: 100%;
 }
 
-.d1 > img {
-  width: 6%;
-  cursor: pointer;
-}
-
-.d2 > span img {
-  height: 6%;
-}
-
-.artist1 {
-  height: 100%;
-  cursor: pointer;
-  border-radius: 50px;
-  margin-right: 10px;
-  transition: all 0.2s;
-  border: 1px solid #0000;
-  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
-}
-
-.artist1:hover {
-  border: 1px solid var(--fourth-color);
-  box-shadow: none;
-}
-
-.artist1:hover span {
-  color: var(--main-color);
-}
-
-.artist1 img {
-  height: 100%;
-  border-radius: 50%;
-}
-
-.artist2 {
-  height: 80%;
-}
-
-.artist2 img {
-  height: 70%;
-}
-
-.d3 {
-  padding: 0;
-  white-space: nowrap;
+.dt2 img{
+  height: 40px;
+  border-radius: 8px;
 }
 
 .kick {
-  border-radius: 5px;
   margin-right: 5px;
+  border-radius: 5px;
   box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
 }
 
 .kick p {
   padding: 5px;
+  align-self: flex-start; /* 确保顶部对齐 */
+  white-space: nowrap; /* 禁止换行 */
 }
 
 .tag {
@@ -608,6 +624,7 @@ export default {
   padding: 2px;
   margin: 2px;
   font-size: 12px;
+  text-align: left;
   border: 1px solid var(--main-color);
   border-radius: 5px;
   background-color: #8b80af80;
@@ -619,67 +636,46 @@ export default {
   width: 15px;
 }
 
-.d4 img {
-  height: 60%;
-}
-
-.select-button {
-  height: 80%;
+.change-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 2%;
-  margin-right: 1%;
-  border-radius: 5px;
   cursor: pointer;
-  user-select: none;
-  transition: all 0.2s;
-  border: 1px solid var(--main-color);
+  border-radius: 10px;
+  margin: 0 5px;
+  padding: 10px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  border: 1px solid #0000;
   box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
 }
 
-.select-button:hover {
+.change-button:hover {
   box-shadow: none;
+  border: 1px solid var(--fourth-color);
 }
 
-.change-button {
-  height: 80%;
-  padding: 0 2%;
-  cursor: pointer;
-  position: relative;
-  justify-content: center;
-  border-radius: 5px;
-  transition: all 0.2s;
-  box-shadow: none;
+.change-button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.change-button::after {
-  content: '';
-  background: var(--main-color);
-  width: 0;
-  height: 2px;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transition: all 0.2s;
+.change-button img{
+  width: 20px;
 }
 
-.change-button:hover::after {
-  width: 100%;
-  left: 0;
+
+.it {
+  box-shadow: inset 2px 2px 4px #b3b3b3, inset -2px -2px 4px #ffffff;
 }
 
-.itt {
-  background: var(--main-color);
-  box-shadow: none;
+.it span {
+  color: var(--main-color);
 }
 
 .detail-description {
   width: 30%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
+  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -687,10 +683,29 @@ export default {
   overflow: auto;
 }
 
-.detail-bottom {
-  width: 90%;
-  height: 70%;
-  margin-top: 1%;
-  margin-left: 5%;
+.detail-right {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.dt-top {
+  width: 100%;
+  height: 5%;
+  margin: 1%;
+  display: flex;
+}
+
+.dt-text-input {
+  width: 20% !important;
+  height: 100% !important;
+  margin: 0 !important;
+}
+
+.dt-song-list {
+  height: 85% !important;
+}
+
+.dt-page-nation {
+  height: 5% !important;
 }
 </style>

@@ -27,6 +27,8 @@ import checkAccess from "@/util/access/checkAccess";
 import AIChat from "@/pages/user/AIChat.vue";
 import UserPlaylistManage from "@/pages/music/UserPlaylistManage.vue";
 import AdminUpload from "@/pages/user/AdminUpload.vue";
+import Publicity from "@/api/pojo/Publicity";
+import MusicPublicity from "@/pages/music/MusicPublicity.vue";
 
 Vue.use(VueRouter);
 
@@ -173,6 +175,11 @@ const router = new VueRouter({
           path: "/music/ai",
           component: AIChat
         },
+        {
+          name: "publicity",
+          path: "/music/publicity/:id",
+          component: MusicPublicity
+        }
       ]
     },
     {

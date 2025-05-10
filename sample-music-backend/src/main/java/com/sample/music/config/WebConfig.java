@@ -35,7 +35,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .addInterceptor(loginInterceptor)
                 .excludePathPatterns(
                         // 原有排除路径保留
-                        "/api/**/select/**",
                         "/api/user/login",
                         "/api/user/register",
                         "/api/user/sendVerifyCode",

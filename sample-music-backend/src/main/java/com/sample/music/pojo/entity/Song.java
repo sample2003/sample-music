@@ -73,15 +73,10 @@ public class Song {
      * 歌曲信息上传时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime createTime;
+    private String createTime;
     /**
      * 歌曲信息更新时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime updateTime;
-    /**
-     * 歌曲添加歌单日期
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private String relateTime;
+    private String updateTime;
 }

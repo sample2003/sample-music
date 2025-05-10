@@ -47,4 +47,9 @@ public class PublicityService {
         pb.setItems(publicityViews);
         return pb;
     }
+
+    public PublicityView query(Long id) {
+        PublicityView query = publicityMapper.query(id);
+        return query;
+    }
 }

@@ -10,7 +10,7 @@
       </select>
     </div>
     <!-- 上一页 -->
-    <button class="prev-page" :disabled="currentPage <= 1" @click="changePageNum(currentPage - 1)">
+    <button class="prev-page" v-show="currentPage > 1" @click="changePageNum(currentPage - 1)">
       <span>上</span>
     </button>
     <!-- 显示页数 -->
@@ -28,7 +28,7 @@
     </div>
 
     <!-- 下一页 -->
-    <button class="next-page" :disabled="currentPage >= pageCount" @click="changePageNum(currentPage + 1)">
+    <button class="next-page" v-show="currentPage < pageCount" @click="changePageNum(currentPage + 1)">
       <span>下</span>
     </button>
     <!-- 跳转到指定页数 -->

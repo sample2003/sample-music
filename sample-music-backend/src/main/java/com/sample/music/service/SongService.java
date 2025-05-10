@@ -219,7 +219,6 @@ public class SongService {
      *
      * @param song 歌曲
      */
-    @CacheEvict(value = "songDetailCache", key = "#song.id")
     public Song updateSong(Song song) {
         if (querySongById(song.getId()) == null) throw new BusinessException(404, "未找到歌曲");
         songMapper.updateSong(song);
@@ -240,7 +239,7 @@ public class SongService {
             value = "songPageCache",
             key = "{#condition, #params, #pageNum, #pageSize, #sortType?.name()}"
     )
-    public PageBean<SongView> conditionAndPagedQuery(
+    public PageBean<SongView> query(
             String condition,
             TargetType params,
             Integer pageNum,
@@ -285,6 +284,47 @@ public class SongService {
         });
         pb.setTotal(total); // 直接使用分页结果的size作为总数
         pb.setItems(songViews);
+        return pb;
+    }
+
+    @Cacheable(
+            value = "AdminSelectSongCache",
+            key = "{#condition, #params, #pageNum, #pageSize, #sortType?.name()}"
+    )
+    public PageBean<Song> select(
+            String condition,
+            TargetType params,
+            Integer pageNum,
+            Integer pageSize,
+            SortType sortType)
+    {
+        // 先获取总数
+        int total;
+        if (condition == null || condition.isEmpty()) {
+            // 没有条件，执行总数查询
+            total = songMapper.countAll();
+        } else {
+            // 有条件，执行条件总数查询
+            total = songMapper.countByCondition(condition, params.getType());
+        }
+        PageBean<Song> pb = new PageBean<>();
+        // 设置分页参数
+        PageHelper.startPage(pageNum, pageSize);
+        if (sortType != null) {
+            PageHelper.orderBy(String.format("%s %s", sortType.getField(), sortType.getDirection()));
+        }
+        // 执行分页查询
+        List<Song> songs;
+        List<SongView> songViews = new ArrayList<>();
+        if (condition == null || condition.isEmpty()) {
+            // 没有条件，执行分页查询
+            songs = songMapper.PagedQuery();
+        } else {
+            // 有条件，执行条件查询
+            songs = songMapper.conditionAndPagedQuery(condition, params.getType());
+        }
+        pb.setTotal(total); // 直接使用分页结果的size作为总数
+        pb.setItems(songs);
         return pb;
     }
 

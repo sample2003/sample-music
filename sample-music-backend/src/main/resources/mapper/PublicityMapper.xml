@@ -40,4 +40,20 @@
             LOWER(n.title) LIKE CONCAT('%', LOWER(#{condition}), '%')
             OR LOWER(u.username) LIKE CONCAT('%', LOWER(#{condition}), '%')
     </select>
+
+    <select id="query" resultType="com.sample.music.pojo.vo.view.PublicityView">
+        SELECT n.id,
+               n.title,
+               u.username AS username,
+               u.avatar AS userAvatar,
+               n.cover,
+               n.message,
+               n.viewers,
+               n.create_time,
+               n.update_time
+        FROM publicity n
+                 JOIN
+             user u ON n.user_id = u.id
+        WHERE n.id = #{id}
+    </select>
 </mapper>

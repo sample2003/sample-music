@@ -44,4 +44,16 @@ public class PublicityController {
         PageBean<PublicityView> pb = publicityService.conditionAndPagedQuery(condition, publicityType, pageNum, pageSize);
         return Result.success(pb);
     }
+
+    /**
+     * 一个查询公告
+     *
+     * @return Result<PageBean < Album>>
+     */
+    @Public
+    @GetMapping("query/{id}")
+    public Result<PublicityView> query(@PathVariable Long id) {
+        PublicityView pb = publicityService.query(id);
+        return Result.success(pb);
+    }
 }

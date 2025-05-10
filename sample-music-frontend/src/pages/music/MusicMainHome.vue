@@ -19,6 +19,7 @@
       <div class="notice">
         <div class="notice-slides">
           <div class="notice-slide" v-for="n in notice" :key="n.id"
+               @click="jumpPublicity(n.id)"
                @mouseenter="clear('notice')"
                @mouseleave="playSlides('notice')"
                :class="{'active': noticeIndex === notice.indexOf(n)}">
@@ -42,6 +43,7 @@
         <div class="notice-slides">
           <div class="notice-slide" v-for="a in advert" :key="`advert-${a.id}`"
                :class="{'active': advertIndex === advert.indexOf(a)}"
+               @click="jumpPublicity(a.id)"
                @mouseenter="clear('advert')"
                @mouseleave="playSlides('advert')">
             <div class="back" :style="{ 'background-image': `url(${a.cover})` }"></div>
@@ -64,6 +66,7 @@
         <div class="notice-slides">
           <div class="notice-slide" v-for="n in notice" :key="n.id"
                :class="{'active': noticeIndex === notice.indexOf(n)}"
+               @click="jumpPublicity(a.id)"
                @mouseenter="clear('notice')"
                @mouseleave="playSlides('notice')">
             <div class="back" :style="{ 'background-image': `url(${n.cover})` }"></div>
@@ -91,16 +94,16 @@
           <img v-once :src="Icon.detailWhiteIcon" alt="">
           <span>{{ al.title }}</span>
           <div class="kik flex">
-            <img v-once :src="Icon.peopleIcon" alt="">
-            <span>{{ al.artist }}</span>
-          </div>
-          <div class="kik flex">
             <img v-once :src="Icon.headsetIcon" alt="">
             <span>{{ al.listeners }}</span>
           </div>
+          <div class="kik flex">
+            <img v-once :src="Icon.calendarIcon" alt="">
+            <span>{{ al.releaseDate }}</span>
+          </div>
           <span>{{ al.description }}</span>
-          <span style="display: inline-flex;"><img :src="Icon.calendarIcon" alt=""
-                                                   style="width: 10%;padding-left: 5px;">{{ al.releaseDate }}</span>
+<!--          <span style="display: inline-flex;"><img :src="Icon.calendarIcon" alt="" style="width: 10%;padding-left: 5px;">{{ al.releaseDate }}</span>-->
+          <span style="display: inline-flex"><img :src="Icon.diskIcon" alt="" style="width: 10%;padding-left: 5px;">{{ al.title }} - <span style="display: inline-flex">{{ al.artist }}</span></span>
         </div>
       </div>
     </div>
@@ -126,15 +129,6 @@
       </div>
     </div>
 
-    <div class="second flex">
-      <h3 class="headSpan">分类</h3>
-      <div class="classifys">
-        <div class="classify flex" v-for="cl in classify" :key="cl.id">
-          <img :src="cl.img" alt="">
-          <span>{{ cl.msg }}</span>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -197,6 +191,10 @@ export default {
           this.otherIndex = (this.otherIndex + 1) % this.notice.length;
         }, 3000); // 每3秒自动播放下一张
       }
+    },
+    // 跳转到公告页
+    jumpPublicity(id) {
+      this.$router.push({ path: `/music/publicity/${id}` });
     },
     // 设置自动滚动
     setActiveIndex(index, type) {
@@ -543,19 +541,24 @@ export default {
 }
 
 .card > img:nth-of-type(1) {
-  width: 45%;
-  z-index: 1;
+  width: 90%;
+  z-index: 10;
   position: absolute;
   top: 5%;
   left: 5%;
   border-radius: 5px;
+  transition: 0.2s all ease;
   height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
   object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
 }
 
+.card:hover > img:nth-of-type(1){
+  width: 45%;
+}
+
 .card > img:nth-of-type(2) {
-  width: 25%;
+  width: 70%;
   padding: 10%;
   position: absolute;
   top: 5%;
@@ -564,13 +567,14 @@ export default {
   opacity: 0;
   background-color: rgba(34, 34, 34, 0.58);
   transition: all 0.2s ease;
-  z-index: 1;
+  z-index: 11;
   height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
   object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
 }
 
-.card > img:nth-of-type(2):hover {
+.card:hover > img:nth-of-type(2) {
+  width: 25%;
   opacity: 1;
 }
 

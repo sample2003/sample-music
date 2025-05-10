@@ -129,6 +129,8 @@ const Icon = {
   toggleLeftIcon: require("../../assets/icon/toggle-left.svg"),
   // 个性化
   gexingIcon: require("../../assets/icon/gexing.svg"),
+  // 眼睛
+  eyeIcon: require("../../assets/icon/eye.svg"),
   // 唱片
   diskPng: require("../../assets/icon/disk.png"),
   // 唱针

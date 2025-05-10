@@ -74,9 +74,9 @@
       </div>
     </div>
     <!-- 右边部分 -->
-    <div class="play_right">
+    <div class="play_right" v-if="songLyric.length > 0">
       <!-- 歌词部分 -->
-      <div @scroll="stopScrollingLyrics" v-if="songLyric.length > 0" class="lyricsContainer" ref="lyricsContainer">
+      <div @scroll="stopScrollingLyrics" class="lyricsContainer" ref="lyricsContainer">
         <div class="lyricSpacer"></div>
         <span
             class="lyric"
@@ -88,25 +88,9 @@
                 </span>
         <div class="lyricSpacer"></div>
       </div>
-      <div v-else>
-        <h3>暂无歌词</h3>
-      </div>
-      <!-- 选项 -->
-<!--      <div class="other">
-        <div class="o1 flex">
-          <img :src="Icon.commentIcon" alt="" :class="{'bac': this.isShowComment}" @click="showComment">
-          <span>{{ this.user_comment.length }}</span>
-        </div>
-        <div class="o2">
-          <img :src="Icon.addIcon" alt="">
-        </div>
-        <div class="o3">
-          <img :src="Icon.uploadIcon" alt="">
-        </div>
-        <div class="o4">
-          <img :src="Icon.fileIcon" alt="" :class="{'bac': this.isShowDetail}" @click="showDetail">
-        </div>
-      </div>-->
+    </div>
+    <div v-else style="width: 50%">
+      <h3>暂无歌词</h3>
     </div>
   </div>
 </template>
@@ -217,6 +201,7 @@ export default {
         if (this.currentLyricIndex !== -1) {
           // 获取当前歌词元素
           this.$nextTick(() => {
+            // 获取歌词区域
             const container = this.$refs.lyricsContainer;
             if (container && container.children && this.currentLyricIndex >= 0 && this.currentLyricIndex < container.children.length) {
               const currentLyricElement = container.children[this.currentLyricIndex];
@@ -242,6 +227,7 @@ export default {
       clearInterval(this.scrollInterval);
     },
 
+    // 歌词滚动
     handleLyricScroll() {
       clearTimeout(this.userScrollTimer);
       // 用户滚动时，停止自动滚动

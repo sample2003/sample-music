@@ -3,6 +3,7 @@ package com.sample.music.controller;
 import com.github.houbb.sensitive.word.core.SensitiveWordHelper;
 import com.google.gson.Gson;
 import com.sample.music.annotation.AdminOnly;
+import com.sample.music.annotation.Public;
 import com.sample.music.common.Result;
 import com.sample.music.constant.SortType;
 import com.sample.music.constant.TargetType;
@@ -119,14 +120,35 @@ public class SongController {
      * @param pageSize  分页参数，每页大小
      * @return Result<PageBean < Song>>
      */
-    @GetMapping("select/conditionAndPaged")
-    public Result<PageBean<SongView>> conditionAndPaged(
+    @Public
+    @GetMapping("query")
+    public Result<PageBean<SongView>> query(
             @RequestParam(required = false) String condition,
             @RequestParam(defaultValue = "ALL") TargetType params,
             @RequestParam(defaultValue = "LISTENERS_DESC") SortType sortType,
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize) {
-        PageBean<SongView> pb = songService.conditionAndPagedQuery(condition, params, pageNum, pageSize, sortType);
+        PageBean<SongView> pb = songService.query(condition, params, pageNum, pageSize, sortType);
+        return Result.success(pb);
+    }
+
+    /**
+     * 条件分页查询歌曲（管理员）
+     *
+     * @param condition 条件
+     * @param pageNum   分页参数，页码
+     * @param pageSize  分页参数，每页大小
+     * @return Result<PageBean < Song>>
+     */
+    @AdminOnly
+    @GetMapping("select")
+    public Result<PageBean<Song>> select(
+            @RequestParam(required = false) String condition,
+            @RequestParam(defaultValue = "ALL") TargetType params,
+            @RequestParam(defaultValue = "LISTENERS_DESC") SortType sortType,
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageBean<Song> pb = songService.select(condition, params, pageNum, pageSize, sortType);
         return Result.success(pb);
     }
 

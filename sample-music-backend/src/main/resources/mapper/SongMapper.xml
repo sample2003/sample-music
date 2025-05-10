@@ -127,7 +127,9 @@
                s.tags,
                s.listeners,
                s.permission,
-               s.release_date
+               s.release_date,
+               s.update_time,
+               s.create_time
         FROM song s
             LEFT JOIN artist ar ON s.artist_id = ar.id
             LEFT JOIN album al ON s.album_id = al.id
@@ -171,7 +173,9 @@
                s.tags,
                s.listeners,
                s.permission,
-               s.release_date
+               s.release_date,
+               s.update_time,
+               s.create_time
         FROM song s
              LEFT JOIN artist ar ON s.artist_id = ar.id
              LEFT JOIN album al ON s.album_id = al.id
