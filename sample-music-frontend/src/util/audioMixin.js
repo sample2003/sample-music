@@ -4,13 +4,14 @@ import Vue from "vue";
 import Icon from "@/util/common/Icon";
 import songService from "@/api/service/SongService";
 import userService from "@/api/service/userService";
+import StatisticsService from "@/api/service/StatisticsService";
 
 export default {
   data() {
     return {
       lyricsLoaded: false, // 歌词是否已加载
       volume: 50, // 声音大小，默认一半
-      expAddedTime: 0, // 播放时间
+      listenTime: 0, // 播放时间
       hasAddedExp: false, // 是否已增加过经验
       lastProcessedSecond: 0, //
       trackStartTime: null,   // 记录歌曲开始播放的时间戳（毫秒）
@@ -43,7 +44,7 @@ export default {
   },
   watch: {},
   methods: {
-    // 获取歌曲并播放音频·
+    // 获取歌曲并播放音频
     playBySong(song) {
       this.setIsLoading(true);
       this.lyricsLoaded = false;
@@ -67,17 +68,32 @@ export default {
       this.setIsLoading(false);
     },
     // 播放音频
-    playAudio() {
-      if (this.songPlaying.permission !== 0 && this.userDetail.role !== ACCESS_ENUM.ADMIN) {
+    async playAudio() {
+      if (this.songPlaying.permission !== 0 && this.userDetail?.role !== ACCESS_ENUM.ADMIN) {
         Vue.prototype.$message("暂无权限")
         return;
       }
       // 销毁之前播放的音频并移除事件监听器
-      this.initPlayState()
+      await this.initPlayState()
 
       // 新建音频并添加事件监听器
       this.setAudio(new Audio());
-      this.audio.src = this.getSongMode === 'flac' ? this.songPlaying.flacUrl : this.songPlaying.mp3Url;
+
+      // 判断该播放什么类型的歌曲
+      if (this.getSongMode === 'flac' && this.songPlaying.flacUrl) {
+        this.audio.src = this.songPlaying.flacUrl
+      }else if (this.getSongMode === 'mp3' && this.songPlaying.mp3Url) {
+        this.audio.src = this.songPlaying.mp3Url
+      }else if (this.songPlaying.mp3Url) {
+        this.audio.src = this.songPlaying.mp3Url
+        this.setSongMode('mp3')
+      }else if (this.songPlaying.flacUrl) {
+        this.audio.src = this.songPlaying.flacUrl
+        this.setSongMode('flac')
+      }
+
+      // this.audio.src = this.getSongMode === 'flac' ? this.songPlaying.flacUrl : this.songPlaying.mp3Url;
+
       this.audio.volume = this.volume / 100;
       this.audio.play()
         .then(() => {
@@ -101,21 +117,31 @@ export default {
     },
     // 音频播放时间更新时调用的方法
     handleAudioTimeUpdate() {
-      console.log(this.expAddedTime)
       const currentTime = this.audio.currentTime;
       let currentLyric = null;
       this.setCurrentTime(currentTime);
+      const currentSecond = Math.floor(currentTime); // 获取当前整秒数
 
-      // 新增：经验时间处理逻辑
-      if (this.audio && !this.audio.paused) {
-        this.expAddedTime += 1;
-        if (this.expAddedTime === 30) {
-          // 用户听歌经验+30
+      // 初始化或更新上一次记录的秒数
+      if (this.lastTriggeredSecond === undefined) {
+        this.lastTriggeredSecond = currentSecond;
+      }
+
+      // 如果进入新的秒数区间
+      if (currentSecond > this.lastTriggeredSecond) {
+        const delta = currentSecond - this.lastTriggeredSecond;
+        this.listenTime += delta; // 累加实际经过的秒数
+        this.lastTriggeredSecond = currentSecond;
+
+        // 精确触发30秒条件（只在首次达到30秒时执行）
+        if (this.listenTime >= 30 && !this.hasTriggered30) {
           userService.updateUserExp(30).then();
-          // 歌曲收听数+1
           songService.listenersPlusOne(this.songPlaying.id).then();
+          this.hasTriggered30 = true; // 防止重复触发
         }
       }
+
+      console.log(this.listenTime)
 
       // 在歌词数组中查找当前时间对应的歌词
       for (let i = this.songLyric.length - 1; i >= 0; i--) {
@@ -267,7 +293,7 @@ export default {
           this.playRandom();
           break;
         case 'gexing':
-          this.playRandom();
+          this.playNext();
           break;
         default:
           // 如果 mode_play 没有设置，就默认播放下一首
@@ -276,37 +302,36 @@ export default {
       }
     },
     // 播放上一首
-    playPrevious() {
+    async playPrevious() {
       if (this.songIndex > 0) {
-        this.setSongIndex(this.songIndex - 1);
+        await this.setSongIndex(this.songIndex - 1);
       } else {
-        this.setSongIndex(this.playlistPlaying.length - 1);
+        await this.setSongIndex(this.playlistPlaying.length - 1);
       }
-      this.setSongPlaying(this.playlistPlaying[this.songIndex]);
+      await this.setSongPlaying(this.playlistPlaying[this.songIndex]);
       this.playAudio();
     },
     // 播放下一首
-    playNext() {
-      this.setCurrentLyric([]);
-      this.setSongLyric([]);
-      this.setTimestamp([]);
+    async playNext() {
+      if (this.listenTime > 5) await this.listenRecord();
+
       if (this.songIndex < this.playlistPlaying.length - 1) {
-        this.setSongIndex(this.songIndex + 1);
+        await this.setSongIndex(this.songIndex + 1);
       } else {
-        this.setSongIndex(0);
+        await this.setSongIndex(0);
       }
-      this.setSongPlaying(this.playlistPlaying[this.songIndex]);
+      await this.setSongPlaying(this.playlistPlaying[this.songIndex]);
       this.playAudio();
     },
     // 随机播放
-    playRandom() {
-      this.setSongIndex(Math.floor(Math.random() * this.playlistPlaying.length));
-      this.setSongPlaying(this.playlistPlaying[this.songIndex]);
+    async playRandom() {
+      await this.setSongIndex(Math.floor(Math.random() * this.playlistPlaying.length));
+      await this.setSongPlaying(this.playlistPlaying[this.songIndex]);
       this.playAudio();
     },
     // 单曲循环
-    playSingle() {
-      this.setSongPlaying(this.playlistPlaying[this.songIndex]);
+    async playSingle() {
+      await this.setSongPlaying(this.playlistPlaying[this.songIndex]);
       this.playAudio();
     },
     // 初始化播放状态
@@ -317,9 +342,11 @@ export default {
         this.audio.src = '';
         this.setAudio(null);
       }
-      this.setCurrentTime(0)
-      this.setTimestamp([]);
+      this.listenTime = 0;
+      this.setCurrentTime(0);
+      this.setCurrentLyric([]);
       this.setSongLyric([]);
+      this.setTimestamp([]);
     },
     // 播放选中歌曲
     playSelectSongs() {
@@ -341,30 +368,43 @@ export default {
     changeVolume() {
       this.audio.volume = this.volume / 100;
     },
+    // 上报播放时长
+    logTrackDuration() {
+      if (!this.trackStartTime || !this.songPlaying) return;
+
+      // 计算已播放时长（秒）
+      const durationSec = Math.floor((Date.now() - this.trackStartTime) / 1000);
+
+      // 避免上报无效值（如瞬间切歌）
+      if (durationSec < 1) return;
+
+      // 调用API上报数据（示例接口）
+      songService.logPlayDuration({
+        songId: this.songPlaying.id,
+        duration: durationSec
+      }).then(() => {
+        console.log('播放时长上报成功');
+      }).catch(error => {
+        console.error('上报失败:', error);
+      });
+
+      // 重置计时状态
+      this.trackStartTime = null;
+      this.currentTrackDuration = 0;
+    },
+
+    // 记录收听信息
+    async listenRecord() {
+      const moment = require('moment')
+      const formattedTime = moment().format('YYYY-MM-DD HH:mm:ss')
+      const listenDetail = {
+        userId: this.userDetail?.id || null,
+        songId: this.songPlaying.id,
+        duration: this.listenTime,
+        listenTime: formattedTime
+      }
+      await StatisticsService.recordListen(listenDetail);
+    },
   },
 
-  // 上报播放时长
-  logTrackDuration() {
-    if (!this.trackStartTime || !this.songPlaying) return;
-
-    // 计算已播放时长（秒）
-    const durationSec = Math.floor((Date.now() - this.trackStartTime) / 1000);
-
-    // 避免上报无效值（如瞬间切歌）
-    if (durationSec < 1) return;
-
-    // 调用API上报数据（示例接口）
-    songService.logPlayDuration({
-      songId: this.songPlaying.id,
-      duration: durationSec
-    }).then(() => {
-      console.log('播放时长上报成功');
-    }).catch(error => {
-      console.error('上报失败:', error);
-    });
-
-    // 重置计时状态
-    this.trackStartTime = null;
-    this.currentTrackDuration = 0;
-  },
 };

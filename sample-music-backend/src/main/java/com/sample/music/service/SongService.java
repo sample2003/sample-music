@@ -11,6 +11,8 @@ import com.sample.music.mapper.ArtistMapper;
 import com.sample.music.mapper.SongMapper;
 import com.sample.music.pojo.dto.PageBean;
 import com.sample.music.pojo.dto.SongUpload;
+import com.sample.music.pojo.entity.Album;
+import com.sample.music.pojo.entity.Artist;
 import com.sample.music.pojo.entity.Song;
 import com.sample.music.pojo.vo.view.SongView;
 import lombok.RequiredArgsConstructor;
@@ -276,10 +278,14 @@ public class SongService {
             BeanUtils.copyProperties(song, songView);
             songView.setTags(JSONUtil.toList(song.getTags(), String.class));
             songView.setArtists(JSONUtil.toList(song.getArtists(), String.class));
-            if (song.getArtist() != null)
-                songView.setArtistAvatar(artistMapper.selectArtistByName(song.getArtist()).getAvatar());
-            if (song.getAlbum() != null)
-                songView.setAlbumCover(albumMapper.selectAlbumByTitle(song.getAlbum()).getCover());
+            if (song.getArtist() != null) {
+                Artist artist = artistMapper.selectArtistByName(song.getArtist());
+                if (artist != null) songView.setArtistAvatar(artist.getAvatar());
+            }
+            if (song.getAlbum() != null) {
+                Album album = albumMapper.selectAlbumByTitle(song.getAlbum());
+                if (album != null) songView.setAlbumCover(album.getCover());
+            }
             songViews.add(songView);
         });
         pb.setTotal(total); // 直接使用分页结果的size作为总数

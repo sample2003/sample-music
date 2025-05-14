@@ -44,7 +44,7 @@
         s.listeners,
         s.permission,
         s.release_date
-        FROM song s
+        from song_own s
         LEFT JOIN artist ar ON s.artist_id = ar.id
         LEFT JOIN album al ON s.album_id = al.id
         <where>
@@ -80,7 +80,7 @@
                s.listeners,
                s.permission,
                s.release_date
-        FROM song s
+        from song_own s
                  LEFT JOIN artist ar ON s.artist_id = ar.id
                  LEFT JOIN album al ON s.album_id = al.id
     </select>

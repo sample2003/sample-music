@@ -3,7 +3,7 @@
     <!-- 每页大小 -->
     <div class="page-size-selector">
       每页显示：
-      <select v-model="localPageSize" @change="emitChangePageSize">
+      <select v-model="lp" @change="emitChangePageSize">
         <option v-for="option in pageSizeOptions" :key="option" :value="option">
           {{ option }}
         </option>
@@ -66,14 +66,14 @@ export default {
   },
   data() {
     return {
-      localPageSize: this.pageSize,
+      lp: this.pageSize,
       cp: this.currentPage,
     };
   },
   computed: {
     // 页数
     pageCount() {
-      return Math.ceil(this.totalItems / this.localPageSize);
+      return Math.ceil(this.totalItems / this.lp);
     },
     // 计算页数
     visiblePages() {
@@ -106,7 +106,7 @@ export default {
     },
     // 改变页码大小
     async emitChangePageSize() {
-      this.$emit('update:pageSize', this.localPageSize);
+      this.$emit('update:pageSize', this.lp);
       this.$emit('update:currentPage', 1); // 发射更新当前页码的事件
       this.cp = 1; // 重置跳转框中的页码为第一页
     }
@@ -115,7 +115,7 @@ export default {
     pageSize: {
       immediate: true,
       handler(newVal) {
-        this.localPageSize = newVal;
+        this.lp = newVal;
       }
     }
   },

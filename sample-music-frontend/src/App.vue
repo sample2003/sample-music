@@ -16,9 +16,6 @@ export default {
     }
   },
   methods: {
-    handleLoad() {
-      this.loading = false;
-    },
     // 页面关闭前紧急上报用户听歌时长
     handleBeforeUnload() {
       if (this.trackStartTime && this.songPlaying) {
@@ -70,11 +67,6 @@ export default {
   text-align: center;
 }
 
-/*::-webkit-scrollbar {
-  width: 0;  横向滚动条的宽度
-  height: 0;
-}*/
-
 /* 滚动条 */
 ::-webkit-scrollbar {
   width: 10px !important;
@@ -104,6 +96,23 @@ export default {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.songPaused {
+  animation: rotate 8s infinite linear paused;
+}
+
+.songRunning {
+  animation: rotate 8s infinite linear running;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 元素进入（淡入）阶段 */

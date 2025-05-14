@@ -23,12 +23,12 @@
                 (select id from artist where name = #{artist}),
                 (select id from album where title = #{album}),
                 #{artists},
-                #{duration}, #{mp3Url}, #{flacUrl}, #{cover}, #{lyric}, #{style}, #{tags}, #{listeners}, #{permission}, #{releaseDate}, NOW(), NOW());
+                #{duration}, #{mp3Url}, #{flacUrl}, #{cover}, #{lyric}, #{style}, #{tags}, #{listeners}, #{permission}, #{releaseDate}, NOW(), NOW())
     </insert>
 
     <delete id="deleteSongById">
         delete
-        from song
+        from song_own
         where id = #{songId}
     </delete>
 
@@ -71,19 +71,19 @@
                s.listeners,
                s.permission,
                s.release_date
-        FROM song s
+        from song_own s
              LEFT JOIN artist ar ON s.artist_id = ar.id
              LEFT JOIN album al ON s.album_id = al.id
         where s.id = #{songId}
     </select>
 
     <select id="countAll" resultType="int">
-        SELECT COUNT(*) FROM song
+        SELECT COUNT(*) from song_own
     </select>
 
     <select id="countByCondition" parameterType="string" resultType="int">
         SELECT COUNT(*)
-        FROM song s
+        from song_own s
                  LEFT JOIN artist ar ON s.artist_id = ar.id
                  LEFT JOIN album al ON s.album_id = al.id
         <where>
@@ -130,7 +130,7 @@
                s.release_date,
                s.update_time,
                s.create_time
-        FROM song s
+        from song_own s
             LEFT JOIN artist ar ON s.artist_id = ar.id
             LEFT JOIN album al ON s.album_id = al.id
         <where>
@@ -166,6 +166,7 @@
                al.title AS album,
                s.artists,
                s.lyric,
+               s.duration,
                s.cover,
                s.mp3_url,
                s.flac_url,
@@ -176,13 +177,13 @@
                s.release_date,
                s.update_time,
                s.create_time
-        FROM song s
+        from song_own s
              LEFT JOIN artist ar ON s.artist_id = ar.id
              LEFT JOIN album al ON s.album_id = al.id
     </select>
 
     <select id="queryAllByIds" resultType="com.sample.music.pojo.entity.Song">
-        SELECT * FROM song WHERE id IN
+        SELECT * from song_own WHERE id IN
         <foreach item='item' index='index' collection='ids' open='(' separator=',' close=')'>
             #{item}
         </foreach>

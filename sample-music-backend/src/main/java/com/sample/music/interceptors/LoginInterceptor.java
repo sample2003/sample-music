@@ -25,14 +25,18 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (handler instanceof HandlerMethod handlerMethod) {
-            // 注解 @Public，开放接口
-            boolean methodHasPublic = handlerMethod.getMethodAnnotation(Public.class) != null;
-            boolean classHasPublic = handlerMethod.getBeanType().isAnnotationPresent(Public.class);
-            if (methodHasPublic || classHasPublic) {
-                return true;
-            }
+        // 放行所有非 Controller 方法的请求
+        if (!(handler instanceof HandlerMethod handlerMethod)) {
+            return true;
         }
+
+        // 注解 @Public 放行
+        boolean methodHasPublic = handlerMethod.getMethodAnnotation(Public.class) != null;
+        boolean classHasPublic = handlerMethod.getBeanType().isAnnotationPresent(Public.class);
+        if (methodHasPublic || classHasPublic) {
+            return true;
+        }
+
         // 令牌验证
         if (request.getMethod().equals("OPTIONS")) {
             return true;

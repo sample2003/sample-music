@@ -1,7 +1,7 @@
 <template>
   <div id="Search">
     <div class="exist">
-      <div class="title flex">
+      <div class="exist-top flex">
         <div class="flex">
           <h2 style="margin: 0 10px;box-sizing: border-box">{{ condition ? condition : "综合"}}</h2><p>搜索结果如下</p>
         </div>
@@ -15,7 +15,7 @@
           ></ButtonSelect>
         </div>
       </div>
-      <div style="width: 100%; height: 90%;" v-if="songsBySearch.items.length > 0">
+      <div class="exist-bottom flex" v-if="songsBySearch.items.length > 0">
         <div class="list">
           <SongList
               @add="handleAdd"
@@ -25,13 +25,13 @@
         <PageNation
             class="page"
             :totalItems="songsBySearch.total || 0"
-            :pageSize.sync="pageSize"
-            :currentPage.sync="pageNum"
+            :pageSize.sync="localPageSize"
+            :currentPage.sync="localPageNum"
             @update:pageSize="handlePageSizeChange"
             @update:currentPage="handlePageChange"
         />
       </div>
-      <h2 v-else>未搜索出歌曲</h2>
+      <h2 v-else style="margin: 5%;">未搜索出歌曲</h2>
     </div>
 <!--    <div class="e1" v-if="!isExistC && isExistS">
       <h1>未搜索到歌曲</h1>
@@ -51,11 +51,7 @@ import ButtonSelect from "@/components/ButtonSelect.vue";
 
 export default {
   name: "MusicMainSearch",
-  components: {
-    ButtonSelect,
-    SongList,
-    PageNation
-  },
+  components: {ButtonSelect, SongList, PageNation},
   props: {
     show: {},
     condition: { type: String },
@@ -74,30 +70,30 @@ export default {
         {name: "专辑", fx: "ALBUM"},
         {name: "风格", fx: "STYLE"},
         {name: "标签", fx: "TAG"}],
-      param: {},
+      localCondition: "",
+      localParams: "",
+      localSortType: "",
+      localPageNum: 1,
+      localPageSize: 10,
     };
   },
   watch: {
-    // 正确监听路由参数变化
     $route: {
-      immediate: true,
-      async handler(to) {
-        if (!this.needReload(to)) return
-        await this.fetchData()
+      immediate: true, // 立即执行一次
+      async handler(newRoute) {
+        // 同步路由参数到本地状态
+        this.localCondition = newRoute.params.condition || ''
+        this.localParams = newRoute.params.params || 'ALL'
+        this.localPageNum = parseInt(newRoute.params.pageNum) || 1
+        this.localPageSize = parseInt(newRoute.params.pageSize) || 10
+
+        // 强制更新按钮状态
+        this.currentBtn = this.localParams
+
+        // 重新加载数据
+        await this.fetchData();
       }
     },
-    params() {
-      this.fetchData()
-    },
-    pageNum() {
-      this.fetchData()
-    },
-    pageSize() {
-      this.fetchData()
-    },
-    currentBtn() {
-      this.fetchData()
-    }
   },
   computed: {
     Icon() {
@@ -108,57 +104,43 @@ export default {
     })
   },
   methods: {
-    // 判断参数是否改变
-    needReload(to) {
-      return to.params.condition !== this.condition ||
-          to.params.params !== this.params ||
-          to.params.sortType !== this.sortType ||
-          to.params.pageNum !== this.pageNum ||
-          to.params.pageSize !== this.pageSize
+    // 初始化
+    initSearchParams() {
+      this.localCondition = this.condition;
+      this.localParams = this.params;
+      this.localSortType = this.sortType;
+      this.localPageNum = this.pageNum;
+      this.localPageSize = this.pageSize;
+      this.currentBtn = this.params;
+      this.fetchData();
     },
-    handlePageChange(newPage) {
-      this.$router.push({
-        name: 'search',
-        params: this.getRouteParams({ pageNum: newPage })
-      })
+    async handleButtonChange(newValue) {
+      this.currentBtn = newValue;
+      this.localParams = newValue;
+      this.localPageNum = 1;
+      await this.fetchData()
     },
-    handleButtonChange(newValue) {
-      alert(newValue)
-      this.currentBtn = newValue
-      this.$router.push({
-        name: 'search',
-        params: this.getRouteParams({ params: newValue, pageNum: 1 })
-      })
+    async handlePageChange(newPage) {
+      this.localPageNum = newPage;
+      await this.fetchData()
     },
-    handlePageSizeChange(newSize) {
-      this.$router.push({
-        name: 'search',
-        params: this.getRouteParams({ pageSize: newSize, pageNum: 1 })
-      })
-    },
-    getRouteParams(overrides = {}) {
-      return {
-        condition: this.condition,
-        params: this.params,
-        sortType: this.sortType,
-        pageNum: this.pageNum,
-        pageSize: this.pageSize,
-        ...overrides
-      }
+    async handlePageSizeChange(newSize) {
+      this.localPageSize = newSize;
+      this.localPageNum = 1;
+      await this.fetchData()
     },
     async fetchData() {
       try {
         const params = {
-          condition: this.condition,
-          params: this.params,
-          sortType: this.sortType,
-          pageNum: this.pageNum,
-          pageSize: this.pageSize
+          condition: this.localCondition,
+          params: this.localParams,
+          sortType: this.localSortType,
+          pageNum: this.localPageNum,
+          pageSize: this.localPageSize
         }
         await this.getSongsByCondition(params)
       } catch (error) {
         console.error('搜索失败:', error)
-        // 处理错误状态
       }
     },
     handleAdd() {
@@ -166,8 +148,7 @@ export default {
     }
   },
   mounted() {
-    this.currentBtn = this.params
-    this.fetchData();
+    this.initSearchParams();
   }
 };
 </script>
@@ -181,6 +162,7 @@ export default {
 .exist {
   width: 100%;
   height: 95%;
+  margin-top: 1%;
   font-size: var(--fontSize);
   overflow: auto;
   display: flex;
@@ -188,13 +170,16 @@ export default {
   align-items: center;
 }
 
-.title {
-  height: 10%;
+.exist-bottom {
+  width: 100%;
+  height: 95%;
+  flex-grow: 1;
+  flex-direction: column;
 }
 
 .list {
   width: 95%;
-  height: 90%;
+  height: 95%;
 }
 
 .page {

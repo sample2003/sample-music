@@ -69,7 +69,7 @@
         <div class="detail-message">
           <div class="dt dt1">
             <div class="box">
-              <p class="cl">{{ this.classify }}</p>
+              <p class="cl">{{ classify }}</p>
               <h3 style="text-align: start;overflow: hidden;text-overflow: ellipsis">{{ playlistWithSongs?.title }}</h3>
             </div>
           </div>
@@ -111,12 +111,12 @@
           </div>
 
           <div class="dt d4">
-            <div class="change-button flex" @click="showSongList" :class="{'it' : this.isShowSongList}">
+            <div class="change-button flex" @click="showSongList" :class="{'it' : isShowSongList}">
               <span style="white-space: nowrap;">歌曲<span style="margin-left: 5px;">{{
                   playlistWithSongs?.songs?.length || 0
                 }}</span></span>
             </div>
-            <div class="change-button flex" @click="showComment" :class="{'it' : this.isShowComment}">
+            <div class="change-button flex" @click="showComment" :class="{'it' : isShowComment}">
               <span style="white-space: nowrap;">评论<span style="margin-left: 5px;">{{
                   user_comment?.length || 0
                 }}</span></span>
@@ -130,10 +130,10 @@
 
         </div>
       </div>
-      <div v-if="isShowSongList && playlistWithSongs?.songs?.length > 0" class="detail-right ">
+      <div v-if="isShowSongList" class="detail-right ">
         <div class="dt-top">
-          <TextInput class="dt-text-input" message="搜索歌单中的歌曲"></TextInput>
-          <div class="change-button" @click="playAllSongs('playlist', playlistWithSongs)">
+          <TextInput class="dt-text-input" message="搜索歌单中的歌曲" v-if="playlistWithSongs?.songs.length > 0"></TextInput>
+          <div class="change-button" @click="playAllSongs('playlist', playlistWithSongs)" v-if="playlistWithSongs?.songs.length > 0">
             <img :src="Icon.playIcon" alt="">
             <p>播放全部</p>
           </div>
@@ -426,7 +426,7 @@ export default {
 
 .detail-cover > img:nth-of-type(1) {
   z-index: 2;
-  background-color: var(--main-color);
+  background-color: var(--fourth-color);
 }
 
 .detail-cover > img:nth-of-type(2) {

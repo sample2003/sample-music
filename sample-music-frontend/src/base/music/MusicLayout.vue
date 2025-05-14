@@ -67,6 +67,13 @@ import accessEnum from "../../util/access/accessEnum";
 export default {
   name: 'MusicLayout',
   components: {TextInput, Side, Control, Main},
+  data() {
+    return {
+      value: '',
+      wantListener: '',
+      isShowWantList: false
+    }
+  },
   computed: {
     accessEnum() {
       return accessEnum
@@ -78,13 +85,6 @@ export default {
       const isPlayRoute = this.$route.path.includes('/music/play');
       const isEmpty = this.songPlaying == null || Object.keys(this.songPlaying).length === 0;
       return !isEmpty && !isPlayRoute;
-    }
-  },
-  data() {
-    return {
-      value: '',
-      wantListener: '',
-      isShowWantList: false
     }
   },
   methods: {
@@ -113,7 +113,7 @@ export default {
 
       this.$router.push({
         name: "search",
-        params: { // 必须与路由 path 中的 :xxx 名称对应
+        params: {
           condition: this.value,
           params: 'ALL',
           sortType: 'LISTENERS_DESC',

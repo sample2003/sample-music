@@ -1,32 +1,26 @@
 <template>
   <div id="MusicPublicity">
 
-    <div class="title">
-      <p class="cl">公告</p>
-      <h1>{{ publicity.title }}</h1>
-    </div>
-
-    <div class="flex" style="width: 90%; margin-left: 5%; justify-content: space-between">
-      <div class="box flex">
-        <img :src="publicity.userAvatar" alt="" class="userAvatar">
-        <p>{{ publicity.username }}</p>
+    <div class="top flex">
+      <div class="title">
+        <p>公告</p>
+        <h1>{{ publicity.title }}</h1>
       </div>
 
-      <div class="flex">
+      <div class="right flex">
+        <div class="kick flex">
+          <img :src="publicity.userAvatar" alt="" class="userAvatar" style="width: 30px;">
+          <span class="tag">{{ publicity.username }}</span>
+        </div>
         <div class="kick flex">
           <img :src="Icon.eyeIcon" alt="">
-          <span class="tag">
-              {{ publicity?.viewers }}
-            </span>
+          <span class="tag">{{ publicity?.viewers }}</span>
         </div>
         <div class="kick flex">
           <img :src="Icon.calendarIcon" alt="">
-          <span class="tag">
-              {{ publicity.createTime }}
-            </span>
+          <span class="tag">{{ publicity.createTime }}</span>
         </div>
       </div>
-
     </div>
     <img :src="publicity.cover" alt="" class="mainImg">
     <p>{{ publicity.message }}</p>
@@ -79,44 +73,45 @@ export default {
   overflow: scroll;
 }
 
+.top {
+  width: 90%;
+  margin-left: 5%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .title {
   display: flex;
   border-radius: 5px;
   padding: 5px;
-  margin: 1% 5%;
-  box-shadow: var(--boxShadow);
+  margin: 1%;
+  flex-grow: 1;
+  white-space: wrap;
 }
 
-.cl {
+.title p {
   padding: 5px 8px;
+  margin-right: 10px;
   background-color: var(--main-color);
-  border-radius: 8px;
+  border-radius: 5px;
   color: var(--second-color);
   white-space: nowrap;
   align-self: center;
 }
 
-.box {
-  padding: 5px;
-  box-shadow: var(--boxShadow);
-  border-radius: 5px;
+.title h1 {
+  white-space: wrap;
 }
 
-.box img {
-  width: 40px;
-}
-
-.userAvatar {
-  width: 40px;
-  border-radius: 5px;
+.right {
+  gap: 10px;
 }
 
 .mainImg {
-  width: 90%;
-  margin: 1% 5%;
+  width: 80%;
+  margin: 0 10%;
   border-radius: 10px;
 }
-
 
 .kick {
   margin-right: 5px;
@@ -142,6 +137,7 @@ export default {
   border-radius: 5px;
   background-color: #8b80af80;
   cursor: pointer;
+  white-space: nowrap; /* 禁止换行 */
 }
 
 .kick img {

@@ -6,12 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
-@Configuration
 //@EnableWebMvc // 避免覆盖SpringBoot默认配置
+@Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
     private final LoginInterceptor loginInterceptor;
+
     private final AdminInterceptor adminInterceptor;
 
     /**
@@ -34,20 +35,19 @@ public class WebConfig implements WebMvcConfigurer {
         registry
                 .addInterceptor(loginInterceptor)
                 .excludePathPatterns(
-                        // 原有排除路径保留
                         "/api/user/login",
                         "/api/user/register",
                         "/api/user/sendVerifyCode",
 
-                        // 补充Knife4j相关路径
+                        // 排除Knife4j接口
                         "/swagger-ui/**",
                         "/swagger-ui.html",
                         "/swagger-resources/**",
-                        "/v3/api-docs/**",  // 新增OpenAPI规范路径
+                        "/v3/api-docs/**",
                         "/webjars/**",
                         "/doc.html",
-                        "/doc.html/**",     // 增加二级路径匹配
-                        "/favicon.ico"      // 网站图标
+                        "/doc.html/**",
+                        "/favicon.ico"
                 );
 
 
@@ -57,6 +57,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/api/admin/login",
                         "/api/admin/logout",
+
                         // 排除Knife4j接口
                         "/swagger-ui/**",
                         "/v3/api-docs/**",

@@ -1,6 +1,10 @@
 <template>
   <div id="musicMainSet">
     <h2>还在测试阶段，敬请期待</h2>
+    <div>
+      <button @click="check()">解析</button>
+      <input type="file" id="folderInput" webkitdirectory directory multiple>
+    </div>
   </div>
 </template>
 
@@ -8,6 +12,7 @@
 import ChatService from "@/api/service/AIService";
 import TextInput from "@/components/TextInput.vue";
 import TextArea from "@/components/TextArea.vue";
+import StatisticsService from "@/api/service/StatisticsService";
 
 export default {
   name: 'MusicMainSet',
@@ -22,6 +27,24 @@ export default {
     };
   },
   methods: {
+    async check() {
+      const input = document.getElementById('folderInput');
+      if (!input.files.length) return;
+
+      // 获取相对路径（示例：第一个文件的路径）
+      const fullPath = input.files[0].webkitRelativePath;
+      const folderPath = fullPath.split('/')[0];
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/music/parse?folder=${encodeURIComponent(folderPath)}`, {
+          method: 'POST'
+        });
+        const result = await response.json();
+        alert(result.success || result.error);
+      } catch (error) {
+        console.error('请求失败:', error);
+      }
+    },
     aa(content) {
       ChatService.getChat(content)
           .then(content => {
@@ -29,6 +52,18 @@ export default {
             this.chat = content;
           })
           .catch(err => console.error("请求失败:", err));
+    },
+    aaa() {
+      const moment = require('moment')
+      const formattedTime = moment().format('YYYY-MM-DD HH:mm:ss')
+      const listenDetail = {
+        userId: this.userDetail,
+        songId: this.songPlaying.id,
+        duration: 10,
+        listenTime: formattedTime
+      }
+      StatisticsService.recordListen(listenDetail)
+      console.log(listenDetail)
     },
     // 新增：启动流式请求
     async startStream(content) {

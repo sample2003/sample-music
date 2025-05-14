@@ -2,7 +2,10 @@
   <div id="Control" class="flex">
     <!-- 播放栏左侧 -->
     <div id="left" class="flex">
-      <img :src="songPlaying.cover" alt="" @click="jumpPlay">
+      <div class="mainImg" :class="isPlay? 'songRunning':'songPaused'">
+        <img :src="songPlaying.cover" alt="" @click="jumpPlay">
+        <img :src="Icon.diskPng" alt="" @click="jumpPlay">
+      </div>
       <div class="text flex">
         <ScrollText></ScrollText>
         <span class="song-artist" @click="searchArtist(songPlaying.artist)">{{ songPlaying.artist }}</span>
@@ -39,7 +42,7 @@
         </div>
         <div class="control_icon" @click="isShowHistoryList">
           <img :src="Icon.historyIcon" alt="" :class="{'isShow':this.showList}">
-          <div class="historyList" v-show="showList">
+          <div class="historyList" v-show="showList" @click.stop>
             <div class="historySong" v-for="s in playlistPlaying" :key="s.id" :class="{'hoi': s.id === songPlaying.id}">
               <img :src="s.cover" alt="" >
               <div style="flex-direction: column">
@@ -49,7 +52,7 @@
                 </div>
                 <div class="song flex" style="justify-content: start; width: 100%;"
                      :class="{ 'songPlayed': songPl(s.title) }">
-                  <p v-for="tag in s.tags" :key="`tag-${s.tags}`"> {{tag}} </p>
+                  <p v-for="tag in s.tags" :key="`tag-${tag}`"> {{tag}} </p>
                 </div>
               </div>
               <img :src="Icon.playIcon" alt="" @click="playBySong(s)">
@@ -136,7 +139,7 @@ export default {
     },
     handleGlobalClick(event) {
       // 检查点击是否发生在历史播放记录列表之外
-      if (this.showList && !event.target.closest('#right, #middle')) {
+      if (this.showList && !event.target.closest('#right, #middle, .historySong')) {
         this.showList = false;
       }
     },
@@ -161,7 +164,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 0 5px #0000001a;
   background-color: var(--second-color);
-  z-index: 10;
+  z-index: 50;
 }
 
 /* 歌曲基本信息 */
@@ -171,15 +174,39 @@ export default {
   justify-content: end;
 }
 
-/* 歌曲封面 */
-#left img {
-  width: 12%;
+.mainImg {
+  height: 90%;
+  width: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
+  aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
   margin: 1%;
-  border-radius: 10px;
+  position: relative;
+}
+
+/* 歌曲封面 */
+.mainImg img {
+  margin: 1%;
+  border-radius: 50%;
   cursor: pointer;
   height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
   object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.mainImg > img:nth-of-type(1){
+  width: 80%;
+  left: 10%;
+  top: 10%;
+  z-index: 3;
+}
+
+.mainImg > img:nth-of-type(2){
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 2;
 }
 
 .text {
@@ -334,6 +361,7 @@ span {
   margin: 5px;
   border-radius: 5px;
   transition: 0.2s all ease;
+  cursor: pointer;
 }
 
 .historySong p {
@@ -450,4 +478,5 @@ span {
     transform: rotate(-10deg) scale(1.2);
   }
 }
+
 </style>

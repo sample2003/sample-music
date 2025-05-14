@@ -543,6 +543,7 @@ export default {
   height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
   object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
+  background-color: var(--fourth-color);
 }
 
 .card:hover > img:nth-of-type(1){

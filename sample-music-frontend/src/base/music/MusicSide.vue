@@ -36,7 +36,7 @@ export default {
         },
         {
           btnID: nanoid(),
-          btnName: "歌单",
+          btnName: "收纳",
           btnR: "list",
           btnIcon: Icon.listIcon
         },

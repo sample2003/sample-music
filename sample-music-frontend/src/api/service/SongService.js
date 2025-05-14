@@ -33,7 +33,7 @@ const SongService = {
         urlSearchParams.append('pageSize', params.pageSize);
       }
     }
-    const url = `/api/song/select/conditionAndPaged?${urlSearchParams}`;
+    const url = `/api/song/query?${urlSearchParams}`;
     return service({
       method: "GET",
       url: url,

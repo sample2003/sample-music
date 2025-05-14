@@ -1,6 +1,6 @@
 <template>
   <div id="songList">
-    <div v-if="songs.total !== 0" class="songs">
+    <div v-if="songs.total !== 0" class="songs flex">
       <!-- 开始行 -->
       <div class="song flex songNav">
         <input
@@ -55,9 +55,7 @@
             <span v-for="(a, index) in s.artists" :key="index">&<span class="artist">{{ a }}</span></span>
           </div>
           <div style="width: 27%;display: flex;justify-content: start;"><span>{{ s.album || '-' }}</span></div>
-          <div style="width: 10%;display: flex;justify-content: start;"><span>{{
-              durationInMinutes(s.duration) || '-'
-            }}</span></div>
+          <div style="width: 10%;display: flex;justify-content: start;"><span>{{durationInMinutes(s.duration) || '-' }}</span></div>
         </div>
         <div v-if="operator === 'playlist'" class="operator flex">
           <img :src="Icon.playIcon" alt="" @click="playBySong(s)">
@@ -71,7 +69,9 @@
         </div>
       </div>
     </div>
-<!--    <h3 v-else>暂无歌曲</h3>-->
+    <div v-else>
+      <h3>暂无歌曲</h3>
+    </div>
   </div>
 </template>
 
@@ -133,6 +133,9 @@ export default {
       return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
     }
   },
+  mounted() {
+    console.log(this.songs)
+  }
 }
 </script>
 
@@ -147,13 +150,13 @@ export default {
 .songs {
   width: 100%;
   height: 100%;
+  flex-direction: column;
 }
 
 .song {
   width: 100%;
   height: 8%;
   min-height: 40px;
-  margin-bottom: 2px;
   border-radius: 5px;
   background: var(--second-color);
   backdrop-filter: blur(10px);

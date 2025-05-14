@@ -48,6 +48,7 @@
       <div class="pl_control">
         <ScrollText :max-width="'100%'" :font-size="'2em'" style="margin: 10px;"></ScrollText>
         <div class="control-button flex">
+          <img :src="Icon.fileIcon" alt="" :class="{'bac': this.isShowDetail}" @click="showDetail">
           <img :src="returnPlayIcon.icon" alt="" @click="togglePlayMode" :title="returnPlayIcon.prompt">
           <img :src="Icon.backward10sIcon" alt="" @click="backward10s">
           <img :src="Icon.lastIcon" alt="" @click="playPrevious">
@@ -57,7 +58,6 @@
           <img :src="Icon.forward10sIcon" alt="" @click="forward10s">
           <img :src="songMode === 'mp3' ? Icon.mp3Icon : Icon.flacIcon" alt="">
           <img :src="Icon.commentIcon" alt="" :class="{'bac': this.isShowComment}" @click="showComment">
-          <img :src="Icon.fileIcon" alt="" :class="{'bac': this.isShowDetail}" @click="showDetail">
         </div>
         <div class="progress-container flex">
           <span style="padding: 1%;">{{ formattedTime(currentTime) }}</span>
@@ -81,6 +81,7 @@
         <span
             class="lyric"
             :class="{ current: isCurrentLyric(index) }"
+            :style="{ filter: getLyricBlur(index) }"
             v-for="(lyric, index) in songLyric"
             :key="index"
         >
@@ -113,7 +114,6 @@ export default {
       userScrollTimer: null,
       isShowComment: false,
       isShowDetail: false,
-      // 音频可视化
       isGoodArray: [], // 存储每个评论的点赞状态
       animation: null
     }
@@ -239,6 +239,16 @@ export default {
       }, 2000); // 2秒内无滚动操作则恢复自动滚动
     },
 
+    // 歌曲模糊效果
+    getLyricBlur(index) {
+      // 计算与当前歌词的距离
+      const distance = Math.abs((index - this.currentLyricIndex) / 2);
+
+      // 距离越远，模糊度越高
+      const blurValue = Math.min(5, distance * 1.1); // 最大模糊 5px
+      return `blur(${blurValue}px)`;
+    },
+
     // 显示详情
     showDetail() {
       if (this.isShowDetail === false) {
@@ -330,14 +340,12 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   background-color: var(--second-color);
-  transition: all 0.3s;
+  transition: all 0.2s;
   border: 1px solid #0000;
-  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
 }
 
 .control-button img:hover {
-  box-shadow: none;
-  border: 1px solid var(--fourth-color);
+  background-color: var(--fourth-color);
 }
 
 .progress-container {
@@ -385,7 +393,6 @@ export default {
   position: relative;
   border: 1px solid var(--fourth-color);
   user-select: none;
-  box-shadow: 12px 12px 24px #b3b3b3, -12px -12px 24px #ffffff;
 }
 
 .stylus {
@@ -404,7 +411,7 @@ export default {
 }
 
 .sr {
-  transform: rotate(3deg);
+  transform: rotate(-2deg);
 }
 
 .play_style {
@@ -465,14 +472,6 @@ export default {
   width: 80%;
 }
 
-.songPaused {
-  animation: rotate 8s infinite linear paused;
-}
-
-.songRunning {
-  animation: rotate 8s infinite linear running;
-}
-
 .pl_comment {
   width: 100%;
   height: 50%;
@@ -505,14 +504,6 @@ export default {
   border-radius: 8px;
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 .play_right {
   width: 50%;
@@ -548,6 +539,7 @@ export default {
   transition: 0.2s all ease-in-out;
   cursor: pointer;
   margin-bottom: 10px;
+  font-size: 1.5em;
 }
 
 .lyric:hover {
@@ -556,7 +548,7 @@ export default {
 
 .current {
   color: var(--main-color);
-  font-size: 22px;
+  font-size: 2.5em;
   font-weight: 600;
 }
 

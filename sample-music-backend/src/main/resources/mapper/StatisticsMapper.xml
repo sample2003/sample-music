@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sample.music.mapper.StatisticsMapper">
+
+    <insert id="recordListen">
+        INSERT INTO listen(user_id, song_id, duration, listen_time)
+        VALUES (#{userId}, #{songId}, #{duration}, #{listenTime})
+    </insert>
+
+    <select id="getTopSongs" resultType="com.sample.music.pojo.entity.Song">
+        SELECT l.songId AS songId, COUNT(l) AS playCount FROM listen l GROUP BY l.songId ORDER BY playCount DESC
+    </select>
+</mapper>
