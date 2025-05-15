@@ -22,6 +22,7 @@
            v-if="this.invitationIcon">
       <input
           :type="type"
+          :autocomplete="auto"
           required="required"
           :value="value"
           @input="emitValue($event)"
@@ -65,12 +66,13 @@ export default {
     },
     className() {
       // 根据 method 的值返回相应的类名
-      if (this.method === 'fetchSongs') {
-        return 'fs';
-      } else if (this.method === 'input') {
-        return 'it';
-      }
+      if (this.method === 'fetchSongs') return 'fs';
+      else if (this.method === 'input') return 'it';
       return ''; // 如果不需要添加类名，则返回空字符串
+    },
+    auto() {
+      if (this.type === 'password') return 'current-password';
+      else return '';
     }
   },
   data() {

@@ -5,24 +5,26 @@
         <div class="box" data-text="Sample -Music">
           <div v-show="this.isShowLogin1" class="content">
             <p style="color: #000"><span style="font-size: 1.1em;line-height: 1.4em;">欢迎你</span>，请填写基本信息</p>
-            <TextInput
-                message="请输入账号或邮箱"
-                @loginInput="handleLoginParam"
-                :value="loginParam.text"
-                param-key="text"
-                :user-icon="true"
-                :cancel-icon="true"
-                style="height: 30%"/>
-            <TextInput
-                message="请输入密码"
-                type="password"
-                @loginInput="handleLoginParam"
-                :value="loginParam.password"
-                param-key="password"
-                :password-icon="true"
-                :cancel-icon="true"
-                style="height: 30%"/>
-            <a class="handleButton" @click="handleLogin">登录</a>
+            <form @submit.prevent="handleLogin" style="width: 100%">
+              <TextInput
+                  message="请输入账号或邮箱"
+                  @loginInput="handleLoginParam"
+                  :value="loginParam.text"
+                  param-key="text"
+                  :user-icon="true"
+                  :cancel-icon="true"
+                  style="height: 30%"/>
+              <TextInput
+                  message="请输入密码"
+                  type="password"
+                  @loginInput="handleLoginParam"
+                  :value="loginParam.password"
+                  param-key="password"
+                  :password-icon="true"
+                  :cancel-icon="true"
+                  style="height: 30%"/>
+              <button class="handleButton" type="submit">登录</button >
+            </form>
           </div>
           <div v-show="this.isShowLogin2" class="content qrcode">
             <p style="color: #000"><span style="font-size: 1.1em;line-height: 1.4em;">欢迎你</span>，请微信扫一扫扫码登录
@@ -33,52 +35,54 @@
           </div>
           <div v-show="this.isShowRegister" class="content">
             <p style="color: #000"><span style="font-weight: bolder;">欢迎</span>，请填写基本信息</p>
-            <TextInput
-                message="请输入注册邮箱"
-                @registerInput="handleRegisterParam"
-                :value="registerParam.email"
-                param-key="email"
-                :email-icon="true"
-                :cancel-icon="true"
-                style="height: 30%"/>
-            <TextInput
-                message="请输入用户名"
-                @registerInput="handleRegisterParam"
-                :value="registerParam.username"
-                param-key="username"
-                :user-icon="true"
-                :cancel-icon="true"
-                style="height: 30%"/>
-            <TextInput
-                message="请输入密码"
-                type="password"
-                @registerInput="handleRegisterParam"
-                :value="registerParam.password"
-                param-key="password"
-                :password-icon="true"
-                :cancel-icon="true"
-                style="height: 30%"/>
-            <TextInput
-                message="请输入验证码"
-                @registerInput="handleRegisterParam"
-                :value="registerParam.verificationCode"
-                v-show="this.registerParam.email"
-                param-key="verificationCode"
-                :verify-icon="true"
-                style="height: 30%;width: 70%;margin: 2%;"/>
-            <a class="msg"
-               @click="handleSendVerifyCode"
-               :class="{'disabled' : countdown > 0}"
-               v-show="registerParam.email">{{ countdownText }}</a>
-            <TextInput
-                message="请输入邀请码"
-                @registerInput="handleRegisterParam"
-                :value="registerParam.invitationCode"
-                param-key="invitationCode"
-                :invitation-icon="true"
-                :cancel-icon="true"
-                style="height: 30%"/>
-            <a class="handleButton" @click="handleRegister">注册</a>
+            <form @submit.prevent="handleRegister" style="width: 100%">
+              <TextInput
+                  message="请输入注册邮箱"
+                  @registerInput="handleRegisterParam"
+                  :value="registerParam.email"
+                  param-key="email"
+                  :email-icon="true"
+                  :cancel-icon="true"
+                  style="height: 30%"/>
+              <TextInput
+                  message="请输入用户名"
+                  @registerInput="handleRegisterParam"
+                  :value="registerParam.username"
+                  param-key="username"
+                  :user-icon="true"
+                  :cancel-icon="true"
+                  style="height: 30%"/>
+              <TextInput
+                  message="请输入密码"
+                  type="password"
+                  @registerInput="handleRegisterParam"
+                  :value="registerParam.password"
+                  param-key="password"
+                  :password-icon="true"
+                  :cancel-icon="true"
+                  style="height: 30%"/>
+              <TextInput
+                  message="请输入验证码"
+                  @registerInput="handleRegisterParam"
+                  :value="registerParam.verificationCode"
+                  v-show="this.registerParam.email"
+                  param-key="verificationCode"
+                  :verify-icon="true"
+                  style="height: 30%;width: 70%;margin: 2%;"/>
+              <a class="msg"
+                 @click="handleSendVerifyCode"
+                 :class="{'disabled' : countdown > 0}"
+                 v-show="registerParam.email">{{ countdownText }}</a>
+              <TextInput
+                  message="请输入邀请码"
+                  @registerInput="handleRegisterParam"
+                  :value="registerParam.invitationCode"
+                  param-key="invitationCode"
+                  :invitation-icon="true"
+                  :cancel-icon="true"
+                  style="height: 30%"/>
+              <button class="handleButton" type="submit">注册</button>
+            </form>
           </div>
         </div>
         <div class="select">
@@ -353,6 +357,7 @@ export default {
   transition: 0.2s all ease;
   padding: 5px 0;
   margin-top: 10px;
+  border: none;
 }
 
 .handleButton:hover {
