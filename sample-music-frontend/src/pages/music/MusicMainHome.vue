@@ -203,8 +203,8 @@ export default {
     // 获取推荐歌单
     async getPlaylists() {
       // todo
-      const data = await PlaylistService.selectPlaylists();
-      this.playlistsAndSongs = data.items?.slice(0, 6);
+      const playlists = await PlaylistService.UserPagedQuery("true", null, 1, 10);
+      this.playlistsAndSongs = playlists.items?.slice(0, 6);
     },
     // 获取公告
     async getNotice() {
@@ -465,7 +465,6 @@ export default {
   text-align: start;
   text-indent: 1em;
   cursor: default;
-  background: var(--main-backgroundColor);
 }
 
 .classifys {

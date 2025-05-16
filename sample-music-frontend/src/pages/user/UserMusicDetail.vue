@@ -196,7 +196,7 @@ export default {
       detailType: "",
       isShowSongList: true,
       isShowComment: false,
-      targetId: 1,
+      targetId: null,
       user_comment: {},
       isFavorite: false,
     };
@@ -362,7 +362,7 @@ export default {
       }
     },
   },
-  created() {
+  mounted() {
     this.detailType = this.$route.params.detailType || this.detailType;
     this.initParams();
   },
@@ -416,7 +416,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  height: 90%;
+  height: 85%;
   z-index: 1;
   width: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
@@ -430,7 +430,7 @@ export default {
 }
 
 .detail-cover > img:nth-of-type(2) {
-  left: 25%;
+  left: 15%;
 }
 
 .detail-message {

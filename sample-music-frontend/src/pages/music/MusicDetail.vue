@@ -25,7 +25,7 @@
             <p>发布日期</p>
             <span class="tag">
               <img :src="Icon.calendarIcon" alt="">
-              {{ albumDetail?.createTime }}
+              {{ albumDetail?.releaseDate }}
             </span>
           </div>
 
@@ -383,6 +383,10 @@ export default {
     },
     // 将歌单添加或移除收藏
     changeFavoritesPlaylist(id) {
+      if (this.userDetail == null) {
+        this.$message("未登录")
+        return;
+      }
       this.isFavoritePlaylist().then(async isFavorite => {
         if (isFavorite) {
           await FavoriteService.removeByFavorites("playlist", id);
@@ -539,7 +543,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
+  height: 90%;
   z-index: 1;
   width: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
@@ -553,7 +557,7 @@ export default {
 }
 
 .detail-cover > img:nth-of-type(2) {
-  left: 25%;
+  left: 15%;
 }
 
 .detail-message {

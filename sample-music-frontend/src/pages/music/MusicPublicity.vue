@@ -23,19 +23,23 @@
       </div>
     </div>
     <img :src="publicity.cover" alt="" class="mainImg">
-    <p>{{ publicity.message }}</p>
+    <div class="markdown-content" v-html="compiledMarkdown"></div>
   </div>
 </template>
 
 <script>
 import PublicityService from "@/api/service/PublicityService";
 import Icon from "@/util/common/Icon";
+import md from "@/util/markdown";
 
 export default {
   name: "MusicPublicity",
   computed: {
     Icon() {
       return Icon
+    },
+    compiledMarkdown() {
+      return md.render(this.publicity.message)
     }
   },
   data() {
@@ -46,8 +50,9 @@ export default {
   },
   methods: {
     async initParams () {
-      const data = await PublicityService.query(this.publicityId)
-      this.publicity = data.data
+      const data = await PublicityService.query(this.publicityId);
+      this.publicity = data.data;
+      console.log(this.publicity.message)
     }
   },
   created() {

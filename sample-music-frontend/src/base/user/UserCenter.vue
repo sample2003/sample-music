@@ -3,7 +3,7 @@
     <div class="top flex">
       <div class="userBasicInfo flex">
         <img
-            :src="this.userDetail.avatar ?? Icon.notLoginIcon"
+            :src="userDetail?.avatar ?? Icon.notLoginIcon"
             alt="">
         <span>{{ this.userDetail.username ?? accessEnum.NOT_LOGIN }}</span>
       </div>

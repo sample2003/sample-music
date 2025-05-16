@@ -55,7 +55,7 @@ export default {
   methods: {
     async fetchData() {
       const flag = await PlaylistService.checkBelongTo(this.id);
-      if (flag) {
+      if (flag && this.id) {
         this.playlistUpdate = await PlaylistService.playlistWithSongs(this.id);
       }else {
         this.$message("无权修改该歌单")
@@ -218,6 +218,7 @@ form {
   color: var(--second-color);
   background-color: #0007;
   border-radius: 5px;
+  backdrop-filter: blur(5px);
   top: 0;
   left: 0;
   z-index: 1;

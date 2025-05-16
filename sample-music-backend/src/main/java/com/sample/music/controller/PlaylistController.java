@@ -120,6 +120,7 @@ public class PlaylistController {
      *
      * @return Result<PlaylistWithSongs>
      */
+    @Public
     @GetMapping("select/{id}")
     public Result<PlaylistWithSongs> queryPlaylistWithSongs(@PathVariable("id") Long id) {
         PlaylistWithSongs playlistWithSongs = playlistService.queryPlaylistWithSongs(id);
@@ -194,6 +195,7 @@ public class PlaylistController {
      *
      * @param comment 评论
      */
+    @Public
     @PostMapping("insert/comment")
     public Result<String> insertPlaylistComment(Comment comment) {
         comment.setTargetType("playlist");

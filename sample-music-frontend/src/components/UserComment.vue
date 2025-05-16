@@ -6,11 +6,11 @@
           class="comment"
           v-for="c in user_comment"
           :key="c.id"
-          :style="{border: userDetail.username === c.username ? '1px solid var(--main-color)' : '1px solid #0000'}"
+          :style="{border: userDetail?.username === c.username ? '1px solid var(--main-color)' : '1px solid #0000'}"
       >
         <div class="user-detail flex">
-          <img :src="Icon.peopleIcon" alt="">
-          <span :style="{color: userDetail.username === c.username ? 'var(--main-color)' : '#888888'}">{{
+          <img :src="c.userAvatar" alt="">
+          <span :style="{color: userDetail?.username === c.username ? 'var(--main-color)' : '#888888'}">{{
               c.username
             }}</span>
         </div>
@@ -22,7 +22,7 @@
           <img :src="isGoodArray.includes(c.id) ? Icon.likeIcon : Icon.notLikeIcon" alt=""
                @click="changeFavoritesComment(c.id)">
           <span>{{ c.likes }}</span>
-          <img v-show="userDetail.username === c.username" :src="Icon.deleteIcon" alt="" @click="deleteComment(c.id)">
+          <img v-show="userDetail?.username === c.username" :src="Icon.deleteIcon" alt="" @click="deleteComment(c.id)">
         </div>
       </div>
     </div>

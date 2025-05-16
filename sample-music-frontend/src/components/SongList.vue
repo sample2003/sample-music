@@ -150,6 +150,8 @@ export default {
 .songs {
   width: 100%;
   height: 100%;
+  justify-content: start;
+  gap: 5px;
   flex-direction: column;
 }
 
