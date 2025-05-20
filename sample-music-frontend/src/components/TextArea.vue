@@ -18,8 +18,7 @@ export default {
   name: "TextArea",
   props: {
     message: {type: String},
-    value: {type: String},
-    maxLimit: {type: String, default: "200"},
+    maxLimit: {type: String, default: '0'},
     type: {type: String, default: 'text'}
   },
   data() {
@@ -35,7 +34,7 @@ export default {
     },
     // 限制评论长度
     limitCommentLength(event) {
-      if (this.maxLimit !== '0') {
+      if (this.maxLimit !== '0' && this.maxLimit !== null) {
         if (this.area.length > this.maxLimit) {
           this.area = this.area.slice(0, parseInt(this.maxLimit));
         }

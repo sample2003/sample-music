@@ -1,7 +1,7 @@
 <template>
   <div id="userComment">
     <TextArea message="说点什么吧（￣︶￣）" type="comment" @submit="insertContent"></TextArea>
-    <div v-if="user_comment && user_comment.length > 0" class="comments">
+    <div v-if="user_comment.length > 0" class="comments">
       <div
           class="comment"
           v-for="c in user_comment"

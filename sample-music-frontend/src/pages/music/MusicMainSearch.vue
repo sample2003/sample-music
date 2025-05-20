@@ -27,7 +27,7 @@
             :totalItems="songsBySearch.total || 0"
             :pageSize.sync="localPageSize"
             :currentPage.sync="localPageNum"
-            @update:pageSize="handlePageSizeChange"
+            @updatePageSize="handlePageSizeChange"
             @update:currentPage="handlePageChange"
         />
       </div>

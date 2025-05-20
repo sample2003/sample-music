@@ -106,7 +106,7 @@ export default {
     },
     // 改变页码大小
     async emitChangePageSize() {
-      this.$emit('update:pageSize', this.lp);
+      this.$emit('updatePageSize', this.lp);
       this.$emit('update:currentPage', 1); // 发射更新当前页码的事件
       this.cp = 1; // 重置跳转框中的页码为第一页
     }

@@ -204,7 +204,7 @@ export default {
     async getPlaylists() {
       // todo
       const playlists = await PlaylistService.UserPagedQuery("true", null, 1, 10);
-      this.playlistsAndSongs = playlists.items?.slice(0, 6);
+      this.playlistsAndSongs = playlists.data.items?.slice(0, 6);
     },
     // 获取公告
     async getNotice() {

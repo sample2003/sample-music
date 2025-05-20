@@ -85,7 +85,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="songs(albumDetail?.songs)"
+            :songs="albumDetail?.songs"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -95,7 +95,7 @@
             :totalItems="albumDetail?.songs?.length || 0"
             :pageSize.sync="pageSize"
             :currentPage.sync="pageNum"
-            @update:pageSize="handlePageSizeChange"
+            @updatePageSize="handlePageSizeChange"
             @update:currentPage="handlePageChange">
         </PageNation>
       </div>
@@ -189,7 +189,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="songs(this.playlist?.songs)"
+            :songs="this.playlist?.songs"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -199,7 +199,7 @@
             :totalItems="this.playlist?.songs?.length || 0"
             :pageSize.sync="pageSize"
             :currentPage.sync="pageNum"
-            @update:pageSize="handlePageSizeChange"
+            @updatePageSize="handlePageSizeChange"
             @update:currentPage="handlePageChange">
         </PageNation>
       </div>
@@ -397,13 +397,6 @@ export default {
         }
       });
     },
-    // 格式化
-    songs(songs) {
-      return {
-        total: songs.length,
-        items: songs,
-      }
-    },
     // 获取专辑信息
     async fetchAlbumData(albumId) {
       const albumWithSongs = await AlbumService.albumWithSongs(albumId);
@@ -432,9 +425,10 @@ export default {
     // 增加歌曲至歌单
     async handleAdd(ids) {
       const playlists = await PlaylistService.UserPagedQuery("false", null, 1, 100);
-      this.$change("添加歌曲到歌单", playlists.data.items, (confirmed, targetId) => {
+      this.$change("添加歌曲到歌单", playlists.data.items, async (confirmed, targetId) => {
         if (confirmed) {
-          RelateService.addSongsToPlaylist(targetId, ids)
+          await RelateService.addSongsToPlaylist(targetId, ids)
+          this.$message("添加成功");
         }
       })
     },

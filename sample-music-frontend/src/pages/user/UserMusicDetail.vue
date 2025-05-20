@@ -132,8 +132,8 @@
       </div>
       <div v-if="isShowSongList" class="detail-right ">
         <div class="dt-top">
-          <TextInput class="dt-text-input" message="搜索歌单中的歌曲" v-if="playlistWithSongs?.songs.length > 0"></TextInput>
-          <div class="change-button" @click="playAllSongs('playlist', playlistWithSongs)" v-if="playlistWithSongs?.songs.length > 0">
+          <TextInput class="dt-text-input" message="搜索歌单中的歌曲" v-if="playlistWithSongs?.songs?.length > 0"></TextInput>
+          <div class="change-button" @click="playAllSongs('playlist', playlistWithSongs)" v-if="playlistWithSongs?.songs?.length > 0">
             <img :src="Icon.playIcon" alt="">
             <p>播放全部</p>
           </div>
@@ -155,7 +155,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="songs(playlistWithSongs?.songs)"
+            :songs="playlistWithSongs?.songs"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -165,7 +165,7 @@
           :totalItems="playlistWithSongs?.songs?.length || 0"
           :pageSize.sync="pageSize"
           :currentPage.sync="pageNum"
-          @update:pageSize="handlePageSizeChange"
+          @updatePageSize="handlePageSizeChange"
           @update:currentPage="handlePageChange">
         </PageNation>
       </div>
@@ -288,13 +288,6 @@ export default {
           this.isFavorite = true;
         }
       });
-    },
-    // 格式化
-    songs(songs) {
-      return {
-        total: songs.length,
-        items: songs,
-      }
     },
     // 获取专辑信息
     async fetchAlbumData(albumId) {
