@@ -27,7 +27,7 @@
           :pageSize="itemsPerPage"
           :pageSizeOptions="pageSizeOptions"
           :currentPage.sync="currentPage"
-          @update:pageSize="handlePageSizeChange"
+          @updatePageSize="handlePageSizeChange"
           @update:currentPage="fetchData"
       />
     </div>

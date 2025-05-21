@@ -132,8 +132,8 @@
       </div>
       <div v-if="isShowSongList" class="detail-right ">
         <div class="dt-top">
-          <TextInput class="dt-text-input" message="搜索歌单中的歌曲" v-if="playlistWithSongs?.songs.length > 0"></TextInput>
-          <div class="change-button" @click="playAllSongs('playlist', playlistWithSongs)" v-if="playlistWithSongs?.songs.length > 0">
+          <TextInput class="dt-text-input" message="搜索歌单中的歌曲" v-if="playlistWithSongs?.songs?.length > 0"></TextInput>
+          <div class="change-button" @click="playAllSongs('playlist', playlistWithSongs)" v-if="playlistWithSongs?.songs?.length > 0">
             <img :src="Icon.playIcon" alt="">
             <p>播放全部</p>
           </div>
@@ -155,7 +155,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="songs(playlistWithSongs?.songs)"
+            :songs="playlistWithSongs?.songs"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -165,7 +165,7 @@
           :totalItems="playlistWithSongs?.songs?.length || 0"
           :pageSize.sync="pageSize"
           :currentPage.sync="pageNum"
-          @update:pageSize="handlePageSizeChange"
+          @updatePageSize="handlePageSizeChange"
           @update:currentPage="handlePageChange">
         </PageNation>
       </div>
@@ -196,7 +196,7 @@ export default {
       detailType: "",
       isShowSongList: true,
       isShowComment: false,
-      targetId: 1,
+      targetId: null,
       user_comment: {},
       isFavorite: false,
     };
@@ -289,13 +289,6 @@ export default {
         }
       });
     },
-    // 格式化
-    songs(songs) {
-      return {
-        total: songs.length,
-        items: songs,
-      }
-    },
     // 获取专辑信息
     async fetchAlbumData(albumId) {
       const albumWithSongs = await AlbumService.albumWithSongs(albumId);
@@ -362,7 +355,7 @@ export default {
       }
     },
   },
-  created() {
+  mounted() {
     this.detailType = this.$route.params.detailType || this.detailType;
     this.initParams();
   },
@@ -416,7 +409,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  height: 90%;
+  height: 85%;
   z-index: 1;
   width: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
@@ -430,7 +423,7 @@ export default {
 }
 
 .detail-cover > img:nth-of-type(2) {
-  left: 25%;
+  left: 15%;
 }
 
 .detail-message {

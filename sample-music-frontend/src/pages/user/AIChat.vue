@@ -24,7 +24,7 @@
 
       <div v-else class="content">
         <div class="user-info info flex">
-          <p>{{ value }}</p>
+          <p>{{ streamingText }}</p>
           <img :src="userDetail.avatar" alt="">
         </div>
         <div class="chat-info info flex">
@@ -34,7 +34,7 @@
       </div>
 
       <div class="input">
-        <TextArea message="寻找你想听的歌吧" max-limit="0" type="chat" @submit="startStream"></TextArea>
+        <TextArea message="寻找你想听的歌吧" :value="content" type="chat" @submit="main"></TextArea>
       </div>
     </div>
     <!--    &lt;!&ndash; 会话历史 &ndash;&gt;
@@ -58,6 +58,8 @@
 <script>
 import Icon from "@/util/common/Icon";
 import TextArea from "@/components/TextArea.vue";
+import OpenAI from "openai";
+import axios from "axios";
 
 export default {
   name: 'AiChat',
@@ -70,9 +72,10 @@ export default {
   data() {
     return {
       isCollapsed: false,
-      value: '复述aaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      value: '',
       streamingText: '',   // 实时流式文本
-      chatList: []
+      chatList: [],
+      content: '',
     }
   },
   methods: {
@@ -121,6 +124,33 @@ export default {
         }
       }
     },
+    
+/*    async main(content) {
+      
+      const openai = new OpenAI({
+        baseURL: 'https://api.deepseek.com',
+        apiKey: 'sk-43af2c2f320944408bd6f24d25a58f61'
+      });
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: "system", content: content }],
+        model: "deepseek-chat",
+      });
+      console.log(completion)
+      console.log(completion.choices[0].message.content);
+    }
+  },*/
+    async main(content) {
+      const openai = new OpenAI({
+        baseURL: 'https://api.deepseek.com',
+        apiKey: 'sk-43af2c2f320944408bd6f24d25a58f61'
+      });
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: "system", content: content }],
+        model: "deepseek-chat",
+      });
+      console.log(completion)
+      alert(completion.choices[0].message.content);
+    }
   },
   mounted() {
 

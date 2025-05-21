@@ -176,15 +176,20 @@ export default {
     },
     // 用户登录
     async handleLogin() {
+      for (const key in this.loginParam) {
+        if (this.loginParam[key] === '') {
+          this.$message("请完整填写登录信息")
+          return;
+        }
+      }
+      
       try {
         const res = await userService.loginUser(this.loginParam);
-        if (res === 'empty') {
-          this.$message("请完整填写登录信息")
-        } else if (res === 401) {
+        if (res.code === 401) {
           this.$message("密码错误")
-        } else if (res === 403) {
+        } else if (res.code === 403) {
           this.$message("该用户已被封禁")
-        } else if (res === 404) {
+        } else if (res.code === 404) {
           this.$message("该用户未注册")
         } else {
           // 登录成功的处理逻辑
@@ -382,7 +387,7 @@ export default {
   justify-content: center;
   text-decoration: none;
   white-space: nowrap;
-  font-size: 11em;
+  font-size: 10em;
   color: #222;
   letter-spacing: 10px;
   word-spacing: 2em;

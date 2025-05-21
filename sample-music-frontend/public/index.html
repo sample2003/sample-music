@@ -6,19 +6,28 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <!--    <title><%= htmlWebpackPlugin.options.title %></title>-->
-    <title>样本音乐</title>
+    <title>SampleMusic - 样本音乐</title>
 </head>
+<style>
+    .loading-spinner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+</style>
 <body>
 <noscript>
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
 </noscript>
 <div id="app-loading">
-    <div class="loading-spinner">
-        <h2>加载中。。。</h2>
+    <div class="loading-spinner" style="height: 90%">
+        <img src="<%= BASE_URL %>loading.gif" alt="" style="width: 50px;">
+        <h2>加载中</h2>
     </div>
 </div>
 <div id="app"></div>
-<!-- built files will be auto injected -->
 </body>
 </html>

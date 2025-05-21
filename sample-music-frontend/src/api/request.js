@@ -1,5 +1,6 @@
 import axios from "axios";
 import router from "@/router";
+import Vue from "vue";
 
 const service = axios.create({
     baseURL: "http://localhost:8080",
@@ -17,9 +18,10 @@ service.interceptors.request.use(config => {
 
 service.interceptors.response.use(
     (response) => {
-        // 任何 HTTP 状态码为 2xx 的响应数据都会触发此函数
-        // 对响应数据做点什么
         return response.data;
+        /*if (response.data.code !== 401) {
+            return response.data;
+        }else Vue.prototype.$message('未登录');*/
     },
     (error) => {
         if (
@@ -27,8 +29,7 @@ service.interceptors.response.use(
             error.message === "ECONNABORTED"
         ) {
             // 后端服务器关闭时，跳转到错误页面
-            router.push({
-              name: "ServerClose"}).catch((err) => console.error(err));
+            router.push({name: "ServerClose"}).catch((err) => console.error(err));
         } else {
             // 处理其他错误
         }

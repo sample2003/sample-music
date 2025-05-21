@@ -139,7 +139,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="songs(playlistWithSongs?.songs)"
+            :songs="playlistWithSongs?.songs"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -259,13 +259,6 @@ export default {
           this.isFavorite = true;
         }
       });
-    },
-    // 格式化
-    songs(songs) {
-      return {
-        total: songs.length,
-        items: songs,
-      }
     },
     // 获取专辑信息
     async fetchAlbumData(albumId) {

@@ -25,7 +25,7 @@
             <p>发布日期</p>
             <span class="tag">
               <img :src="Icon.calendarIcon" alt="">
-              {{ albumDetail?.createTime }}
+              {{ albumDetail?.releaseDate }}
             </span>
           </div>
 
@@ -85,7 +85,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="songs(albumDetail?.songs)"
+            :songs="albumDetail?.songs"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -95,7 +95,7 @@
             :totalItems="albumDetail?.songs?.length || 0"
             :pageSize.sync="pageSize"
             :currentPage.sync="pageNum"
-            @update:pageSize="handlePageSizeChange"
+            @updatePageSize="handlePageSizeChange"
             @update:currentPage="handlePageChange">
         </PageNation>
       </div>
@@ -189,7 +189,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="songs(this.playlist?.songs)"
+            :songs="this.playlist?.songs"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -199,7 +199,7 @@
             :totalItems="this.playlist?.songs?.length || 0"
             :pageSize.sync="pageSize"
             :currentPage.sync="pageNum"
-            @update:pageSize="handlePageSizeChange"
+            @updatePageSize="handlePageSizeChange"
             @update:currentPage="handlePageChange">
         </PageNation>
       </div>
@@ -383,6 +383,10 @@ export default {
     },
     // 将歌单添加或移除收藏
     changeFavoritesPlaylist(id) {
+      if (this.userDetail == null) {
+        this.$message("未登录")
+        return;
+      }
       this.isFavoritePlaylist().then(async isFavorite => {
         if (isFavorite) {
           await FavoriteService.removeByFavorites("playlist", id);
@@ -392,13 +396,6 @@ export default {
           this.isFavorite = true;
         }
       });
-    },
-    // 格式化
-    songs(songs) {
-      return {
-        total: songs.length,
-        items: songs,
-      }
     },
     // 获取专辑信息
     async fetchAlbumData(albumId) {
@@ -428,9 +425,10 @@ export default {
     // 增加歌曲至歌单
     async handleAdd(ids) {
       const playlists = await PlaylistService.UserPagedQuery("false", null, 1, 100);
-      this.$change("添加歌曲到歌单", playlists.data.items, (confirmed, targetId) => {
+      this.$change("添加歌曲到歌单", playlists.data.items, async (confirmed, targetId) => {
         if (confirmed) {
-          RelateService.addSongsToPlaylist(targetId, ids)
+          await RelateService.addSongsToPlaylist(targetId, ids)
+          this.$message("添加成功");
         }
       })
     },
@@ -539,7 +537,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
+  height: 90%;
   z-index: 1;
   width: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
@@ -553,7 +551,7 @@ export default {
 }
 
 .detail-cover > img:nth-of-type(2) {
-  left: 25%;
+  left: 15%;
 }
 
 .detail-message {

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mysql
+ Source Server         : mysql8
  Source Server Type    : MySQL
- Source Server Version : 80034 (8.0.34)
+ Source Server Version : 80027 (8.0.27)
  Source Host           : localhost:3307
  Source Schema         : sample_music
 
  Target Server Type    : MySQL
- Target Server Version : 80034 (8.0.34)
+ Target Server Version : 80027 (8.0.27)
  File Encoding         : 65001
 
- Date: 18/04/2025 16:39:22
+ Date: 20/05/2025 21:06:43
 */
 
 SET NAMES utf8mb4;
@@ -29,14 +29,14 @@ CREATE TABLE `album`  (
   `listeners` int NULL DEFAULT 0 COMMENT '收听数',
   `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '专辑封面',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '专辑简介',
-  `tags` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '标签列表（json数组）',
+  `tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '标签列表（json数组）',
   `release_date` date NULL DEFAULT NULL COMMENT '专辑发布日期',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '专辑信息上传时间',
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '专辑信息更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_album_artist`(`artist_id` ASC) USING BTREE,
   CONSTRAINT `fk_album_artist` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '专辑信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 341 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '专辑信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of album
@@ -57,6 +57,87 @@ INSERT INTO `album` VALUES (13, 1, '哎呦，不错哦', 0, 0, 'https://sample20
 INSERT INTO `album` VALUES (14, 1, '周杰伦的床边故事', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/14zjldcbgs.jpg', '周杰伦发布的第十四张专辑。', NULL, '2016-06-24', '2024-11-28 22:08:22', '2024-11-28 22:08:22');
 INSERT INTO `album` VALUES (15, 1, '最伟大的作品', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/15zwddzp.jpg', '周杰伦发布的第十五张专辑。', NULL, '2022-07-06', '2024-11-28 22:08:22', '2024-11-28 22:08:22');
 INSERT INTO `album` VALUES (16, 2, '未知', 0, 0, NULL, NULL, NULL, '2024-12-19', '2024-12-19 10:07:05', '2024-12-19 10:07:05');
+INSERT INTO `album` VALUES (260, NULL, '未知专辑', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (261, NULL, '春庭雪', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (262, NULL, '长生诀', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (263, NULL, '盗墓笔记·十年人间', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (264, NULL, '长安姑娘', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (265, NULL, '牵丝戏', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (266, NULL, '腐草为萤', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (267, NULL, '音乐混合体', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (268, NULL, '晚夜微雨问海棠', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (269, NULL, '戒网（《黑神话：悟空》游戏插曲）', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (270, NULL, '一诺情长·橙光歌曲', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (271, NULL, '赤伶', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (272, NULL, '弦上春雪', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (273, NULL, '聆音', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (274, NULL, '【纯男声】满汉全席音乐团队', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (275, NULL, '人鱼传说之长生烛·主题曲', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (276, NULL, '听！我们的歌', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (277, NULL, '河图精选', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (278, NULL, '西楼别序', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (279, NULL, '半壶纱', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (280, NULL, '《黑神话：悟空》游戏音乐精选集', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (281, NULL, '青云不坠', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (282, NULL, '典狱司', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (283, NULL, '天命风流·墨明棋妙原创音乐团队主题精选集', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (284, NULL, '芊芊', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (285, NULL, '云与海', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (286, NULL, '沈园外', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (287, NULL, '如懿传 电视剧原声带', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (288, NULL, '失余年(续沈园外)', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (289, NULL, '关山酒', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (290, NULL, '云水谣', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (291, NULL, '虞兮叹', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (292, NULL, '遇龙·橙光游戏主题曲', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (293, NULL, '壁上观', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (294, NULL, '不负人间', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (295, NULL, '不负人间 (梦幻西游化生寺门派曲)', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (296, NULL, '人间惊鸿客', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (297, NULL, '田螺', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (298, NULL, '古剑奇谭 电视剧原声带', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (299, NULL, '拜无忧', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (300, NULL, '东风志', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (301, NULL, 'TA·说', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (302, NULL, '叹云兮', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (303, NULL, '探故知', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (304, NULL, '春三月', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (305, NULL, '吹灭小山河', 0, 0, NULL, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `album` VALUES (306, NULL, 'JJ的咖啡调调, Vol. 1', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:16', '2025-05-16 09:24:16');
+INSERT INTO `album` VALUES (307, NULL, 'JJ的咖啡调调, Vol. 2', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (308, NULL, 'JJ陆', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (309, NULL, '一定会/After The Rain', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (310, NULL, '乐行者', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (311, NULL, '伟大的渺小', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (312, NULL, '和自己对话', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (313, NULL, '和自己对话 From M.E. To Myself', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (314, NULL, '因你 而在', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (315, NULL, '她说 概念自选辑', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (316, NULL, '爱情睡醒了 电视剧原声带', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (317, NULL, '学不会', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (318, NULL, '将故事写成我们', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (319, NULL, '梦想的声音 第12期', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (320, NULL, '交换余生', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (321, NULL, '幸存者 Drifter', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (322, NULL, '新地球 - 人 (Special Edition)', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (323, NULL, '曹操', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (324, NULL, '第二天堂', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (325, NULL, '100天', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (326, NULL, '编号89757', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (327, NULL, '海蝶夯之唱响世界', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (328, NULL, '裹着心的光Light of Sanctuary', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (329, NULL, '西界', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (330, NULL, '梦想的声音第二季 第4期', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (331, NULL, '重拾_快乐', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `album` VALUES (332, NULL, '下完这场雨', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `album` VALUES (333, NULL, '很有爱', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `album` VALUES (334, NULL, '9公主', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `album` VALUES (335, NULL, '卢沟晓月', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `album` VALUES (336, NULL, '峨眉雪', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `album` VALUES (337, NULL, '东方不败', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `album` VALUES (338, NULL, '黑板情书', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `album` VALUES (339, NULL, '破防', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `album` VALUES (340, NULL, '古·玩', 0, 0, NULL, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
 
 -- ----------------------------
 -- Table structure for artist
@@ -65,23 +146,63 @@ DROP TABLE IF EXISTS `artist`;
 CREATE TABLE `artist`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '艺术家id',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '艺术家名字',
-  `sex` varchar(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT '未知' COMMENT '性别',
+  `sex` varchar(2) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '未知' COMMENT '性别',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '艺术家照片',
   `follows` int NULL DEFAULT 0 COMMENT '关注数',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '艺术家介绍',
-  `tags` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '标签列表（json数组）',
+  `tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '标签列表（json数组）',
   `birthday` datetime NULL DEFAULT NULL COMMENT '艺术家生日',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '艺术家信息上传时间',
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '艺术家信息更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '艺术家信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 267 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '艺术家信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of artist
 -- ----------------------------
 INSERT INTO `artist` VALUES (1, '周杰伦', '男', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/m.jpg', 0, '周杰伦（Jay Chou），1979年1月18日出生于台湾省新北市，祖籍福建省永春县，华语流行乐男歌手、音乐人、演员、导演、编剧，毕业于淡江中学。', NULL, '1979-01-18 00:00:00', '2024-11-28 21:43:51', '2024-11-28 21:43:51');
 INSERT INTO `artist` VALUES (2, '未知', '未知', NULL, 0, '未知', NULL, '2024-12-19 10:06:24', '2024-12-19 10:06:32', '2024-12-19 10:06:32');
+INSERT INTO `artist` VALUES (227, '刘思涵', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (228, '邓寓君(等什么君)', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (229, '伦桑', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (230, '西瓜JUN', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (231, '李常超（Lao乾妈）', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (232, '银临', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (233, '胡彦斌', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (234, '镜予歌', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (235, '村西', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (236, '橙光音乐', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (237, 'HITA', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (238, 'CRITTY', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (239, '五音Jw', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (240, '张杰', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (241, '河图', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (242, '尹昔眠', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (243, '刘珂矣', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (244, '张紫宁', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (245, '陈鸿宇', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (246, '小坠', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (247, '音频怪物', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (248, '橙翼', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (249, '阿YueYue', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (250, '毛不易', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (251, 'en', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (252, '闻人听書_', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (253, '秦勇', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (254, '一棵小葱', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (255, '阿兰', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (256, '叶里', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (257, '国风堂', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (258, '萧忆情Alex', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (259, '任素汐', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (260, '鞠婧祎', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (261, '浅影阿', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (262, '司南', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (263, '司夏', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `artist` VALUES (264, '林俊杰', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-16 09:24:16', '2025-05-16 09:24:16');
+INSERT INTO `artist` VALUES (265, '郑容和', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `artist` VALUES (266, '后弦', '未知', NULL, 0, NULL, NULL, NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
 
 -- ----------------------------
 -- Table structure for chat
@@ -100,7 +221,7 @@ CREATE TABLE `chat`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_chat_user`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_chat_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of chat
@@ -116,7 +237,7 @@ CREATE TABLE `comment`  (
   `user_id` bigint NULL DEFAULT NULL COMMENT '发布评论用户id',
   `content` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '内容',
   `likes` int NULL DEFAULT 0 COMMENT '点赞数',
-  `target_type` enum('song','playlist','album','work','notice') CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT '评论类型',
+  `target_type` enum('song','playlist','album','work','notice') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '评论类型',
   `target_id` bigint NOT NULL COMMENT '评论位置',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发布时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -124,7 +245,7 @@ CREATE TABLE `comment`  (
   INDEX `target_type`(`target_type` ASC) USING BTREE,
   INDEX `fk_comment_user`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_comment_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '评论信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '评论信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of comment
@@ -132,10 +253,14 @@ CREATE TABLE `comment`  (
 INSERT INTO `comment` VALUES (1, 5, '每首歌都很好听', 2, 'album', 1, '2024-11-29 14:18:26', '2024-11-29 14:18:26');
 INSERT INTO `comment` VALUES (49, 5, '好听', 0, 'song', 153, '2025-01-27 12:49:43', '2025-01-27 12:49:43');
 INSERT INTO `comment` VALUES (50, 5, '好听', 0, 'song', 153, '2025-01-30 12:18:29', '2025-01-30 12:18:29');
-INSERT INTO `comment` VALUES (51, 5, '挺好听', 0, 'album', 1, '2025-01-30 12:19:51', '2025-01-30 12:19:51');
+INSERT INTO `comment` VALUES (51, 5, '挺好听', 1, 'album', 1, '2025-01-30 12:19:51', '2025-01-30 12:19:51');
 INSERT INTO `comment` VALUES (52, 5, '豪庭', 1, 'album', 2, '2025-04-01 11:58:36', '2025-04-01 11:58:36');
 INSERT INTO `comment` VALUES (53, 5, '我说好听，你尔多隆吗', 0, 'album', 2, '2025-04-10 16:37:22', '2025-04-10 16:37:22');
 INSERT INTO `comment` VALUES (54, 5, '牛', 0, 'playlist', 44, '2025-04-17 17:40:35', '2025-04-17 17:40:35');
+INSERT INTO `comment` VALUES (55, 5, '豪庭', 0, 'song', 4, '2025-05-10 16:48:25', '2025-05-10 16:48:25');
+INSERT INTO `comment` VALUES (56, 5, '豪庭', 0, 'album', 1, '2025-05-16 10:47:00', '2025-05-16 10:47:00');
+INSERT INTO `comment` VALUES (57, 5, '非常好听', 0, 'album', 1, '2025-05-17 11:03:17', '2025-05-17 11:03:17');
+INSERT INTO `comment` VALUES (58, 5, '你说什么', 0, 'album', 1, '2025-05-17 15:09:25', '2025-05-17 15:09:25');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -151,7 +276,7 @@ CREATE TABLE `favorite`  (
   UNIQUE INDEX `unique_favorite`(`user_id` ASC, `target_type` ASC, `target_id` ASC) USING BTREE,
   INDEX `target_type`(`target_type` ASC) USING BTREE,
   CONSTRAINT `fk_favorite_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 112 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of favorite
@@ -160,13 +285,33 @@ INSERT INTO `favorite` VALUES (1, 5, 'song', 1, '2024-11-25 18:28:26');
 INSERT INTO `favorite` VALUES (108, 5, 'playlist', 1, '2025-01-27 12:46:06');
 INSERT INTO `favorite` VALUES (109, 5, 'comment', 1, '2025-04-01 11:58:23');
 INSERT INTO `favorite` VALUES (110, 5, 'comment', 52, '2025-04-01 11:58:38');
+INSERT INTO `favorite` VALUES (114, 5, 'comment', 51, '2025-05-17 11:03:20');
+
+-- ----------------------------
+-- Table structure for followings
+-- ----------------------------
+DROP TABLE IF EXISTS `followings`;
+CREATE TABLE `followings`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NULL DEFAULT NULL COMMENT '用户id',
+  `target_type` enum('song','playlist','album','work','notice') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '关注哪个类型',
+  `target_id` int NOT NULL COMMENT '关注了什么',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '收藏时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_followings_user`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `fk_followings_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of followings
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for listen
 -- ----------------------------
 DROP TABLE IF EXISTS `listen`;
 CREATE TABLE `listen`  (
-  `id` bigint NOT NULL COMMENT '收听id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '收听id',
   `user_id` bigint NULL DEFAULT NULL COMMENT '收听用户id，可能为游客',
   `song_id` bigint NOT NULL COMMENT '收听歌曲id',
   `duration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '持续时间',
@@ -176,11 +321,37 @@ CREATE TABLE `listen`  (
   INDEX `fk_listen_song`(`song_id` ASC) USING BTREE,
   CONSTRAINT `fk_listen_song` FOREIGN KEY (`song_id`) REFERENCES `song` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_listen_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of listen
 -- ----------------------------
+INSERT INTO `listen` VALUES (21, 5, 23, '271', '2025-05-16 22:58:35');
+
+-- ----------------------------
+-- Table structure for notice
+-- ----------------------------
+DROP TABLE IF EXISTS `notice`;
+CREATE TABLE `notice`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '公告id',
+  `user_id` bigint NULL DEFAULT NULL COMMENT '发布人id',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '公告标题',
+  `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公告内容',
+  `viewers` int NULL DEFAULT 0 COMMENT '观看人数',
+  `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公告封面',
+  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '公告创建时间',
+  `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '公告更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_title`(`title` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `notice_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '公告' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of notice
+-- ----------------------------
+INSERT INTO `notice` VALUES (1, 5, '小站现在只能听一些站长喜欢听的歌 ￣へ￣', '因为是自建歌曲存储服务，传歌有点繁琐，所以现在只能听杰伦和一些站长喜欢听的歌，如果有想听的歌曲，在网站右上角可以说你想听，我会尽快上传的', 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/zjlh1.jpg', '2024-11-28 12:03:20', '2024-11-28 12:03:20');
+INSERT INTO `notice` VALUES (2, 5, '在网站右上角写下你想听什么吧 ^__^', 'adsfasd', 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/c.jpg', '2024-12-09 17:05:44', '2024-12-09 17:05:44');
 
 -- ----------------------------
 -- Table structure for playlist
@@ -194,7 +365,7 @@ CREATE TABLE `playlist`  (
   `listeners` int NULL DEFAULT 0 COMMENT '收听数',
   `cover` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌单封面',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌单简介',
-  `tags` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '标签列表（json数组）',
+  `tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '标签列表（json数组）',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '歌单创建时间',
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '歌单更新时间',
   `is_public` int NULL DEFAULT 0 COMMENT '是否公开：0 私密，1 公开是否',
@@ -202,17 +373,17 @@ CREATE TABLE `playlist`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_playlist_user`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_playlist_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '歌单信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '歌单信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of playlist
 -- ----------------------------
-INSERT INTO `playlist` VALUES (1, 5, '是的方法', 2, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '士大夫', '[\"流行\"]', '2024-12-16 16:21:12', '2025-01-30 12:20:35', 1, 0);
+INSERT INTO `playlist` VALUES (1, 5, '是的方法', 2, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '士大夫', '[\"流行\"]', '2024-12-16 16:21:12', '2025-05-17 16:08:32', 1, 0);
 INSERT INTO `playlist` VALUES (40, 5, 'Hello', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/73e87701-1912-4cde-9367-88b3c3aa15a3.png', '我说Hello，你尔多隆吗', NULL, '2024-12-16 16:45:39', '2025-04-10 16:26:15', 1, 0);
-INSERT INTO `playlist` VALUES (41, 13, 'aaaa', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'aaaaaaaaa', NULL, '2024-12-26 14:03:04', '2025-04-17 15:42:52', 1, 0);
+INSERT INTO `playlist` VALUES (41, 13, 'aaaa', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'aaaaaaaaa', NULL, '2024-12-26 14:03:04', '2025-05-17 16:12:40', 1, 0);
 INSERT INTO `playlist` VALUES (42, 13, 'sdf', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/2a42fe72-0ab3-4b5c-9f84-aac1f8006cbf.jpg', 'sdf', NULL, '2024-12-26 14:03:17', '2024-12-27 23:34:16', 1, 0);
 INSERT INTO `playlist` VALUES (43, 5, '豪庭', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/cover/978b2ce7-7816-48f9-8eec-44c772b151f5.jpg', '丟，啊丟，啊丟手絹', NULL, '2025-01-27 12:47:11', '2025-04-11 17:51:02', 1, 0);
-INSERT INTO `playlist` VALUES (44, 5, '给我一杯忘情水', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '', '[\"流行\"]', '2025-01-27 12:47:22', '2025-04-18 13:59:55', 1, 0);
+INSERT INTO `playlist` VALUES (44, 5, '给我一杯忘情水', 0, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', '', '[\"流行\"]', '2025-01-27 12:47:22', '2025-05-12 18:13:33', 1, 0);
 
 -- ----------------------------
 -- Table structure for publicity
@@ -225,21 +396,21 @@ CREATE TABLE `publicity`  (
   `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公告内容',
   `viewers` int NULL DEFAULT 0 COMMENT '观看人数',
   `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公告封面',
-  `publicity_type` enum('notice','infomercial') CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT '公告类型',
+  `publicity_type` enum('notice','infomercial') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '公告类型',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '公告创建时间',
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '公告更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_title`(`title` ASC) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `public_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '公告' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '公告' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of publicity
 -- ----------------------------
-INSERT INTO `publicity` VALUES (1, 5, '欢迎你', NULL, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/zjlh1.jpg', 'notice', '2025-04-10 16:07:20', '2025-04-10 16:07:20');
-INSERT INTO `publicity` VALUES (2, 5, 'welcome', NULL, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/c.jpg', 'infomercial', '2025-04-10 16:08:47', '2025-04-10 16:08:47');
-INSERT INTO `publicity` VALUES (3, 5, '祝你有个好体验', NULL, 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/R-C.jpg', 'notice', '2025-04-10 16:18:22', '2025-04-10 16:18:22');
+INSERT INTO `publicity` VALUES (1, 5, '欢迎你', '# 欢迎你', 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/zjlh1.jpg', 'notice', '2025-04-10 16:07:20', '2025-04-10 16:07:20');
+INSERT INTO `publicity` VALUES (2, 5, 'welcome', 'welcome', 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/c.jpg', 'infomercial', '2025-04-10 16:08:47', '2025-04-10 16:08:47');
+INSERT INTO `publicity` VALUES (3, 5, '祝你有个好体验', '祝你有个好体验', 0, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/R-C.jpg', 'notice', '2025-04-10 16:18:22', '2025-04-10 16:18:22');
 
 -- ----------------------------
 -- Table structure for relate
@@ -253,32 +424,62 @@ CREATE TABLE `relate`  (
   INDEX `playlist_id`(`playlist_id` ASC) USING BTREE,
   CONSTRAINT `relate_ibfk_1` FOREIGN KEY (`song_id`) REFERENCES `song` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `relate_ibfk_2` FOREIGN KEY (`playlist_id`) REFERENCES `playlist` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '关联歌曲和歌单' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '关联歌曲和歌单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of relate
 -- ----------------------------
-INSERT INTO `relate` VALUES (41, 1, NULL);
-INSERT INTO `relate` VALUES (44, 1, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (41, 2, NULL);
-INSERT INTO `relate` VALUES (44, 2, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (41, 3, NULL);
-INSERT INTO `relate` VALUES (44, 3, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (41, 4, NULL);
-INSERT INTO `relate` VALUES (44, 4, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (41, 5, NULL);
-INSERT INTO `relate` VALUES (44, 5, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (41, 6, NULL);
-INSERT INTO `relate` VALUES (44, 6, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (41, 7, NULL);
-INSERT INTO `relate` VALUES (44, 7, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (41, 8, NULL);
-INSERT INTO `relate` VALUES (44, 8, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (41, 9, NULL);
-INSERT INTO `relate` VALUES (44, 9, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (41, 10, NULL);
-INSERT INTO `relate` VALUES (44, 10, '2025-04-08 15:15:51');
-INSERT INTO `relate` VALUES (44, 113, '2025-01-30 12:20:11');
+INSERT INTO `relate` VALUES (1, 1, '2025-05-16 10:47:38');
+INSERT INTO `relate` VALUES (41, 1, '2025-05-17 16:04:53');
+INSERT INTO `relate` VALUES (42, 1, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 2, '2025-05-17 16:04:59');
+INSERT INTO `relate` VALUES (42, 2, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 3, '2025-05-17 16:05:01');
+INSERT INTO `relate` VALUES (42, 3, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 4, '2025-05-17 16:05:02');
+INSERT INTO `relate` VALUES (42, 4, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 5, '2025-05-17 16:05:04');
+INSERT INTO `relate` VALUES (42, 5, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 6, '2025-05-17 16:05:04');
+INSERT INTO `relate` VALUES (42, 6, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 7, '2025-05-17 16:05:04');
+INSERT INTO `relate` VALUES (42, 7, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 8, '2025-05-17 16:05:04');
+INSERT INTO `relate` VALUES (42, 8, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 9, '2025-05-17 16:05:04');
+INSERT INTO `relate` VALUES (42, 9, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 10, '2025-05-17 16:05:04');
+INSERT INTO `relate` VALUES (42, 10, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 11, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 11, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 12, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 12, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 13, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 13, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 14, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 14, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 15, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 15, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 16, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 16, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 17, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 17, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 18, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 18, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 19, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 19, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 20, '2025-05-17 16:07:48');
+INSERT INTO `relate` VALUES (42, 20, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 21, '2025-05-17 16:08:44');
+INSERT INTO `relate` VALUES (42, 21, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 22, '2025-05-17 16:08:38');
+INSERT INTO `relate` VALUES (42, 22, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 23, '2025-05-17 16:10:14');
+INSERT INTO `relate` VALUES (42, 23, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 24, '2025-05-17 16:11:05');
+INSERT INTO `relate` VALUES (42, 24, '2025-05-17 16:12:41');
+INSERT INTO `relate` VALUES (41, 26, '2025-05-17 16:11:21');
+INSERT INTO `relate` VALUES (42, 26, '2025-05-17 16:12:41');
 
 -- ----------------------------
 -- Table structure for role
@@ -286,9 +487,9 @@ INSERT INTO `relate` VALUES (44, 113, '2025-01-30 12:20:11');
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role`  (
   `id` int NOT NULL COMMENT '主键',
-  `role_name` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '身份',
+  `role_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '身份',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of role
@@ -304,15 +505,15 @@ CREATE TABLE `song`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '歌曲id',
   `artist_id` bigint NULL DEFAULT NULL COMMENT '歌手id',
   `album_id` bigint NULL DEFAULT NULL COMMENT '专辑id',
-  `title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT '歌曲名',
-  `artists` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '其他歌手（json 数组）',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '歌曲名',
+  `artists` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '其他歌手（json 数组）',
   `duration` int NULL DEFAULT 0 COMMENT '歌曲时长（秒）',
   `mp3_url` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲地址',
   `flac_url` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '无损歌曲地址',
   `cover` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲封面',
   `lyric` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌词',
   `style` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲风格',
-  `tags` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '标签列表（json 数组）',
+  `tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '标签列表（json 数组）',
   `listeners` int NULL DEFAULT 0 COMMENT '收听数',
   `permission` int NULL DEFAULT 0 COMMENT '权限：0 用户；1 管理员；',
   `release_date` datetime NULL DEFAULT NULL COMMENT '歌曲发行时间',
@@ -324,7 +525,7 @@ CREATE TABLE `song`  (
   INDEX `fk_song_album`(`album_id` ASC) USING BTREE,
   CONSTRAINT `fk_song_album` FOREIGN KEY (`album_id`) REFERENCES `album` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `fk_song_artist` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 201 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '歌曲信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 201 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '歌曲信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of song
@@ -334,11 +535,11 @@ INSERT INTO `song` VALUES (2, 1, 1, '完美主义', NULL, 280, 'https://sample20
 INSERT INTO `song` VALUES (3, 1, 1, '星晴', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%98%9F%E6%99%B4-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%98%9F%E6%99%B4-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%98%9F%E6%99%B4-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (4, 1, 1, '娘子', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%A8%98%E5%AD%90-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%A8%98%E5%AD%90-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%A8%98%E5%AD%90-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (5, 1, 1, '斗牛', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%96%97%E7%89%9B-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%96%97%E7%89%9B-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%96%97%E7%89%9B-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
-INSERT INTO `song` VALUES (6, 1, 1, '黑色幽默', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BB%91%E8%89%B2%E5%B9%BD%E9%BB%98-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BB%91%E8%89%B2%E5%B9%BD%E9%BB%98-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E9%BB%91%E8%89%B2%E5%B9%BD%E9%BB%98-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 34, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
+INSERT INTO `song` VALUES (6, 1, 1, '黑色幽默', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BB%91%E8%89%B2%E5%B9%BD%E9%BB%98-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BB%91%E8%89%B2%E5%B9%BD%E9%BB%98-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E9%BB%91%E8%89%B2%E5%B9%BD%E9%BB%98-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (7, 1, 1, '伊斯坦堡', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E4%BC%8A%E6%96%AF%E5%9D%A6%E5%A0%A1-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E4%BC%8A%E6%96%AF%E5%9D%A6%E5%A0%A1-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E4%BC%8A%E6%96%AF%E5%9D%A6%E5%A0%A1-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (8, 1, 1, '印第安老斑鸠', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8D%B0%E7%AC%AC%E5%AE%89%E8%80%81%E6%96%91%E9%B8%A0-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8D%B0%E7%AC%AC%E5%AE%89%E8%80%81%E6%96%91%E9%B8%A0-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%8D%B0%E7%AC%AC%E5%AE%89%E8%80%81%E6%96%91%E9%B8%A0-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (9, 1, 1, '龙卷风', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BE%99%E5%8D%B7%E9%A3%8E-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BE%99%E5%8D%B7%E9%A3%8E-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E9%BE%99%E5%8D%B7%E9%A3%8E-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
-INSERT INTO `song` VALUES (10, 1, 1, '反方向的钟', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8F%8D%E6%96%B9%E5%90%91%E7%9A%84%E9%92%9F-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8F%8D%E6%96%B9%E5%90%91%E7%9A%84%E9%92%9F-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%8F%8D%E6%96%B9%E5%90%91%E7%9A%84%E9%92%9F-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 60, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
+INSERT INTO `song` VALUES (10, 1, 1, '反方向的钟', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8F%8D%E6%96%B9%E5%90%91%E7%9A%84%E9%92%9F-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8F%8D%E6%96%B9%E5%90%91%E7%9A%84%E9%92%9F-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/1jay.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%8F%8D%E6%96%B9%E5%90%91%E7%9A%84%E9%92%9F-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2000-11-07 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (11, 1, 2, '爱在西元前', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%88%B1%E5%9C%A8%E8%A5%BF%E5%85%83%E5%89%8D-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%88%B1%E5%9C%A8%E8%A5%BF%E5%85%83%E5%89%8D-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/2ftx.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E7%88%B1%E5%9C%A8%E8%A5%BF%E5%85%83%E5%89%8D-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2001-09-20 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (12, 1, 2, '爸我回来了', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%88%B8%EF%BC%8C%E6%88%91%E5%9B%9E%E6%9D%A5%E4%BA%86-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%88%B8%EF%BC%8C%E6%88%91%E5%9B%9E%E6%9D%A5%E4%BA%86-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/2ftx.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E7%88%B8%EF%BC%8C%E6%88%91%E5%9B%9E%E6%9D%A5%E4%BA%86-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2001-09-20 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (13, 1, 2, '简单爱', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%AE%80%E5%8D%95%E7%88%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%AE%80%E5%8D%95%E7%88%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/2ftx.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E7%AE%80%E5%8D%95%E7%88%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2001-09-20 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
@@ -351,7 +552,7 @@ INSERT INTO `song` VALUES (19, 1, 2, '双截棍', NULL, 280, 'https://sample2003
 INSERT INTO `song` VALUES (20, 1, 2, '安静', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%AE%89%E9%9D%99-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%AE%89%E9%9D%99-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/2ftx.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%AE%89%E9%9D%99-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2001-09-20 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (21, 1, 3, '半兽人', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8D%8A%E5%85%BD%E4%BA%BA-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8D%8A%E5%85%BD%E4%BA%BA-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/3bdkj.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%8D%8A%E5%85%BD%E4%BA%BA-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2002-07-18 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (22, 1, 3, '半岛铁盒', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8D%8A%E5%B2%9B%E9%93%81%E7%9B%92-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8D%8A%E5%B2%9B%E9%93%81%E7%9B%92-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/3bdkj.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%8D%8A%E5%B2%9B%E9%93%81%E7%9B%92-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2002-07-18 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
-INSERT INTO `song` VALUES (23, 1, 3, '暗号', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%9A%97%E5%8F%B7-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%9A%97%E5%8F%B7-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/3bdkj.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%9A%97%E5%8F%B7-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2002-07-18 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
+INSERT INTO `song` VALUES (23, 1, 3, '暗号', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%9A%97%E5%8F%B7-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%9A%97%E5%8F%B7-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/3bdkj.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%9A%97%E5%8F%B7-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 1, 0, '2002-07-18 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (24, 1, 3, '龙拳', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BE%99%E6%8B%B3-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BE%99%E6%8B%B3-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/3bdkj.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E9%BE%99%E6%8B%B3-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2002-07-18 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (25, 1, 3, '火车叨位去', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%81%AB%E8%BD%A6%E5%8F%A8%E4%BD%8D%E5%8E%BB-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%81%AB%E8%BD%A6%E5%8F%A8%E4%BD%8D%E5%8E%BB-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/3bdkj.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E7%81%AB%E8%BD%A6%E5%8F%A8%E4%BD%8D%E5%8E%BB-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2002-07-18 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
 INSERT INTO `song` VALUES (26, 1, 3, '分裂', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%88%86%E8%A3%82-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%88%86%E8%A3%82-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/3bdkj.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%88%86%E8%A3%82-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2002-07-18 00:00:00', '2024-11-30 12:05:01', '2024-11-30 12:05:01');
@@ -381,7 +582,7 @@ INSERT INTO `song` VALUES (49, 1, 5, '止战之殇', NULL, 280, 'https://sample2
 INSERT INTO `song` VALUES (50, 1, 6, '夜曲', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%A4%9C%E6%9B%B2-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%A4%9C%E6%9B%B2-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/6syydxb.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%A4%9C%E6%9B%B2-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2005-11-01 00:00:00', '2024-12-03 18:15:14', '2024-12-03 18:15:14');
 INSERT INTO `song` VALUES (51, 1, 6, '蓝色风暴', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E8%93%9D%E8%89%B2%E9%A3%8E%E6%9A%B4-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E8%93%9D%E8%89%B2%E9%A3%8E%E6%9A%B4-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/6syydxb.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E8%93%9D%E8%89%B2%E9%A3%8E%E6%9A%B4-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2005-11-01 00:00:00', '2024-12-03 18:15:14', '2024-12-03 18:15:14');
 INSERT INTO `song` VALUES (52, 1, 6, '发如雪', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8F%91%E5%A6%82%E9%9B%AA-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%8F%91%E5%A6%82%E9%9B%AA-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/6syydxb.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%8F%91%E5%A6%82%E9%9B%AA-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2005-11-01 00:00:00', '2024-12-03 18:15:14', '2024-12-03 18:15:14');
-INSERT INTO `song` VALUES (53, 1, 6, '黑色毛衣', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BB%91%E8%89%B2%E6%AF%9B%E8%A1%A3-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BB%91%E8%89%B2%E6%AF%9B%E8%A1%A3-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/6syydxb.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E9%BB%91%E8%89%B2%E6%AF%9B%E8%A1%A3-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 116, 0, '2005-11-01 00:00:00', '2024-12-03 18:15:14', '2024-12-03 18:15:14');
+INSERT INTO `song` VALUES (53, 1, 6, '黑色毛衣', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BB%91%E8%89%B2%E6%AF%9B%E8%A1%A3-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E9%BB%91%E8%89%B2%E6%AF%9B%E8%A1%A3-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/6syydxb.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E9%BB%91%E8%89%B2%E6%AF%9B%E8%A1%A3-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2005-11-01 00:00:00', '2024-12-03 18:15:14', '2024-12-03 18:15:14');
 INSERT INTO `song` VALUES (54, 1, 6, '四面楚歌', '[\"林迈可\"]', 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%9B%9B%E9%9D%A2%E6%A5%9A%E6%AD%8C-%E5%91%A8%E6%9D%B0%E4%BC%A6%26%E6%9E%97%E8%BF%88%E5%8F%AF.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%9B%9B%E9%9D%A2%E6%A5%9A%E6%AD%8C-%E5%91%A8%E6%9D%B0%E4%BC%A6%26%E6%9E%97%E8%BF%88%E5%8F%AF.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/6syydxb.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%9B%9B%E9%9D%A2%E6%A5%9A%E6%AD%8C-%E5%91%A8%E6%9D%B0%E4%BC%A6%26%E6%9E%97%E8%BF%88%E5%8F%AF.txt', '流行', '[\"流行\"]', 0, 0, '2005-11-01 00:00:00', '2024-12-03 18:15:14', '2024-12-03 18:15:14');
 INSERT INTO `song` VALUES (55, 1, 6, '枫', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%9E%AB-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%9E%AB-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/6syydxb.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%9E%AB-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2005-11-01 00:00:00', '2024-12-03 18:15:14', '2024-12-03 18:15:14');
 INSERT INTO `song` VALUES (56, 1, 6, '浪漫手机', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%B5%AA%E6%BC%AB%E6%89%8B%E6%9C%BA-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%B5%AA%E6%BC%AB%E6%89%8B%E6%9C%BA-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/6syydxb.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%B5%AA%E6%BCl%AB%E6%89%8B%E6%9C%BA-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2005-11-01 00:00:00', '2024-12-03 18:15:14', '2024-12-03 18:15:14');
@@ -441,7 +642,7 @@ INSERT INTO `song` VALUES (109, 1, 11, '手语', NULL, 280, 'https://sample2003.
 INSERT INTO `song` VALUES (110, 1, 12, '四季列车', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%9B%9B%E5%AD%A3%E8%BD%A6%E7%89%B9-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%9B%9B%E5%AD%A3%E8%BD%A6%E7%89%B9-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/12sexz.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%9B%9B%E5%AD%A3%E8%BD%A6%E7%89%B9-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2012-12-28 00:00:00', '2024-12-11 10:57:54', '2024-12-11 10:57:54');
 INSERT INTO `song` VALUES (111, 1, 12, '手语', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%89%8B%E8%AF%AD-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%89%8B%E8%AF%AD-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/12sexz.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%89%8B%E8%AF%AD-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2012-12-28 00:00:00', '2024-12-11 10:57:54', '2024-12-11 10:57:54');
 INSERT INTO `song` VALUES (112, 1, 12, '公公偏头痛', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%85%AC%E5%85%AC%E5%81%8F%E5%A4%B4%E7%97%9B-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%85%AC%E5%85%AC%E5%81%8F%E5%A4%B4%E7%97%9B-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/12sexz.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%85%AC%E5%85%AC%E5%81%8F%E5%A4%B4%E7%97%9B-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2012-12-28 00:00:00', '2024-12-11 10:57:54', '2024-12-11 10:57:54');
-INSERT INTO `song` VALUES (113, 1, 12, '明明就', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%98%8E%E6%98%8E%E5%B0%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%98%8A%E6%98%8A%E5%B0%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/12sexz.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%98%8A%E6%98%8A%E5%B0%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2012-12-28 00:00:00', '2024-12-11 10:57:54', '2024-12-11 10:57:54');
+INSERT INTO `song` VALUES (113, 1, 12, '明明就', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%98%8A%E6%98%8A%E5%B0%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%98%8A%E6%98%8A%E5%B0%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/12sexz.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%98%8A%E6%98%8A%E5%B0%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2012-12-28 00:00:00', '2024-12-11 10:57:54', '2024-12-11 10:57:54');
 INSERT INTO `song` VALUES (114, 1, 12, '傻笑', '[\"袁咏琳\"]', 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%82%BB%E7%AC%91-%E5%91%A8%E6%9D%B0%E4%BC%A6%26%E8%A2%81%E5%92%8F%E7%90%B3.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%82%BB%E7%AC%91-%E5%91%A8%E6%9D%B0%E4%BC%A6%26%E8%A2%81%E5%92%8F%E7%90%B3.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/12sexz.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%82%BB%E7%AC%91-%E5%91%A8%E6%9D%B0%E4%BC%A6%26%E8%A2%81%E5%92%8F%E7%90%B3.txt', '流行', '[\"流行\"]', 0, 0, '2012-12-28 00:00:00', '2024-12-11 10:57:54', '2024-12-11 10:57:54');
 INSERT INTO `song` VALUES (115, 1, 12, '比较大的大提琴', '[\"梁心颐\", \"杨瑞代\"]', 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%AF%94%E8%BE%83%E5%A4%A7%E7%9A%84%E5%A4%A7%E6%8F%90%E7%90%B4-%E5%91%A8%E6%9D%B0%E4%BC%A6%26Lara%E6%A2%81%E5%BF%83%E9%A2%90%26%E6%9D%A8%E7%91%9E%E4%BB%A3.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%AF%94%E8%BE%83%E5%A4%A7%E7%9A%84%E5%A4%A7%E6%8F%90%E7%90%B4-%E5%91%A8%E6%9D%B0%E4%BC%A6%26Lara%E6%A2%81%E5%BF%83%E9%A2%90%26%E6%9D%A8%E7%91%9E%E4%BB%A3.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/12sexz.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%AF%94%E8%BE%83%E5%A4%A7%E7%9A%84%E5%A4%A7%E6%8F%90%E7%90%B4-%E5%91%A8%E6%9D%B0%E4%BC%A6%26Lara%E6%A2%81%E5%BF%83%E9%A2%90%26%E6%9D%A8%E7%91%9E%E4%BB%A3.txt', '流行', '[\"流行\"]', 0, 0, '2012-12-28 00:00:00', '2024-12-11 10:57:54', '2024-12-11 10:57:54');
 INSERT INTO `song` VALUES (116, 1, 12, '爱你没差', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%88%B1%E4%BD%A0%E6%B2%A1%E5%B7%AE-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E7%88%B1%E4%BD%A0%E6%B2%A1%E5%B7%AE-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/12sexz.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E7%88%B1%E4%BD%A0%E6%B2%A1%E5%B7%AE-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2012-12-28 00:00:00', '2024-12-11 10:57:54', '2024-12-11 10:57:54');
@@ -481,8 +682,220 @@ INSERT INTO `song` VALUES (149, 1, 15, '粉色海洋', NULL, 280, 'https://sampl
 INSERT INTO `song` VALUES (150, 1, 15, '倒影', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%80%92%E5%BD%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%80%92%E5%BD%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/15zwddzp.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%80%92%E5%BD%B1-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2022-07-06 00:00:00', '2024-12-11 14:57:33', '2024-12-11 14:57:33');
 INSERT INTO `song` VALUES (151, 1, 15, '我是如此相信', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%88%91%E6%98%AF%E5%A6%82%E6%AD%A4%E7%9B%B8%E4%BF%A1-%E5%91%A8%E6%9D%B0%E4%BC%A6.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E6%88%91%E6%98%AF%E5%A6%82%E6%AD%A4%E7%9B%B8%E4%BF%A1-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/15zwddzp.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E6%88%91%E6%98%AF%E5%A6%82%E6%AD%A4%E7%9B%B8%E4%BF%A1-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '流行', '[\"流行\"]', 0, 0, '2022-07-06 00:00:00', '2024-12-11 14:57:33', '2024-12-11 14:57:33');
 INSERT INTO `song` VALUES (152, 1, NULL, '轨迹', NULL, 280, '', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E8%BD%A8%E8%BF%B9-%E5%91%A8%E6%9D%B0%E4%BC%A6.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/xzzjl.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E8%BD%A8%E8%BF%B9-%E5%91%A8%E6%9D%B0%E4%BC%A6.txt', '抒情', '[\"流行\", \"抒情\"]', 0, 0, '2003-11-13 00:00:00', '2024-12-27 18:13:29', '2024-12-27 18:13:29');
-INSERT INTO `song` VALUES (153, 2, 16, 'Long Kiss Good Bye-《火影忍者疾风传》TV动画第298-310集片尾曲-HALCALI', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.txt', '动画', '[\"动画\",\"火影忍者\"]', 1110, 1, '2008-07-06 00:00:00', '2024-12-19 10:07:19', '2024-12-19 10:07:19');
+INSERT INTO `song` VALUES (153, 2, 16, 'Long Kiss Good Bye-《火影忍者疾风传》TV动画第298-310集片尾曲-HALCALI', NULL, 280, 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.mp3', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/Long%20Kiss%20Good%20Bye-%E3%80%8A%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85%E7%96%BE%E9%A3%8E%E4%BC%A0%E3%80%8BTV%E5%8A%A8%E7%94%BB%E7%AC%AC298-310%E9%9B%86%E7%89%87%E5%B0%BE%E6%9B%B2-HALCALI.txt', '动画', '[\"动画\",\"火影忍者\"]', 0, 1, '2008-07-06 00:00:00', '2024-12-19 10:07:19', '2024-12-19 10:07:19');
 INSERT INTO `song` VALUES (200, 1, NULL, '圣诞星 (feat-杨瑞代)', '[\"杨瑞代\"]', 280, '', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/song/%E5%9C%A3%E8%AF%9E%E6%98%9F%20(feat-%E6%9D%A8%E7%91%9E%E4%BB%A3).flac', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/image/%E5%9C%A3%E8%AF%9E%E6%98%9F%20(feat-%E6%9D%A8%E7%91%9E%E4%BB%A3).jpg', 'https://sample2003.oss-cn-guangzhou.aliyuncs.com/music/lyric/%E5%9C%A3%E8%AF%9E%E6%98%9F%20(feat-%E6%9D%A8%E7%91%9E%E4%BB%A3).txt', '流行', NULL, 0, 0, '2023-12-22 00:00:00', '2024-12-28 10:45:09', '2024-12-28 10:45:09');
+
+-- ----------------------------
+-- Table structure for song_local
+-- ----------------------------
+DROP TABLE IF EXISTS `song_local`;
+CREATE TABLE `song_local`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '歌曲id',
+  `artist_id` bigint NULL DEFAULT NULL COMMENT '歌手id',
+  `album_id` bigint NULL DEFAULT NULL COMMENT '专辑id',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '歌曲名',
+  `artists` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '其他歌手（json 数组）',
+  `duration` int NULL DEFAULT 0 COMMENT '歌曲时长（秒）',
+  `mp3_url` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲地址',
+  `flac_url` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '无损歌曲地址',
+  `cover` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲封面',
+  `lyric` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌词',
+  `style` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲风格',
+  `tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '标签列表（json 数组）',
+  `listeners` int NULL DEFAULT 0 COMMENT '收听数',
+  `permission` int NULL DEFAULT 0 COMMENT '权限：0 用户；1 管理员；',
+  `release_date` datetime NULL DEFAULT NULL COMMENT '歌曲发行时间',
+  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '歌曲信息上传时间',
+  `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '歌曲信息更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_title`(`title` ASC) USING BTREE,
+  INDEX `fk_song_artist`(`artist_id` ASC) USING BTREE,
+  INDEX `fk_song_album`(`album_id` ASC) USING BTREE,
+  CONSTRAINT `song_local_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `album` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
+  CONSTRAINT `song_local_ibfk_2` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 201 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '歌曲信息' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of song_local
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for song_own
+-- ----------------------------
+DROP TABLE IF EXISTS `song_own`;
+CREATE TABLE `song_own`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '歌曲id',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '歌曲名',
+  `artist_id` bigint NULL DEFAULT NULL COMMENT '歌手id',
+  `artists` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '其他歌手（json 数组）',
+  `album_id` bigint NULL DEFAULT NULL COMMENT '专辑id',
+  `duration` int NULL DEFAULT 0 COMMENT '歌曲时长（秒）',
+  `mp3_url` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲地址',
+  `flac_url` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '无损歌曲地址',
+  `cover` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲封面',
+  `lyric` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌词',
+  `style` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '歌曲风格',
+  `tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '标签列表（json 数组）',
+  `sampleRate` int NULL DEFAULT NULL COMMENT '取样频率',
+  `bit_depth` int NULL DEFAULT NULL COMMENT '位深',
+  `listeners` int NULL DEFAULT 0 COMMENT '收听数',
+  `permission` int NULL DEFAULT 0 COMMENT '权限：0 用户；1 管理员；',
+  `year` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '歌曲发行年份',
+  `release_date` datetime NULL DEFAULT NULL COMMENT '歌曲发行时间',
+  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '歌曲信息上传时间',
+  `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '歌曲信息更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_title`(`title` ASC) USING BTREE,
+  INDEX `fk_song_artist`(`artist_id` ASC) USING BTREE,
+  INDEX `fk_song_album`(`album_id` ASC) USING BTREE,
+  CONSTRAINT `fk_song_album_own` FOREIGN KEY (`album_id`) REFERENCES `album` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_song_artist_own` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 706 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '歌曲信息' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of song_own
+-- ----------------------------
+INSERT INTO `song_own` VALUES (565, '吹梦到西洲', 227, NULL, 260, 373, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E5%90%B9%E6%A2%A6%E5%88%B0%E8%A5%BF%E6%B4%B2-%E5%88%98%E6%80%9D%E6%B6%B5.flac', 'http://localhost:3000/api/cover?path=%E5%90%B9%E6%A2%A6%E5%88%B0%E8%A5%BF%E6%B4%B2-%E5%88%98%E6%80%9D%E6%B6%B5.jpeg', 'http://localhost:3000/api/lyric?path=%E5%90%B9%E6%A2%A6%E5%88%B0%E8%A5%BF%E6%B4%B2-%E5%88%98%E6%80%9D%E6%B6%B5.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (566, '春庭雪', 228, NULL, 261, 241, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E6%98%A5%E5%BA%AD%E9%9B%AA-%E9%82%93%E5%AF%93%E5%90%9B(%E7%AD%89%E4%BB%80%E4%B9%88%E5%90%9B).flac', 'http://localhost:3000/api/cover?path=%E6%98%A5%E5%BA%AD%E9%9B%AA-%E9%82%93%E5%AF%93%E5%90%9B(%E7%AD%89%E4%BB%80%E4%B9%88%E5%90%9B).jpeg', 'http://localhost:3000/api/lyric?path=%E6%98%A5%E5%BA%AD%E9%9B%AA-%E9%82%93%E5%AF%93%E5%90%9B(%E7%AD%89%E4%BB%80%E4%B9%88%E5%90%9B).lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (567, '长生诀', 230, NULL, 262, 192, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E9%95%BF%E7%94%9F%E8%AF%80-%E8%A5%BF%E7%93%9CJUN.mp3', NULL, 'http://localhost:3000/api/cover?path=%E9%95%BF%E7%94%9F%E8%AF%80-%E8%A5%BF%E7%93%9CJUN.jpeg', '', NULL, NULL, NULL, NULL, 0, 0, '2016', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (568, '盗墓笔记·十年人间-八一七稻米节主题推广曲', 231, NULL, 263, 277, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E7%9B%97%E5%A2%93%E7%AC%94%E8%AE%B0%C2%B7%E5%8D%81%E5%B9%B4%E4%BA%BA%E9%97%B4-%E5%85%AB%E4%B8%80%E4%B8%83%E7%A8%BB%E7%B1%B3%E8%8A%82%E4%B8%BB%E9%A2%98%E6%8E%A8%E5%B9%BF%E6%9B%B2-%E6%9D%8E%E5%B8%B8%E8%B6%85%EF%BC%88Lao%E4%B9%BE%E5%A6%88%EF%BC%89.flac', 'http://localhost:3000/api/cover?path=%E7%9B%97%E5%A2%93%E7%AC%94%E8%AE%B0%C2%B7%E5%8D%81%E5%B9%B4%E4%BA%BA%E9%97%B4-%E5%85%AB%E4%B8%80%E4%B8%83%E7%A8%BB%E7%B1%B3%E8%8A%82%E4%B8%BB%E9%A2%98%E6%8E%A8%E5%B9%BF%E6%9B%B2-%E6%9D%8E%E5%B8%B8%E8%B6%85%EF%BC%88Lao%E4%B9%BE%E5%A6%88%EF%BC%89.jpeg', 'http://localhost:3000/api/lyric?path=%E7%9B%97%E5%A2%93%E7%AC%94%E8%AE%B0%C2%B7%E5%8D%81%E5%B9%B4%E4%BA%BA%E9%97%B4-%E5%85%AB%E4%B8%80%E4%B8%83%E7%A8%BB%E7%B1%B3%E8%8A%82%E4%B8%BB%E9%A2%98%E6%8E%A8%E5%B9%BF%E6%9B%B2-%E6%9D%8E%E5%B8%B8%E8%B6%85%EF%BC%88Lao%E4%B9%BE%E5%A6%88%EF%BC%89.lrc', NULL, NULL, NULL, NULL, 0, 0, '2018', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (569, '长安姑娘', 231, NULL, 264, 255, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E9%95%BF%E5%AE%89%E5%A7%91%E5%A8%98-%E6%9D%8E%E5%B8%B8%E8%B6%85%EF%BC%88Lao%E4%B9%BE%E5%A6%88%EF%BC%89.flac', 'http://localhost:3000/api/cover?path=%E9%95%BF%E5%AE%89%E5%A7%91%E5%A8%98-%E6%9D%8E%E5%B8%B8%E8%B6%85%EF%BC%88Lao%E4%B9%BE%E5%A6%88%EF%BC%89.jpeg', 'http://localhost:3000/api/lyric?path=%E9%95%BF%E5%AE%89%E5%A7%91%E5%A8%98-%E6%9D%8E%E5%B8%B8%E8%B6%85%EF%BC%88Lao%E4%B9%BE%E5%A6%88%EF%BC%89.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (570, '棠梨煎雪', 232, NULL, 266, 246, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E6%A3%A0%E6%A2%A8%E7%85%8E%E9%9B%AA-%E9%93%B6%E4%B8%B4.flac', 'http://localhost:3000/api/cover?path=%E6%A3%A0%E6%A2%A8%E7%85%8E%E9%9B%AA-%E9%93%B6%E4%B8%B4.jpeg', 'http://localhost:3000/api/lyric?path=%E6%A3%A0%E6%A2%A8%E7%85%8E%E9%9B%AA-%E9%93%B6%E4%B8%B4.lrc', NULL, NULL, NULL, NULL, 0, 0, '2013', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (571, '红颜', 233, NULL, 267, 219, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E7%BA%A2%E9%A2%9C-%E8%83%A1%E5%BD%A6%E6%96%8C.flac', 'http://localhost:3000/api/cover?path=%E7%BA%A2%E9%A2%9C-%E8%83%A1%E5%BD%A6%E6%96%8C.jpeg', 'http://localhost:3000/api/lyric?path=%E7%BA%A2%E9%A2%9C-%E8%83%A1%E5%BD%A6%E6%96%8C.lrc', NULL, NULL, NULL, NULL, 0, 0, '2004', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (572, '戒网', 235, '[\"王馨悦\"]', 269, 330, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E6%88%92%E7%BD%91-%E6%9D%91%E8%A5%BF%26%E7%8E%8B%E9%A6%A8%E6%82%A6.flac', 'http://localhost:3000/api/cover?path=%E6%88%92%E7%BD%91-%E6%9D%91%E8%A5%BF%26%E7%8E%8B%E9%A6%A8%E6%82%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E6%88%92%E7%BD%91-%E6%9D%91%E8%A5%BF%26%E7%8E%8B%E9%A6%A8%E6%82%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2022', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (573, '一诺情长', 236, '[\"不才\",\"弦亦默\"]', 270, 283, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E4%B8%80%E8%AF%BA%E6%83%85%E9%95%BF-%E6%A9%99%E5%85%89%E9%9F%B3%E4%B9%90%26%E4%B8%8D%E6%89%8D%26%E5%BC%A6%E4%BA%A6%E9%BB%98.flac', 'http://localhost:3000/api/cover?path=%E4%B8%80%E8%AF%BA%E6%83%85%E9%95%BF-%E6%A9%99%E5%85%89%E9%9F%B3%E4%B9%90%26%E4%B8%8D%E6%89%8D%26%E5%BC%A6%E4%BA%A6%E9%BB%98.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%80%E8%AF%BA%E6%83%85%E9%95%BF-%E6%A9%99%E5%85%89%E9%9F%B3%E4%B9%90%26%E4%B8%8D%E6%89%8D%26%E5%BC%A6%E4%BA%A6%E9%BB%98.lrc', NULL, NULL, NULL, NULL, 0, 0, '2016', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (574, '赤伶', 237, NULL, 271, 266, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E8%B5%A4%E4%BC%B6-HITA.flac', 'http://localhost:3000/api/cover?path=%E8%B5%A4%E4%BC%B6-HITA.jpeg', 'http://localhost:3000/api/lyric?path=%E8%B5%A4%E4%BC%B6-HITA.lrc', NULL, NULL, NULL, NULL, 0, 0, '2018', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (575, '轮回之境', 238, NULL, 272, 252, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E8%BD%AE%E5%9B%9E%E4%B9%8B%E5%A2%83-CRITTY.flac', 'http://localhost:3000/api/cover?path=%E8%BD%AE%E5%9B%9E%E4%B9%8B%E5%A2%83-CRITTY.jpeg', 'http://localhost:3000/api/lyric?path=%E8%BD%AE%E5%9B%9E%E4%B9%8B%E5%A2%83-CRITTY.lrc', NULL, NULL, NULL, NULL, 0, 0, '2013', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (576, '明月天涯', 239, NULL, 273, 240, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E6%98%8E%E6%9C%88%E5%A4%A9%E6%B6%AF-%E4%BA%94%E9%9F%B3Jw.flac', 'http://localhost:3000/api/cover?path=%E6%98%8E%E6%9C%88%E5%A4%A9%E6%B6%AF-%E4%BA%94%E9%9F%B3Jw.jpeg', 'http://localhost:3000/api/lyric?path=%E6%98%8E%E6%9C%88%E5%A4%A9%E6%B6%AF-%E4%BA%94%E9%9F%B3Jw.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (577, '红颜旧', 229, '[\"萧忆情Alex\",\"满汉全席音乐团队\"]', 274, 218, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E7%BA%A2%E9%A2%9C%E6%97%A7-%E4%BC%A6%E6%A1%91%26%E8%90%A7%E5%BF%86%E6%83%85Alex%26%E6%BB%A1%E6%B1%89%E5%85%A8%E5%B8%AD%E9%9F%B3%E4%B9%90%E5%9B%A2%E9%98%9F.flac', 'http://localhost:3000/api/cover?path=%E7%BA%A2%E9%A2%9C%E6%97%A7-%E4%BC%A6%E6%A1%91%26%E8%90%A7%E5%BF%86%E6%83%85Alex%26%E6%BB%A1%E6%B1%89%E5%85%A8%E5%B8%AD%E9%9F%B3%E4%B9%90%E5%9B%A2%E9%98%9F.jpeg', 'http://localhost:3000/api/lyric?path=%E7%BA%A2%E9%A2%9C%E6%97%A7-%E4%BC%A6%E6%A1%91%26%E8%90%A7%E5%BF%86%E6%83%85Alex%26%E6%BB%A1%E6%B1%89%E5%85%A8%E5%B8%AD%E9%9F%B3%E4%B9%90%E5%9B%A2%E9%98%9F.lrc', NULL, NULL, NULL, NULL, 0, 0, '2016', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (578, '山有木兮-橙光《人鱼传说之长生烛》主题曲', 236, '[\"伦桑\"]', 275, 253, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E5%B1%B1%E6%9C%89%E6%9C%A8%E5%85%AE-%E6%A9%99%E5%85%89%E3%80%8A%E4%BA%BA%E9%B1%BC%E4%BC%A0%E8%AF%B4%E4%B9%8B%E9%95%BF%E7%94%9F%E7%83%9B%E3%80%8B%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%A9%99%E5%85%89%E9%9F%B3%E4%B9%90%26%E4%BC%A6%E6%A1%91.flac', 'http://localhost:3000/api/cover?path=%E5%B1%B1%E6%9C%89%E6%9C%A8%E5%85%AE-%E6%A9%99%E5%85%89%E3%80%8A%E4%BA%BA%E9%B1%BC%E4%BC%A0%E8%AF%B4%E4%B9%8B%E9%95%BF%E7%94%9F%E7%83%9B%E3%80%8B%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%A9%99%E5%85%89%E9%9F%B3%E4%B9%90%26%E4%BC%A6%E6%A1%91.jpeg', 'http://localhost:3000/api/lyric?path=%E5%B1%B1%E6%9C%89%E6%9C%A8%E5%85%AE-%E6%A9%99%E5%85%89%E3%80%8A%E4%BA%BA%E9%B1%BC%E4%BC%A0%E8%AF%B4%E4%B9%8B%E9%95%BF%E7%94%9F%E7%83%9B%E3%80%8B%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%A9%99%E5%85%89%E9%9F%B3%E4%B9%90%26%E4%BC%A6%E6%A1%91.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (579, '天下', 240, NULL, 276, 221, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E5%A4%A9%E4%B8%8B-%E5%BC%A0%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%A4%A9%E4%B8%8B-%E5%BC%A0%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%A4%A9%E4%B8%8B-%E5%BC%A0%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (580, '倾尽天下', 241, NULL, 277, 266, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E5%80%BE%E5%B0%BD%E5%A4%A9%E4%B8%8B-%E6%B2%B3%E5%9B%BE.flac', 'http://localhost:3000/api/cover?path=%E5%80%BE%E5%B0%BD%E5%A4%A9%E4%B8%8B-%E6%B2%B3%E5%9B%BE.jpeg', 'http://localhost:3000/api/lyric?path=%E5%80%BE%E5%B0%BD%E5%A4%A9%E4%B8%8B-%E6%B2%B3%E5%9B%BE.lrc', NULL, NULL, NULL, NULL, 0, 0, '2009', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (581, '半壶纱', 243, NULL, 279, 222, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E5%8D%8A%E5%A3%B6%E7%BA%B1-%E5%88%98%E7%8F%82%E7%9F%A3.flac', 'http://localhost:3000/api/cover?path=%E5%8D%8A%E5%A3%B6%E7%BA%B1-%E5%88%98%E7%8F%82%E7%9F%A3.jpeg', 'http://localhost:3000/api/lyric?path=%E5%8D%8A%E5%A3%B6%E7%BA%B1-%E5%88%98%E7%8F%82%E7%9F%A3.lrc', NULL, NULL, NULL, NULL, 0, 0, '2016', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (582, '折梅为题', 246, NULL, 281, 320, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E6%8A%98%E6%A2%85%E4%B8%BA%E9%A2%98-%E5%B0%8F%E5%9D%A0.flac', 'http://localhost:3000/api/cover?path=%E6%8A%98%E6%A2%85%E4%B8%BA%E9%A2%98-%E5%B0%8F%E5%9D%A0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%8A%98%E6%A2%85%E4%B8%BA%E9%A2%98-%E5%B0%8F%E5%9D%A0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2019', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (583, '故梦', 248, NULL, 283, 286, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E6%95%85%E6%A2%A6-%E6%A9%99%E7%BF%BC.flac', 'http://localhost:3000/api/cover?path=%E6%95%85%E6%A2%A6-%E6%A9%99%E7%BF%BC.jpeg', 'http://localhost:3000/api/lyric?path=%E6%95%85%E6%A2%A6-%E6%A9%99%E7%BF%BC.lrc', NULL, NULL, NULL, NULL, 0, 0, '2013', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (584, '芊芊', 249, NULL, 284, 210, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E8%8A%8A%E8%8A%8A-%E9%98%BFYueYue.flac', 'http://localhost:3000/api/cover?path=%E8%8A%8A%E8%8A%8A-%E9%98%BFYueYue.jpeg', 'http://localhost:3000/api/lyric?path=%E8%8A%8A%E8%8A%8A-%E9%98%BFYueYue.lrc', NULL, NULL, NULL, NULL, 0, 0, '2022', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (585, '云与海', 249, NULL, 285, 258, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E4%BA%91%E4%B8%8E%E6%B5%B7-%E9%98%BFYueYue.flac', 'http://localhost:3000/api/cover?path=%E4%BA%91%E4%B8%8E%E6%B5%B7-%E9%98%BFYueYue.jpeg', 'http://localhost:3000/api/lyric?path=%E4%BA%91%E4%B8%8E%E6%B5%B7-%E9%98%BFYueYue.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (586, '关山酒', 228, NULL, 289, 235, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E5%85%B3%E5%B1%B1%E9%85%92-%E9%82%93%E5%AF%93%E5%90%9B(%E7%AD%89%E4%BB%80%E4%B9%88%E5%90%9B).flac', 'http://localhost:3000/api/cover?path=%E5%85%B3%E5%B1%B1%E9%85%92-%E9%82%93%E5%AF%93%E5%90%9B(%E7%AD%89%E4%BB%80%E4%B9%88%E5%90%9B).jpeg', 'http://localhost:3000/api/lyric?path=%E5%85%B3%E5%B1%B1%E9%85%92-%E9%82%93%E5%AF%93%E5%90%9B(%E7%AD%89%E4%BB%80%E4%B9%88%E5%90%9B).lrc', NULL, NULL, NULL, NULL, 0, 0, '2019', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (587, '云水谣', 251, NULL, 290, 242, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E4%BA%91%E6%B0%B4%E8%B0%A3-en.flac', 'http://localhost:3000/api/cover?path=%E4%BA%91%E6%B0%B4%E8%B0%A3-en.jpeg', 'http://localhost:3000/api/lyric?path=%E4%BA%91%E6%B0%B4%E8%B0%A3-en.lrc', NULL, NULL, NULL, NULL, 0, 0, '2019', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (588, '虞兮叹', 252, NULL, 291, 210, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E8%99%9E%E5%85%AE%E5%8F%B9-%E9%97%BB%E4%BA%BA%E5%90%AC%E6%9B%B8_.flac', 'http://localhost:3000/api/cover?path=%E8%99%9E%E5%85%AE%E5%8F%B9-%E9%97%BB%E4%BA%BA%E5%90%AC%E6%9B%B8_.jpeg', 'http://localhost:3000/api/lyric?path=%E8%99%9E%E5%85%AE%E5%8F%B9-%E9%97%BB%E4%BA%BA%E5%90%AC%E6%9B%B8_.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (589, '壁上观', 254, '[\"张曦匀\"]', 293, 284, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E5%A3%81%E4%B8%8A%E8%A7%82-%E4%B8%80%E6%A3%B5%E5%B0%8F%E8%91%B1%26%E5%BC%A0%E6%9B%A6%E5%8C%80.flac', 'http://localhost:3000/api/cover?path=%E5%A3%81%E4%B8%8A%E8%A7%82-%E4%B8%80%E6%A3%B5%E5%B0%8F%E8%91%B1%26%E5%BC%A0%E6%9B%A6%E5%8C%80.jpeg', 'http://localhost:3000/api/lyric?path=%E5%A3%81%E4%B8%8A%E8%A7%82-%E4%B8%80%E6%A3%B5%E5%B0%8F%E8%91%B1%26%E5%BC%A0%E6%9B%A6%E5%8C%80.lrc', NULL, NULL, NULL, NULL, 0, 0, '2019', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (590, '不负人间', 255, NULL, 294, 236, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E4%B8%8D%E8%B4%9F%E4%BA%BA%E9%97%B4-%E9%98%BF%E5%85%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%8D%E8%B4%9F%E4%BA%BA%E9%97%B4-%E9%98%BF%E5%85%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%8D%E8%B4%9F%E4%BA%BA%E9%97%B4-%E9%98%BF%E5%85%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (591, '不负人间', 233, NULL, 295, 243, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E4%B8%8D%E8%B4%9F%E4%BA%BA%E9%97%B4-%E8%83%A1%E5%BD%A6%E6%96%8C.flac', 'http://localhost:3000/api/cover?path=%E4%B8%8D%E8%B4%9F%E4%BA%BA%E9%97%B4-%E8%83%A1%E5%BD%A6%E6%96%8C.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%8D%E8%B4%9F%E4%BA%BA%E9%97%B4-%E8%83%A1%E5%BD%A6%E6%96%8C.lrc', NULL, NULL, NULL, NULL, 0, 0, '2022', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (592, '人间惊鸿客', 256, NULL, 296, 190, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E4%BA%BA%E9%97%B4%E6%83%8A%E9%B8%BF%E5%AE%A2-%E5%8F%B6%E9%87%8C.flac', 'http://localhost:3000/api/cover?path=%E4%BA%BA%E9%97%B4%E6%83%8A%E9%B8%BF%E5%AE%A2-%E5%8F%B6%E9%87%8C.jpeg', 'http://localhost:3000/api/lyric?path=%E4%BA%BA%E9%97%B4%E6%83%8A%E9%B8%BF%E5%AE%A2-%E5%8F%B6%E9%87%8C.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (593, '田螺', 257, NULL, 297, 201, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E7%94%B0%E8%9E%BA-%E5%9B%BD%E9%A3%8E%E5%A0%82%3B%E9%9F%B3%E9%98%99%E8%AF%97%E5%90%AC%3B%E7%8E%8B%E6%A2%93%E9%92%B0.mp3', NULL, 'http://localhost:3000/api/cover?path=%E7%94%B0%E8%9E%BA-%E5%9B%BD%E9%A3%8E%E5%A0%82%3B%E9%9F%B3%E9%98%99%E8%AF%97%E5%90%AC%3B%E7%8E%8B%E6%A2%93%E9%92%B0.jpeg', '', NULL, NULL, NULL, NULL, 0, 0, '2019', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (594, '拜无忧', 258, NULL, 299, 215, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E6%8B%9C%E6%97%A0%E5%BF%A7-%E8%90%A7%E5%BF%86%E6%83%85Alex.flac', 'http://localhost:3000/api/cover?path=%E6%8B%9C%E6%97%A0%E5%BF%A7-%E8%90%A7%E5%BF%86%E6%83%85Alex.jpeg', 'http://localhost:3000/api/lyric?path=%E6%8B%9C%E6%97%A0%E5%BF%A7-%E8%90%A7%E5%BF%86%E6%83%85Alex.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (595, '东风志', 232, '[\"慕寒\"]', 300, 272, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E4%B8%9C%E9%A3%8E%E5%BF%97-%E9%93%B6%E4%B8%B4%26%E6%85%95%E5%AF%92.mp3', NULL, 'http://localhost:3000/api/cover?path=%E4%B8%9C%E9%A3%8E%E5%BF%97-%E9%93%B6%E4%B8%B4%26%E6%85%95%E5%AF%92.jpeg', '', NULL, NULL, NULL, NULL, 0, 0, '2016', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (596, '王招君', 259, NULL, 301, 255, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E7%8E%8B%E6%8B%9B%E5%90%9B-%E4%BB%BB%E7%B4%A0%E6%B1%90.flac', 'http://localhost:3000/api/cover?path=%E7%8E%8B%E6%8B%9B%E5%90%9B-%E4%BB%BB%E7%B4%A0%E6%B1%90.jpeg', 'http://localhost:3000/api/lyric?path=%E7%8E%8B%E6%8B%9B%E5%90%9B-%E4%BB%BB%E7%B4%A0%E6%B1%90.lrc', NULL, NULL, NULL, NULL, 0, 0, '2021', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (597, '叹云兮-《芸汐传》电视剧片尾曲', 260, NULL, 302, 283, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E5%8F%B9%E4%BA%91%E5%85%AE-%E3%80%8A%E8%8A%B8%E6%B1%90%E4%BC%A0%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E7%89%87%E5%B0%BE%E6%9B%B2-%E9%9E%A0%E5%A9%A7%E7%A5%8E.flac', 'http://localhost:3000/api/cover?path=%E5%8F%B9%E4%BA%91%E5%85%AE-%E3%80%8A%E8%8A%B8%E6%B1%90%E4%BC%A0%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E7%89%87%E5%B0%BE%E6%9B%B2-%E9%9E%A0%E5%A9%A7%E7%A5%8E.jpeg', 'http://localhost:3000/api/lyric?path=%E5%8F%B9%E4%BA%91%E5%85%AE-%E3%80%8A%E8%8A%B8%E6%B1%90%E4%BC%A0%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E7%89%87%E5%B0%BE%E6%9B%B2-%E9%9E%A0%E5%A9%A7%E7%A5%8E.lrc', NULL, NULL, NULL, NULL, 0, 0, '2018', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (598, '探故知', 261, '[\"汐音社\"]', 303, 202, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E6%8E%A2%E6%95%85%E7%9F%A5-%E6%B5%85%E5%BD%B1%E9%98%BF%26%E6%B1%90%E9%9F%B3%E7%A4%BE.flac', 'http://localhost:3000/api/cover?path=%E6%8E%A2%E6%95%85%E7%9F%A5-%E6%B5%85%E5%BD%B1%E9%98%BF%26%E6%B1%90%E9%9F%B3%E7%A4%BE.jpeg', 'http://localhost:3000/api/lyric?path=%E6%8E%A2%E6%95%85%E7%9F%A5-%E6%B5%85%E5%BD%B1%E9%98%BF%26%E6%B1%90%E9%9F%B3%E7%A4%BE.lrc', NULL, NULL, NULL, NULL, 0, 0, '1970', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (599, '春三月', 262, NULL, 304, 225, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E6%98%A5%E4%B8%89%E6%9C%88-%E5%8F%B8%E5%8D%97.flac', 'http://localhost:3000/api/cover?path=%E6%98%A5%E4%B8%89%E6%9C%88-%E5%8F%B8%E5%8D%97.jpeg', 'http://localhost:3000/api/lyric?path=%E6%98%A5%E4%B8%89%E6%9C%88-%E5%8F%B8%E5%8D%97.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (600, '吹灭小山河', 263, NULL, 305, 185, 'http://localhost:3000/api/music/stream?path=%5C%E5%8F%A4%E9%A3%8E%2F%E5%90%B9%E7%81%AD%E5%B0%8F%E5%B1%B1%E6%B2%B3-%E5%8F%B8%E5%A4%8F.mp3', NULL, 'http://localhost:3000/api/cover?path=%E5%90%B9%E7%81%AD%E5%B0%8F%E5%B1%B1%E6%B2%B3-%E5%8F%B8%E5%A4%8F.jpeg', '', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-14 11:44:49', '2025-05-14 11:44:49');
+INSERT INTO `song_own` VALUES (601, '恨幸福来过', 264, NULL, 306, 178, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E7%9A%84%E5%92%96%E5%95%A1%E8%B0%83%E8%B0%83%2F%E6%81%A8%E5%B9%B8%E7%A6%8F%E6%9D%A5%E8%BF%87-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%81%A8%E5%B9%B8%E7%A6%8F%E6%9D%A5%E8%BF%87-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%81%A8%E5%B9%B8%E7%A6%8F%E6%9D%A5%E8%BF%87-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2023', NULL, '2025-05-16 09:24:16', '2025-05-16 09:24:16');
+INSERT INTO `song_own` VALUES (602, '想见你想见你想见你', 264, NULL, 306, 138, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E7%9A%84%E5%92%96%E5%95%A1%E8%B0%83%E8%B0%83%2F%E6%83%B3%E8%A7%81%E4%BD%A0%E6%83%B3%E8%A7%81%E4%BD%A0%E6%83%B3%E8%A7%81%E4%BD%A0-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%83%B3%E8%A7%81%E4%BD%A0%E6%83%B3%E8%A7%81%E4%BD%A0%E6%83%B3%E8%A7%81%E4%BD%A0-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%83%B3%E8%A7%81%E4%BD%A0%E6%83%B3%E8%A7%81%E4%BD%A0%E6%83%B3%E8%A7%81%E4%BD%A0-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2023', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (603, '是你', 264, NULL, 307, 218, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E7%9A%84%E5%92%96%E5%95%A1%E8%B0%83%E8%B0%83%2F%E6%98%AF%E4%BD%A0-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%98%AF%E4%BD%A0-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%98%AF%E4%BD%A0-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2023', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (604, '达尔文', 264, NULL, 307, 246, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E7%9A%84%E5%92%96%E5%95%A1%E8%B0%83%E8%B0%83%2F%E8%BE%BE%E5%B0%94%E6%96%87-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E8%BE%BE%E5%B0%94%E6%96%87-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E8%BE%BE%E5%B0%94%E6%96%87-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2022', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (605, '那女孩对我说', 264, NULL, 307, 247, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E7%9A%84%E5%92%96%E5%95%A1%E8%B0%83%E8%B0%83%2F%E9%82%A3%E5%A5%B3%E5%AD%A9%E5%AF%B9%E6%88%91%E8%AF%B4-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E9%82%A3%E5%A5%B3%E5%AD%A9%E5%AF%B9%E6%88%91%E8%AF%B4-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E9%82%A3%E5%A5%B3%E5%AD%A9%E5%AF%B9%E6%88%91%E8%AF%B4-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2023', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (606, 'Always Online-联想idea Pad S9/S10笔记本主题曲|《Cries In A Distance》国语版', 264, NULL, 308, 225, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E9%99%86%2FAlways%20Online-%E8%81%94%E6%83%B3idea%20Pad%20S9%3BS10%E7%AC%94%E8%AE%B0%E6%9C%AC%E4%B8%BB%E9%A2%98%E6%9B%B2%20%E3%80%8ACries%20In%20A%20Distance%E3%80%8B%E5%9B%BD%E8%AF%AD%E7%89%88-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=Always%20Online-%E8%81%94%E6%83%B3idea%20Pad%20S9%3BS10%E7%AC%94%E8%AE%B0%E6%9C%AC%E4%B8%BB%E9%A2%98%E6%9B%B2%20%E3%80%8ACries%20In%20A%20Distance%E3%80%8B%E5%9B%BD%E8%AF%AD%E7%89%88-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=Always%20Online-%E8%81%94%E6%83%B3idea%20Pad%20S9%3BS10%E7%AC%94%E8%AE%B0%E6%9C%AC%E4%B8%BB%E9%A2%98%E6%9B%B2%20%E3%80%8ACries%20In%20A%20Distance%E3%80%8B%E5%9B%BD%E8%AF%AD%E7%89%88-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2008', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (607, '不潮不用花钱', 264, NULL, 308, 234, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E9%99%86%2F%E4%B8%8D%E6%BD%AE%E4%B8%8D%E7%94%A8%E8%8A%B1%E9%92%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%8D%E6%BD%AE%E4%B8%8D%E7%94%A8%E8%8A%B1%E9%92%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%8D%E6%BD%AE%E4%B8%8D%E7%94%A8%E8%8A%B1%E9%92%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2008', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (608, '小酒窝', 264, '[\"蔡卓妍\"]', 308, 218, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E9%99%86%2F%E5%B0%8F%E9%85%92%E7%AA%9D-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E8%94%A1%E5%8D%93%E5%A6%8D.flac', 'http://localhost:3000/api/cover?path=%E5%B0%8F%E9%85%92%E7%AA%9D-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E8%94%A1%E5%8D%93%E5%A6%8D.jpeg', 'http://localhost:3000/api/lyric?path=%E5%B0%8F%E9%85%92%E7%AA%9D-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E8%94%A1%E5%8D%93%E5%A6%8D.lrc', NULL, NULL, NULL, NULL, 0, 0, '2008', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (609, '我还想她-《爱情睡醒了》电视剧插曲', 264, NULL, 308, 248, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E9%99%86%2F%E6%88%91%E8%BF%98%E6%83%B3%E5%A5%B9-%E3%80%8A%E7%88%B1%E6%83%85%E7%9D%A1%E9%86%92%E4%BA%86%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E6%8F%92%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%88%91%E8%BF%98%E6%83%B3%E5%A5%B9-%E3%80%8A%E7%88%B1%E6%83%85%E7%9D%A1%E9%86%92%E4%BA%86%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E6%8F%92%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%88%91%E8%BF%98%E6%83%B3%E5%A5%B9-%E3%80%8A%E7%88%B1%E6%83%85%E7%9D%A1%E9%86%92%E4%BA%86%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E6%8F%92%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2008', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (610, '期待爱', 264, '[\"金莎\"]', 308, 234, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E9%99%86%2F%E6%9C%9F%E5%BE%85%E7%88%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E9%87%91%E8%8E%8E.flac', 'http://localhost:3000/api/cover?path=%E6%9C%9F%E5%BE%85%E7%88%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E9%87%91%E8%8E%8E.jpeg', 'http://localhost:3000/api/lyric?path=%E6%9C%9F%E5%BE%85%E7%88%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E9%87%91%E8%8E%8E.lrc', NULL, NULL, NULL, NULL, 0, 0, '2008', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (611, '点一把火炬', 264, NULL, 308, 254, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E9%99%86%2F%E7%82%B9%E4%B8%80%E6%8A%8A%E7%81%AB%E7%82%AC-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%82%B9%E4%B8%80%E6%8A%8A%E7%81%AB%E7%82%AC-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%82%B9%E4%B8%80%E6%8A%8A%E7%81%AB%E7%82%AC-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2008', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (612, '由你选择', 264, '[\"农夫\"]', 308, 233, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E9%99%86%2F%E7%94%B1%E4%BD%A0%E9%80%89%E6%8B%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E5%86%9C%E5%A4%AB.flac', 'http://localhost:3000/api/cover?path=%E7%94%B1%E4%BD%A0%E9%80%89%E6%8B%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E5%86%9C%E5%A4%AB.jpeg', 'http://localhost:3000/api/lyric?path=%E7%94%B1%E4%BD%A0%E9%80%89%E6%8B%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E5%86%9C%E5%A4%AB.lrc', NULL, NULL, NULL, NULL, 0, 0, '2008', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (613, '醉赤壁-《赤壁Online》网游主题曲', 264, NULL, 308, 282, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5CJJ%E9%99%86%2F%E9%86%89%E8%B5%A4%E5%A3%81-%E3%80%8A%E8%B5%A4%E5%A3%81Online%E3%80%8B%E7%BD%91%E6%B8%B8%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E9%86%89%E8%B5%A4%E5%A3%81-%E3%80%8A%E8%B5%A4%E5%A3%81Online%E3%80%8B%E7%BD%91%E6%B8%B8%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E9%86%89%E8%B5%A4%E5%A3%81-%E3%80%8A%E8%B5%A4%E5%A3%81Online%E3%80%8B%E7%BD%91%E6%B8%B8%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2008', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (614, '一定会', 264, NULL, 309, 207, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%2F%E4%B8%80%E5%AE%9A%E4%BC%9A-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%80%E5%AE%9A%E4%BC%9A-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%80%E5%AE%9A%E4%BC%9A-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2021', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (615, '不懂', 264, NULL, 310, 272, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E4%B9%90%E8%A1%8C%E8%80%85%2F%E4%B8%8D%E6%87%82-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%8D%E6%87%82-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%8D%E6%87%82-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2003', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (616, '冻结', 264, NULL, 310, 289, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E4%B9%90%E8%A1%8C%E8%80%85%2F%E5%86%BB%E7%BB%93-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%86%BB%E7%BB%93-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%86%BB%E7%BB%93-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2003', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (617, '就是我', 264, NULL, 310, 194, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E4%B9%90%E8%A1%8C%E8%80%85%2F%E5%B0%B1%E6%98%AF%E6%88%91-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%B0%B1%E6%98%AF%E6%88%91-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%B0%B1%E6%98%AF%E6%88%91-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2003', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (618, '翅膀', 264, NULL, 310, 222, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E4%B9%90%E8%A1%8C%E8%80%85%2F%E7%BF%85%E8%86%80-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%BF%85%E8%86%80-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%BF%85%E8%86%80-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2003', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (619, '伟大的渺小-《Until The Day》国语版', 264, NULL, 311, 278, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E4%BC%9F%E5%A4%A7%E7%9A%84%E6%B8%BA%E5%B0%8F%2F%E4%BC%9F%E5%A4%A7%E7%9A%84%E6%B8%BA%E5%B0%8F-%E3%80%8AUntil%20The%20Day%E3%80%8B%E5%9B%BD%E8%AF%AD%E7%89%88-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%BC%9F%E5%A4%A7%E7%9A%84%E6%B8%BA%E5%B0%8F-%E3%80%8AUntil%20The%20Day%E3%80%8B%E5%9B%BD%E8%AF%AD%E7%89%88-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%BC%9F%E5%A4%A7%E7%9A%84%E6%B8%BA%E5%B0%8F-%E3%80%8AUntil%20The%20Day%E3%80%8B%E5%9B%BD%E8%AF%AD%E7%89%88-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (620, '圣所', 264, NULL, 311, 230, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E4%BC%9F%E5%A4%A7%E7%9A%84%E6%B8%BA%E5%B0%8F%2F%E5%9C%A3%E6%89%80-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%9C%A3%E6%89%80-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%9C%A3%E6%89%80-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (621, '黑夜问白天', 264, NULL, 311, 292, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E4%BC%9F%E5%A4%A7%E7%9A%84%E6%B8%BA%E5%B0%8F%2F%E9%BB%91%E5%A4%9C%E9%97%AE%E7%99%BD%E5%A4%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E9%BB%91%E5%A4%9C%E9%97%AE%E7%99%BD%E5%A4%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E9%BB%91%E5%A4%9C%E9%97%AE%E7%99%BD%E5%A4%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (622, 'Too Bad', 264, NULL, 312, 262, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%92%8C%E8%87%AA%E5%B7%B1%E5%AF%B9%E8%AF%9D%2FToo%20Bad-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=Too%20Bad-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=Too%20Bad-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2015', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (623, '不为谁而作的歌', 264, NULL, 313, 266, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%92%8C%E8%87%AA%E5%B7%B1%E5%AF%B9%E8%AF%9D%2F%E4%B8%8D%E4%B8%BA%E8%B0%81%E8%80%8C%E4%BD%9C%E7%9A%84%E6%AD%8C-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%8D%E4%B8%BA%E8%B0%81%E8%80%8C%E4%BD%9C%E7%9A%84%E6%AD%8C-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%8D%E4%B8%BA%E8%B0%81%E8%80%8C%E4%BD%9C%E7%9A%84%E6%AD%8C-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2015', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (624, '关键词', 264, NULL, 312, 210, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%92%8C%E8%87%AA%E5%B7%B1%E5%AF%B9%E8%AF%9D%2F%E5%85%B3%E9%94%AE%E8%AF%8D-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%85%B3%E9%94%AE%E8%AF%8D-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%85%B3%E9%94%AE%E8%AF%8D-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2015', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (625, '只要有你的地方-《消失爱人》电影主题曲', 264, NULL, 313, 292, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%92%8C%E8%87%AA%E5%B7%B1%E5%AF%B9%E8%AF%9D%2F%E5%8F%AA%E8%A6%81%E6%9C%89%E4%BD%A0%E7%9A%84%E5%9C%B0%E6%96%B9-%E3%80%8A%E6%B6%88%E5%A4%B1%E7%88%B1%E4%BA%BA%E3%80%8B%E7%94%B5%E5%BD%B1%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%8F%AA%E8%A6%81%E6%9C%89%E4%BD%A0%E7%9A%84%E5%9C%B0%E6%96%B9-%E3%80%8A%E6%B6%88%E5%A4%B1%E7%88%B1%E4%BA%BA%E3%80%8B%E7%94%B5%E5%BD%B1%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%8F%AA%E8%A6%81%E6%9C%89%E4%BD%A0%E7%9A%84%E5%9C%B0%E6%96%B9-%E3%80%8A%E6%B6%88%E5%A4%B1%E7%88%B1%E4%BA%BA%E3%80%8B%E7%94%B5%E5%BD%B1%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2015', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (626, '弹唱', 264, NULL, 313, 195, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%92%8C%E8%87%AA%E5%B7%B1%E5%AF%B9%E8%AF%9D%2F%E5%BC%B9%E5%94%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%BC%B9%E5%94%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%BC%B9%E5%94%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2015', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (627, '修炼爱情', 264, NULL, 314, 287, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%9B%A0%E4%BD%A0%20%E8%80%8C%E5%9C%A8%2F%E4%BF%AE%E7%82%BC%E7%88%B1%E6%83%85-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%BF%AE%E7%82%BC%E7%88%B1%E6%83%85-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%BF%AE%E7%82%BC%E7%88%B1%E6%83%85-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2013', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (628, '裂缝中的阳光', 264, NULL, 314, 229, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%9B%A0%E4%BD%A0%20%E8%80%8C%E5%9C%A8%2F%E8%A3%82%E7%BC%9D%E4%B8%AD%E7%9A%84%E9%98%B3%E5%85%89-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E8%A3%82%E7%BC%9D%E4%B8%AD%E7%9A%84%E9%98%B3%E5%85%89-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E8%A3%82%E7%BC%9D%E4%B8%AD%E7%9A%84%E9%98%B3%E5%85%89-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2013', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (629, '零度的亲吻', 264, NULL, 314, 230, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%9B%A0%E4%BD%A0%20%E8%80%8C%E5%9C%A8%2F%E9%9B%B6%E5%BA%A6%E7%9A%84%E4%BA%B2%E5%90%BB-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E9%9B%B6%E5%BA%A6%E7%9A%84%E4%BA%B2%E5%90%BB-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E9%9B%B6%E5%BA%A6%E7%9A%84%E4%BA%B2%E5%90%BB-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2013', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (630, '一生的爱', 264, NULL, 315, 214, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%A5%B9%E8%AF%B4%2F%E4%B8%80%E7%94%9F%E7%9A%84%E7%88%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%80%E7%94%9F%E7%9A%84%E7%88%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%80%E7%94%9F%E7%9A%84%E7%88%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2010', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (631, '她说-《爱情睡醒了》电视剧插曲', 264, NULL, 315, 321, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%A5%B9%E8%AF%B4%2F%E5%A5%B9%E8%AF%B4-%E3%80%8A%E7%88%B1%E6%83%85%E7%9D%A1%E9%86%92%E4%BA%86%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E6%8F%92%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%A5%B9%E8%AF%B4-%E3%80%8A%E7%88%B1%E6%83%85%E7%9D%A1%E9%86%92%E4%BA%86%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E6%8F%92%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%A5%B9%E8%AF%B4-%E3%80%8A%E7%88%B1%E6%83%85%E7%9D%A1%E9%86%92%E4%BA%86%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E6%8F%92%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2010', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (632, '当你', 264, NULL, 315, 251, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%A5%B9%E8%AF%B4%2F%E5%BD%93%E4%BD%A0-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%BD%93%E4%BD%A0-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%BD%93%E4%BD%A0-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2010', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (633, '心墙', 264, NULL, 315, 226, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%A5%B9%E8%AF%B4%2F%E5%BF%83%E5%A2%99-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%BF%83%E5%A2%99-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%BF%83%E5%A2%99-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2010', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (634, '我很想爱他', 264, NULL, 315, 261, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%A5%B9%E8%AF%B4%2F%E6%88%91%E5%BE%88%E6%83%B3%E7%88%B1%E4%BB%96-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%88%91%E5%BE%88%E6%83%B3%E7%88%B1%E4%BB%96-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%88%91%E5%BE%88%E6%83%B3%E7%88%B1%E4%BB%96-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2010', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (635, 'Love U U-《夏日乐悠悠》电影主题曲', 264, NULL, 317, 220, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%AD%A6%E4%B8%8D%E4%BC%9A%2FLove%20U%20U-%E3%80%8A%E5%A4%8F%E6%97%A5%E4%B9%90%E6%82%A0%E6%82%A0%E3%80%8B%E7%94%B5%E5%BD%B1%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=Love%20U%20U-%E3%80%8A%E5%A4%8F%E6%97%A5%E4%B9%90%E6%82%A0%E6%82%A0%E3%80%8B%E7%94%B5%E5%BD%B1%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=Love%20U%20U-%E3%80%8A%E5%A4%8F%E6%97%A5%E4%B9%90%E6%82%A0%E6%82%A0%E3%80%8B%E7%94%B5%E5%BD%B1%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2011', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (636, '不存在的情人', 264, NULL, 317, 243, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%AD%A6%E4%B8%8D%E4%BC%9A%2F%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E6%83%85%E4%BA%BA-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E6%83%85%E4%BA%BA-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E6%83%85%E4%BA%BA-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2011', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (637, '学不会', 264, NULL, 317, 230, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%AD%A6%E4%B8%8D%E4%BC%9A%2F%E5%AD%A6%E4%B8%8D%E4%BC%9A-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%AD%A6%E4%B8%8D%E4%BC%9A-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%AD%A6%E4%B8%8D%E4%BC%9A-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2011', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (638, '故事细腻', 264, NULL, 317, 215, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%AD%A6%E4%B8%8D%E4%BC%9A%2F%E6%95%85%E4%BA%8B%E7%BB%86%E8%85%BB-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%95%85%E4%BA%8B%E7%BB%86%E8%85%BB-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%95%85%E4%BA%8B%E7%BB%86%E8%85%BB-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2011', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (639, '灵魂的共鸣', 264, NULL, 317, 264, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%AD%A6%E4%B8%8D%E4%BC%9A%2F%E7%81%B5%E9%AD%82%E7%9A%84%E5%85%B1%E9%B8%A3-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%81%B5%E9%AD%82%E7%9A%84%E5%85%B1%E9%B8%A3-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%81%B5%E9%AD%82%E7%9A%84%E5%85%B1%E9%B8%A3-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2011', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (640, '白兰花', 264, NULL, 317, 249, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%AD%A6%E4%B8%8D%E4%BC%9A%2F%E7%99%BD%E5%85%B0%E8%8A%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%99%BD%E5%85%B0%E8%8A%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%99%BD%E5%85%B0%E8%8A%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2011', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (641, '白羊梦', 264, NULL, 317, 252, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%AD%A6%E4%B8%8D%E4%BC%9A%2F%E7%99%BD%E7%BE%8A%E6%A2%A6-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%99%BD%E7%BE%8A%E6%A2%A6-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%99%BD%E7%BE%8A%E6%A2%A6-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2011', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (642, '那些你很冒险的梦', 264, NULL, 317, 244, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%AD%A6%E4%B8%8D%E4%BC%9A%2F%E9%82%A3%E4%BA%9B%E4%BD%A0%E5%BE%88%E5%86%92%E9%99%A9%E7%9A%84%E6%A2%A6-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E9%82%A3%E4%BA%9B%E4%BD%A0%E5%BE%88%E5%86%92%E9%99%A9%E7%9A%84%E6%A2%A6-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E9%82%A3%E4%BA%9B%E4%BD%A0%E5%BE%88%E5%86%92%E9%99%A9%E7%9A%84%E6%A2%A6-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2011', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (643, '陌生老朋友', 264, NULL, 317, 228, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%AD%A6%E4%B8%8D%E4%BC%9A%2F%E9%99%8C%E7%94%9F%E8%80%81%E6%9C%8B%E5%8F%8B-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E9%99%8C%E7%94%9F%E8%80%81%E6%9C%8B%E5%8F%8B-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E9%99%8C%E7%94%9F%E8%80%81%E6%9C%8B%E5%8F%8B-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2011', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (644, '将故事写成我们', 264, NULL, 318, 335, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%2F%E5%B0%86%E6%95%85%E4%BA%8B%E5%86%99%E6%88%90%E6%88%91%E4%BB%AC-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%B0%86%E6%95%85%E4%BA%8B%E5%86%99%E6%88%90%E6%88%91%E4%BB%AC-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%B0%86%E6%95%85%E4%BA%8B%E5%86%99%E6%88%90%E6%88%91%E4%BB%AC-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2019', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (645, '崇拜', 264, NULL, 319, 286, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%2F%E5%B4%87%E6%8B%9C-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%B4%87%E6%8B%9C-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%B4%87%E6%8B%9C-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (646, '交换余生', 264, NULL, 320, 276, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%B9%B8%E5%AD%98%E8%80%85%20Drifter%2F%E4%BA%A4%E6%8D%A2%E4%BD%99%E7%94%9F-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%BA%A4%E6%8D%A2%E4%BD%99%E7%94%9F-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%BA%A4%E6%8D%A2%E4%BD%99%E7%94%9F-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (647, '幸存者', 264, NULL, 321, 282, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%B9%B8%E5%AD%98%E8%80%85%20Drifter%2F%E5%B9%B8%E5%AD%98%E8%80%85-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%B9%B8%E5%AD%98%E8%80%85-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%B9%B8%E5%AD%98%E8%80%85-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (648, '暂时的记号', 264, NULL, 321, 253, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%B9%B8%E5%AD%98%E8%80%85%20Drifter%2F%E6%9A%82%E6%97%B6%E7%9A%84%E8%AE%B0%E5%8F%B7-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%9A%82%E6%97%B6%E7%9A%84%E8%AE%B0%E5%8F%B7-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%9A%82%E6%97%B6%E7%9A%84%E8%AE%B0%E5%8F%B7-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (649, '最向往的地方', 264, NULL, 321, 233, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%B9%B8%E5%AD%98%E8%80%85%20Drifter%2F%E6%9C%80%E5%90%91%E5%BE%80%E7%9A%84%E5%9C%B0%E6%96%B9-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%9C%80%E5%90%91%E5%BE%80%E7%9A%84%E5%9C%B0%E6%96%B9-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%9C%80%E5%90%91%E5%BE%80%E7%9A%84%E5%9C%B0%E6%96%B9-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (650, '最好是', 264, NULL, 321, 273, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%B9%B8%E5%AD%98%E8%80%85%20Drifter%2F%E6%9C%80%E5%A5%BD%E6%98%AF-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%9C%80%E5%A5%BD%E6%98%AF-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%9C%80%E5%A5%BD%E6%98%AF-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (651, '离开的那一些', 264, NULL, 321, 277, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E5%B9%B8%E5%AD%98%E8%80%85%20Drifter%2F%E7%A6%BB%E5%BC%80%E7%9A%84%E9%82%A3%E4%B8%80%E4%BA%9B-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%A6%BB%E5%BC%80%E7%9A%84%E9%82%A3%E4%B8%80%E4%BA%9B-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%A6%BB%E5%BC%80%E7%9A%84%E9%82%A3%E4%B8%80%E4%BA%9B-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2020', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (652, 'Checkmate', 265, '[\"林俊杰\"]', 322, 237, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2FCheckmate-%E9%83%91%E5%AE%B9%E5%92%8C%26%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=Checkmate-%E9%83%91%E5%AE%B9%E5%92%8C%26%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=Checkmate-%E9%83%91%E5%AE%B9%E5%92%8C%26%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (653, 'I Am Alive', 264, '[\"Jason Mraz\"]', 322, 266, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2FI%20Am%20Alive-%E6%9E%97%E4%BF%8A%E6%9D%B0%26Jason%20Mraz.flac', 'http://localhost:3000/api/cover?path=I%20Am%20Alive-%E6%9E%97%E4%BF%8A%E6%9D%B0%26Jason%20Mraz.jpeg', 'http://localhost:3000/api/lyric?path=I%20Am%20Alive-%E6%9E%97%E4%BF%8A%E6%9D%B0%26Jason%20Mraz.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (654, 'Lamando', 264, NULL, 322, 258, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2FLamando-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=Lamando-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=Lamando-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (655, '可惜没如果-《杜鹃之巢》韩剧中文主题曲|《对我而言，可爱的她》韩剧中文片尾曲', 264, NULL, 322, 298, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E5%8F%AF%E6%83%9C%E6%B2%A1%E5%A6%82%E6%9E%9C-%E3%80%8A%E6%9D%9C%E9%B9%83%E4%B9%8B%E5%B7%A2%E3%80%8B%E9%9F%A9%E5%89%A7%E4%B8%AD%E6%96%87%E4%B8%BB%E9%A2%98%E6%9B%B2%20%E3%80%8A%E5%AF%B9%E6%88%91%E8%80%8C%E8%A8%80%EF%BC%8C%E5%8F%AF%E7%88%B1%E7%9A%84%E5%A5%B9%E3%80%8B%E9%9F%A9%E5%89%A7%E4%B8%AD%E6%96%87%E7%89%87%E5%B0%BE%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%8F%AF%E6%83%9C%E6%B2%A1%E5%A6%82%E6%9E%9C-%E3%80%8A%E6%9D%9C%E9%B9%83%E4%B9%8B%E5%B7%A2%E3%80%8B%E9%9F%A9%E5%89%A7%E4%B8%AD%E6%96%87%E4%B8%BB%E9%A2%98%E6%9B%B2%20%E3%80%8A%E5%AF%B9%E6%88%91%E8%80%8C%E8%A8%80%EF%BC%8C%E5%8F%AF%E7%88%B1%E7%9A%84%E5%A5%B9%E3%80%8B%E9%9F%A9%E5%89%A7%E4%B8%AD%E6%96%87%E7%89%87%E5%B0%BE%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%8F%AF%E6%83%9C%E6%B2%A1%E5%A6%82%E6%9E%9C-%E3%80%8A%E6%9D%9C%E9%B9%83%E4%B9%8B%E5%B7%A2%E3%80%8B%E9%9F%A9%E5%89%A7%E4%B8%AD%E6%96%87%E4%B8%BB%E9%A2%98%E6%9B%B2%20%E3%80%8A%E5%AF%B9%E6%88%91%E8%80%8C%E8%A8%80%EF%BC%8C%E5%8F%AF%E7%88%B1%E7%9A%84%E5%A5%B9%E3%80%8B%E9%9F%A9%E5%89%A7%E4%B8%AD%E6%96%87%E7%89%87%E5%B0%BE%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (656, '回', 264, NULL, 322, 133, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E5%9B%9E-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%9B%9E-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%9B%9E-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (657, '手心的蔷薇', 264, '[\"G.E.M.邓紫棋\"]', 322, 280, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E6%89%8B%E5%BF%83%E7%9A%84%E8%94%B7%E8%96%87-%E6%9E%97%E4%BF%8A%E6%9D%B0%26G.E.M.%E9%82%93%E7%B4%AB%E6%A3%8B.flac', 'http://localhost:3000/api/cover?path=%E6%89%8B%E5%BF%83%E7%9A%84%E8%94%B7%E8%96%87-%E6%9E%97%E4%BF%8A%E6%9D%B0%26G.E.M.%E9%82%93%E7%B4%AB%E6%A3%8B.jpeg', 'http://localhost:3000/api/lyric?path=%E6%89%8B%E5%BF%83%E7%9A%84%E8%94%B7%E8%96%87-%E6%9E%97%E4%BF%8A%E6%9D%B0%26G.E.M.%E9%82%93%E7%B4%AB%E6%A3%8B.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (658, '新地球', 264, NULL, 322, 277, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E6%96%B0%E5%9C%B0%E7%90%83-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%96%B0%E5%9C%B0%E7%90%83-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%96%B0%E5%9C%B0%E7%90%83-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (659, '水仙', 264, NULL, 322, 241, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E6%B0%B4%E4%BB%99-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%B0%B4%E4%BB%99-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%B0%B4%E4%BB%99-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (660, '浪漫血液', 264, NULL, 322, 273, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E6%B5%AA%E6%BC%AB%E8%A1%80%E6%B6%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%B5%AA%E6%BC%AB%E8%A1%80%E6%B6%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%B5%AA%E6%BC%AB%E8%A1%80%E6%B6%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (661, '爱的鼓励-《一见不钟情》电视剧片头曲', 264, NULL, 322, 229, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E7%88%B1%E7%9A%84%E9%BC%93%E5%8A%B1-%E3%80%8A%E4%B8%80%E8%A7%81%E4%B8%8D%E9%92%9F%E6%83%85%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E7%89%87%E5%A4%B4%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%88%B1%E7%9A%84%E9%BC%93%E5%8A%B1-%E3%80%8A%E4%B8%80%E8%A7%81%E4%B8%8D%E9%92%9F%E6%83%85%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E7%89%87%E5%A4%B4%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%88%B1%E7%9A%84%E9%BC%93%E5%8A%B1-%E3%80%8A%E4%B8%80%E8%A7%81%E4%B8%8D%E9%92%9F%E6%83%85%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E7%89%87%E5%A4%B4%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (662, '生生', 264, NULL, 322, 258, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E7%94%9F%E7%94%9F-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%94%9F%E7%94%9F-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%94%9F%E7%94%9F-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (663, '茉莉雨', 264, NULL, 322, 257, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E8%8C%89%E8%8E%89%E9%9B%A8-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E8%8C%89%E8%8E%89%E9%9B%A8-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E8%8C%89%E8%8E%89%E9%9B%A8-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (664, '黑键', 264, NULL, 322, 328, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%96%B0%E5%9C%B0%E7%90%83%20-%20%E4%BA%BA%20(Special%20Edition)%2F%E9%BB%91%E9%94%AE-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E9%BB%91%E9%94%AE-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E9%BB%91%E9%94%AE-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2014', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (665, 'Down(Demo)', 264, NULL, 323, 165, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%9B%B9%E6%93%8D%2FDown(Demo)-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=Down(Demo)-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=Down(Demo)-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2006', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (666, '不死之身', 264, NULL, 323, 227, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%9B%B9%E6%93%8D%2F%E4%B8%8D%E6%AD%BB%E4%B9%8B%E8%BA%AB-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%8D%E6%AD%BB%E4%B9%8B%E8%BA%AB-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%8D%E6%AD%BB%E4%B9%8B%E8%BA%AB-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2006', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (667, '原来', 264, NULL, 323, 221, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%9B%B9%E6%93%8D%2F%E5%8E%9F%E6%9D%A5-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%8E%9F%E6%9D%A5-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%8E%9F%E6%9D%A5-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2006', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (668, '曹操', 264, NULL, 323, 242, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%9B%B9%E6%93%8D%2F%E6%9B%B9%E6%93%8D-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%9B%B9%E6%93%8D-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%9B%B9%E6%93%8D-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2006', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (669, '熟能生巧', 264, NULL, 323, 247, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%9B%B9%E6%93%8D%2F%E7%86%9F%E8%83%BD%E7%94%9F%E5%B7%A7-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%86%9F%E8%83%BD%E7%94%9F%E5%B7%A7-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%86%9F%E8%83%BD%E7%94%9F%E5%B7%A7-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2006', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (670, '爱情Yogurt', 264, NULL, 323, 225, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%9B%B9%E6%93%8D%2F%E7%88%B1%E6%83%85Yogurt-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%88%B1%E6%83%85Yogurt-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%88%B1%E6%83%85Yogurt-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2006', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (671, '进化论', 264, NULL, 323, 258, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E6%9B%B9%E6%93%8D%2F%E8%BF%9B%E5%8C%96%E8%AE%BA-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E8%BF%9B%E5%8C%96%E8%AE%BA-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E8%BF%9B%E5%8C%96%E8%AE%BA-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2006', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (672, '害怕', 264, NULL, 324, 282, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E7%AC%AC%E4%BA%8C%E5%A4%A9%E5%A0%82%2F%E5%AE%B3%E6%80%95-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%AE%B3%E6%80%95-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%AE%B3%E6%80%95-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2004', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (673, '江南', 264, NULL, 324, 268, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E7%AC%AC%E4%BA%8C%E5%A4%A9%E5%A0%82%2F%E6%B1%9F%E5%8D%97-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%B1%9F%E5%8D%97-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%B1%9F%E5%8D%97-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2004', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (674, '美人鱼', 264, NULL, 324, 254, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E7%AC%AC%E4%BA%8C%E5%A4%A9%E5%A0%82%2F%E7%BE%8E%E4%BA%BA%E9%B1%BC-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%BE%8E%E4%BA%BA%E9%B1%BC-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%BE%8E%E4%BA%BA%E9%B1%BC-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2004', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (675, '第几个100天', 264, NULL, 325, 281, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%2F%E7%AC%AC%E5%87%A0%E4%B8%AA100%E5%A4%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%AC%AC%E5%87%A0%E4%B8%AA100%E5%A4%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%AC%AC%E5%87%A0%E4%B8%AA100%E5%A4%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2009', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (676, '一千年以后', 264, NULL, 326, 228, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E7%BC%96%E5%8F%B789757%2F%E4%B8%80%E5%8D%83%E5%B9%B4%E4%BB%A5%E5%90%8E-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%80%E5%8D%83%E5%B9%B4%E4%BB%A5%E5%90%8E-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%80%E5%8D%83%E5%B9%B4%E4%BB%A5%E5%90%8E-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2005', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (677, '明天', 264, NULL, 326, 243, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E7%BC%96%E5%8F%B789757%2F%E6%98%8E%E5%A4%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%98%8E%E5%A4%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%98%8E%E5%A4%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2005', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (678, '突然累了', 264, NULL, 326, 251, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E7%BC%96%E5%8F%B789757%2F%E7%AA%81%E7%84%B6%E7%B4%AF%E4%BA%86-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E7%AA%81%E7%84%B6%E7%B4%AF%E4%BA%86-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E7%AA%81%E7%84%B6%E7%B4%AF%E4%BA%86-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2005', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (679, '简简单单', 264, NULL, 326, 212, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E7%BC%96%E5%8F%B789757%2F%E7%AE%80%E7%AE%80%E5%8D%95%E5%8D%95-%E6%9E%97%E4%BF%8A%E6%9D%B0.mp3', NULL, 'http://localhost:3000/api/cover?path=%E7%AE%80%E7%AE%80%E5%8D%95%E5%8D%95-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', '', NULL, NULL, NULL, NULL, 0, 0, '2005', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (680, '被风吹过的夏天-《最佳前男友》电视剧插曲', 264, '[\"金莎\"]', 327, 256, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%2F%E8%A2%AB%E9%A3%8E%E5%90%B9%E8%BF%87%E7%9A%84%E5%A4%8F%E5%A4%A9-%E3%80%8A%E6%9C%80%E4%BD%B3%E5%89%8D%E7%94%B7%E5%8F%8B%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E6%8F%92%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E9%87%91%E8%8E%8E.flac', 'http://localhost:3000/api/cover?path=%E8%A2%AB%E9%A3%8E%E5%90%B9%E8%BF%87%E7%9A%84%E5%A4%8F%E5%A4%A9-%E3%80%8A%E6%9C%80%E4%BD%B3%E5%89%8D%E7%94%B7%E5%8F%8B%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E6%8F%92%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E9%87%91%E8%8E%8E.jpeg', 'http://localhost:3000/api/lyric?path=%E8%A2%AB%E9%A3%8E%E5%90%B9%E8%BF%87%E7%9A%84%E5%A4%8F%E5%A4%A9-%E3%80%8A%E6%9C%80%E4%BD%B3%E5%89%8D%E7%94%B7%E5%8F%8B%E3%80%8B%E7%94%B5%E8%A7%86%E5%89%A7%E6%8F%92%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E9%87%91%E8%8E%8E.lrc', NULL, NULL, NULL, NULL, 0, 0, '2015', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (681, 'L-O-V-E', 264, '[\"洪俊扬\"]', 329, 250, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E8%A5%BF%E7%95%8C%2FL-O-V-E-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E6%B4%AA%E4%BF%8A%E6%89%AC.flac', 'http://localhost:3000/api/cover?path=L-O-V-E-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E6%B4%AA%E4%BF%8A%E6%89%AC.jpeg', 'http://localhost:3000/api/lyric?path=L-O-V-E-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E6%B4%AA%E4%BF%8A%E6%89%AC.lrc', NULL, NULL, NULL, NULL, 0, 0, '2007', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (682, '不流泪的机场', 264, NULL, 329, 288, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E8%A5%BF%E7%95%8C%2F%E4%B8%8D%E6%B5%81%E6%B3%AA%E7%9A%84%E6%9C%BA%E5%9C%BA-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%8D%E6%B5%81%E6%B3%AA%E7%9A%84%E6%9C%BA%E5%9C%BA-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%8D%E6%B5%81%E6%B3%AA%E7%9A%84%E6%9C%BA%E5%9C%BA-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2007', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (683, '发现爱', 264, '[\"金莎\"]', 329, 223, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E8%A5%BF%E7%95%8C%2F%E5%8F%91%E7%8E%B0%E7%88%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E9%87%91%E8%8E%8E.flac', 'http://localhost:3000/api/cover?path=%E5%8F%91%E7%8E%B0%E7%88%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E9%87%91%E8%8E%8E.jpeg', 'http://localhost:3000/api/lyric?path=%E5%8F%91%E7%8E%B0%E7%88%B1-%E6%9E%97%E4%BF%8A%E6%9D%B0%26%E9%87%91%E8%8E%8E.lrc', NULL, NULL, NULL, NULL, 0, 0, '2007', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (684, '杀手', 264, NULL, 329, 294, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E8%A5%BF%E7%95%8C%2F%E6%9D%80%E6%89%8B-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%9D%80%E6%89%8B-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%9D%80%E6%89%8B-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2007', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (685, '自由不变-《东海战》动画电影主题曲', 264, NULL, 329, 270, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E8%A5%BF%E7%95%8C%2F%E8%87%AA%E7%94%B1%E4%B8%8D%E5%8F%98-%E3%80%8A%E4%B8%9C%E6%B5%B7%E6%88%98%E3%80%8B%E5%8A%A8%E7%94%BB%E7%94%B5%E5%BD%B1%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E8%87%AA%E7%94%B1%E4%B8%8D%E5%8F%98-%E3%80%8A%E4%B8%9C%E6%B5%B7%E6%88%98%E3%80%8B%E5%8A%A8%E7%94%BB%E7%94%B5%E5%BD%B1%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E8%87%AA%E7%94%B1%E4%B8%8D%E5%8F%98-%E3%80%8A%E4%B8%9C%E6%B5%B7%E6%88%98%E3%80%8B%E5%8A%A8%E7%94%BB%E7%94%B5%E5%BD%B1%E4%B8%BB%E9%A2%98%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2007', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (686, '西界', 264, NULL, 329, 295, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E8%A5%BF%E7%95%8C%2F%E8%A5%BF%E7%95%8C-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E8%A5%BF%E7%95%8C-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E8%A5%BF%E7%95%8C-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2007', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (687, '输了你赢了世界又如何(Live)', 264, NULL, 330, 283, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%2F%E8%BE%93%E4%BA%86%E4%BD%A0%E8%B5%A2%E4%BA%86%E4%B8%96%E7%95%8C%E5%8F%88%E5%A6%82%E4%BD%95(Live)-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E8%BE%93%E4%BA%86%E4%BD%A0%E8%B5%A2%E4%BA%86%E4%B8%96%E7%95%8C%E5%8F%88%E5%A6%82%E4%BD%95(Live)-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E8%BE%93%E4%BA%86%E4%BD%A0%E8%B5%A2%E4%BA%86%E4%B8%96%E7%95%8C%E5%8F%88%E5%A6%82%E4%BD%95(Live)-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (688, '一时的选择', 264, NULL, 331, 237, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E9%87%8D%E6%8B%BE_%E5%BF%AB%E4%B9%90%2F%E4%B8%80%E6%97%B6%E7%9A%84%E9%80%89%E6%8B%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E4%B8%80%E6%97%B6%E7%9A%84%E9%80%89%E6%8B%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E4%B8%80%E6%97%B6%E7%9A%84%E9%80%89%E6%8B%A9-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2023', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (689, '孤独娱乐', 264, NULL, 331, 240, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E9%87%8D%E6%8B%BE_%E5%BF%AB%E4%B9%90%2F%E5%AD%A4%E7%8B%AC%E5%A8%B1%E4%B9%90-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E5%AD%A4%E7%8B%AC%E5%A8%B1%E4%B9%90-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E5%AD%A4%E7%8B%AC%E5%A8%B1%E4%B9%90-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2023', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (690, '愿与愁-第四届TMEA腾讯音乐盛典表演原曲', 264, NULL, 331, 232, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E9%87%8D%E6%8B%BE_%E5%BF%AB%E4%B9%90%2F%E6%84%BF%E4%B8%8E%E6%84%81-%E7%AC%AC%E5%9B%9B%E5%B1%8ATMEA%E8%85%BE%E8%AE%AF%E9%9F%B3%E4%B9%90%E7%9B%9B%E5%85%B8%E8%A1%A8%E6%BC%94%E5%8E%9F%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E6%84%BF%E4%B8%8E%E6%84%81-%E7%AC%AC%E5%9B%9B%E5%B1%8ATMEA%E8%85%BE%E8%AE%AF%E9%9F%B3%E4%B9%90%E7%9B%9B%E5%85%B8%E8%A1%A8%E6%BC%94%E5%8E%9F%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E6%84%BF%E4%B8%8E%E6%84%81-%E7%AC%AC%E5%9B%9B%E5%B1%8ATMEA%E8%85%BE%E8%AE%AF%E9%9F%B3%E4%B9%90%E7%9B%9B%E5%85%B8%E8%A1%A8%E6%BC%94%E5%8E%9F%E6%9B%B2-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2023', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (691, '自画像', 264, NULL, 331, 227, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E9%87%8D%E6%8B%BE_%E5%BF%AB%E4%B9%90%2F%E8%87%AA%E7%94%BB%E5%83%8F-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E8%87%AA%E7%94%BB%E5%83%8F-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E8%87%AA%E7%94%BB%E5%83%8F-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2023', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (692, '谢幕', 264, NULL, 331, 244, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E6%9E%97%E4%BF%8A%E6%9D%B0%5C%E9%87%8D%E6%8B%BE_%E5%BF%AB%E4%B9%90%2F%E8%B0%A2%E5%B9%95-%E6%9E%97%E4%BF%8A%E6%9D%B0.flac', 'http://localhost:3000/api/cover?path=%E8%B0%A2%E5%B9%95-%E6%9E%97%E4%BF%8A%E6%9D%B0.jpeg', 'http://localhost:3000/api/lyric?path=%E8%B0%A2%E5%B9%95-%E6%9E%97%E4%BF%8A%E6%9D%B0.lrc', NULL, NULL, NULL, NULL, 0, 0, '2023', NULL, '2025-05-16 09:24:17', '2025-05-16 09:24:17');
+INSERT INTO `song_own` VALUES (693, '下完这场雨', 266, NULL, 332, 271, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E4%B8%8B%E5%AE%8C%E8%BF%99%E5%9C%BA%E9%9B%A8-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E4%B8%8B%E5%AE%8C%E8%BF%99%E5%9C%BA%E9%9B%A8-%E5%90%8E%E5%BC%A6.png', 'http://localhost:3000/api/lyric?path=%E4%B8%8B%E5%AE%8C%E8%BF%99%E5%9C%BA%E9%9B%A8-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2016', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (694, '单车恋人', 266, NULL, 334, 249, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E5%8D%95%E8%BD%A6%E6%81%8B%E4%BA%BA-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E5%8D%95%E8%BD%A6%E6%81%8B%E4%BA%BA-%E5%90%8E%E5%BC%A6.png', 'http://localhost:3000/api/lyric?path=%E5%8D%95%E8%BD%A6%E6%81%8B%E4%BA%BA-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2006', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (695, '卢沟晓月', 266, NULL, 335, 239, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E5%8D%A2%E6%B2%9F%E6%99%93%E6%9C%88-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E5%8D%A2%E6%B2%9F%E6%99%93%E6%9C%88-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E5%8D%A2%E6%B2%9F%E6%99%93%E6%9C%88-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2015', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (696, '娃娃脸', 266, NULL, 333, 212, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E5%A8%83%E5%A8%83%E8%84%B8-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E5%A8%83%E5%A8%83%E8%84%B8-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E5%A8%83%E5%A8%83%E8%84%B8-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2012', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (697, '峨眉雪', 266, NULL, 336, 233, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E5%B3%A8%E7%9C%89%E9%9B%AA-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E5%B3%A8%E7%9C%89%E9%9B%AA-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E5%B3%A8%E7%9C%89%E9%9B%AA-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2024', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (698, '昆明湖', 266, NULL, 334, 296, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E6%98%86%E6%98%8E%E6%B9%96-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E6%98%86%E6%98%8E%E6%B9%96-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E6%98%86%E6%98%8E%E6%B9%96-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2006', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (699, '海口', 266, NULL, 337, 298, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E6%B5%B7%E5%8F%A3-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E6%B5%B7%E5%8F%A3-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E6%B5%B7%E5%8F%A3-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2008', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (700, '爱妃', 266, NULL, 338, 261, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E7%88%B1%E5%A6%83-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E7%88%B1%E5%A6%83-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E7%88%B1%E5%A6%83-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2013', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (701, '画风', 266, NULL, 332, 247, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E7%94%BB%E9%A3%8E-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E7%94%BB%E9%A3%8E-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E7%94%BB%E9%A3%8E-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2017', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (702, '破防', 266, NULL, 339, 239, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E7%A0%B4%E9%98%B2-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E7%A0%B4%E9%98%B2-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E7%A0%B4%E9%98%B2-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2022', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (703, '花甲', 266, NULL, 333, 283, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E8%8A%B1%E7%94%B2-%E5%90%8E%E5%BC%A6.mp3', NULL, 'http://localhost:3000/api/cover?path=%E8%8A%B1%E7%94%B2-%E5%90%8E%E5%BC%A6.jpeg', '', NULL, NULL, NULL, NULL, 0, 0, '2012', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (704, '西厢', 266, NULL, 340, 264, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E8%A5%BF%E5%8E%A2-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E8%A5%BF%E5%8E%A2-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E8%A5%BF%E5%8E%A2-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2005', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
+INSERT INTO `song_own` VALUES (705, '黑板情书', 266, NULL, 338, 256, NULL, 'http://localhost:3000/api/music/stream?path=%5C%E5%90%8E%E5%BC%A6%2F%E9%BB%91%E6%9D%BF%E6%83%85%E4%B9%A6-%E5%90%8E%E5%BC%A6.flac', 'http://localhost:3000/api/cover?path=%E9%BB%91%E6%9D%BF%E6%83%85%E4%B9%A6-%E5%90%8E%E5%BC%A6.jpeg', 'http://localhost:3000/api/lyric?path=%E9%BB%91%E6%9D%BF%E6%83%85%E4%B9%A6-%E5%90%8E%E5%BC%A6.lrc', NULL, NULL, NULL, NULL, 0, 0, '2013', NULL, '2025-05-16 09:24:49', '2025-05-16 09:24:49');
 
 -- ----------------------------
 -- Table structure for songfeature
@@ -493,13 +906,13 @@ CREATE TABLE `songfeature`  (
   `mfcc` json NULL COMMENT 'MFCC特征',
   `tempo` float NULL DEFAULT NULL COMMENT '节奏',
   `filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '路径',
   PRIMARY KEY (`song_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of songfeature
 -- ----------------------------
-INSERT INTO `songfeature` VALUES (1, '[-103.70299530029295, 88.58061218261719, 4.959054946899414, 9.501815795898438, -1.725482940673828, 4.441530227661133, -4.046633720397949, 0.3746873736381531, -2.592613220214844, 2.038169860839844, -4.0111083984375, 1.120105862617493, -3.8785150051116943]', 95.7031, '1984-Charlie Puth.mp3');
 
 -- ----------------------------
 -- Table structure for user
@@ -507,24 +920,24 @@ INSERT INTO `songfeature` VALUES (1, '[-103.70299530029295, 88.58061218261719, 4
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT '用户名',
-  `password` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT '密码',
-  `nickname` varchar(18) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '昵称',
-  `phone` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '手机号',
-  `email` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '邮箱',
-  `sex` varchar(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '性别',
-  `avatar` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '头像',
+  `username` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '用户名',
+  `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '密码',
+  `nickname` varchar(18) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '昵称',
+  `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '手机号',
+  `email` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '邮箱',
+  `sex` varchar(2) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '性别',
+  `avatar` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '头像',
   `likes` int NOT NULL DEFAULT 0 COMMENT '关注数',
   `exp` int NOT NULL DEFAULT 0 COMMENT '等级',
-  `openid` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '第三方登录id',
+  `openid` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '第三方登录id',
   `status` int NOT NULL DEFAULT 1 COMMENT '状态 0:登录，1:启用，2:禁用',
-  `description` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL DEFAULT '什么都没留下哦~' COMMENT '个人简介',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '什么都没留下哦~' COMMENT '个人简介',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted` tinyint NOT NULL DEFAULT 0 COMMENT '是否被删除 0:否，1:是',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_username`(`username` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '用户信息' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '用户信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
@@ -543,7 +956,7 @@ CREATE TABLE `user_config`  (
   `deleted` tinyint NOT NULL DEFAULT 1 COMMENT '是否已注销 0：是，1：否',
   INDEX `fk_user_config`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_user_config` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_config
@@ -562,12 +975,52 @@ CREATE TABLE `user_role`  (
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '关联角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '关联角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES (1, 5);
 INSERT INTO `user_role` VALUES (2, 13);
+
+-- ----------------------------
+-- Table structure for web_data
+-- ----------------------------
+DROP TABLE IF EXISTS `web_data`;
+CREATE TABLE `web_data`  (
+  `user_id` bigint NULL DEFAULT NULL COMMENT '发布人id',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '公告标题',
+  `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '公告内容',
+  `visitors` bigint NULL DEFAULT 0 COMMENT '访问人数',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `run_time` datetime NULL DEFAULT NULL COMMENT '运行时间'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '网站运行数据' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of web_data
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for work
+-- ----------------------------
+DROP TABLE IF EXISTS `work`;
+CREATE TABLE `work`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '工单id',
+  `user_id` bigint NULL DEFAULT NULL COMMENT '发布人id',
+  `response_id` bigint NULL DEFAULT NULL COMMENT '负责人id',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '工单标题',
+  `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '工单内容',
+  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '工单创建时间',
+  `resolve_time` datetime NULL DEFAULT NULL COMMENT '工单被解决时间',
+  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否被删除 0:没有',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_title`(`title` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `work_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '工单' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of work
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

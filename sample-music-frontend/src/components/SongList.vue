@@ -1,6 +1,6 @@
 <template>
   <div id="songList">
-    <div v-if="songs.total !== 0" class="songs flex">
+    <div v-if="songs && songs.length !== 0" class="songs flex">
       <!-- 开始行 -->
       <div class="song flex songNav">
         <input
@@ -9,13 +9,13 @@
             v-model="wantChecked"
             @change="toggleAll">
         <div class="message flex">
-          <span style="width: 45%;">{{ songs.total }}首歌曲</span>
+          <span style="width: 45%;">{{ songs.length }}首歌曲</span>
           <span style="width: 15%;">歌手</span>
           <span style="width: 27%;">专辑</span>
           <span style="width: 10%">时长</span>
         </div>
         <div v-if="selectedSongs.length > 0" class="operator operatorNav flex">
-          <img :src="Icon.playIcon" alt="" @click="playAllSongs(operator, songs.items)">
+          <img :src="Icon.playIcon" alt="" @click="playAllSongs(operator, songs)">
           <img :src="Icon.addIcon" alt="" @click="handleAdd(selectedSongs)">
           <img v-if="operator === 'playlist'" :key="operator" :src="Icon.deleteIcon" alt=""
                @click="handleDelete(selectedSongs)">
@@ -30,7 +30,7 @@
       <!-- 歌曲列表 -->
       <div
           class="song flex"
-          v-for="s in songs.items"
+          v-for="s in songs"
           :key="s.id"
           :class="{ 'songPlayed': songPl(s.title) }"
           @dblclick="playBySong(s)"
@@ -80,18 +80,24 @@ import Icon from "@/util/common/Icon";
 
 export default {
   name: 'SongList',
-  props: ['songs', 'operator'],
+  props: {
+    songs: {
+      type: Array,
+      default: () => []  // 设置默认值为空数组
+    },
+    operator: String
+  },
   data() {
     return {
       selectedSongs: [],
       wantChecked: false,
-      tags: ["jay", "jie"]
+      tags: []
     }
   },
   watch: {
     // 查看是否全部选中
     selectedSongs(val) {
-      this.wantChecked = val.length === this.songs.items.length;
+      this.wantChecked = val.length === this.songs.length;
     }
   },
   computed: {
@@ -106,7 +112,8 @@ export default {
     // 全选或全不选
     toggleAll() {
       if (this.wantChecked) {
-        this.selectedSongs = this.songs.items.map(s => s.id);
+        this.selectedSongs = this.songs.map(s => s.id);
+        console.log(this.selectedSongs)
       } else {
         this.selectedSongs = [];
       }
@@ -127,6 +134,9 @@ export default {
         this.$message("未选中歌曲")
       }
     },
+    crack() {
+      alert("功能开发中")
+    },
     durationInMinutes(seconds) {
       const minutes = Math.floor(seconds / 60);
       const remainingSeconds = seconds % 60;
@@ -134,7 +144,10 @@ export default {
     }
   },
   mounted() {
-    console.log(this.songs)
+    this.$on("crack", this.crack)
+  },
+  beforeDestroy() {
+    this.$off("crack", this.crack)
   }
 }
 </script>
@@ -150,6 +163,8 @@ export default {
 .songs {
   width: 100%;
   height: 100%;
+  justify-content: start;
+  gap: 5px;
   flex-direction: column;
 }
 

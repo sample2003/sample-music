@@ -71,7 +71,7 @@ export default {
     jump(name) {
       // 导航到新路由
       if (name === 'list') {
-        if (this.playlistDetail) this.$router.push({path: `/music/${name}/detail/playlist/${this.playlistDetail.id}`});
+        if (this.playlistDetail && this.playlistDetail.id) this.$router.push({path: `/music/${name}/detail/playlist/${this.playlistDetail.id}`});
         else this.$router.push({path: `/music/${name}`});
       } else {
         this.$router.push({path: `/music/${name}`}, () => {

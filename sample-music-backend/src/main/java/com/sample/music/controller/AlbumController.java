@@ -65,6 +65,7 @@ public class AlbumController {
      * @param id 专辑id
      * @return Result<Album>
      */
+    @Public
     @GetMapping("select/{id}")
     public Result<AlbumView> selectAlbumById(@PathVariable("id") Long id) {
         AlbumView album = albumService.selectAlbumById(id);
@@ -80,6 +81,7 @@ public class AlbumController {
      *
      * @return Result<AlbumWithSongs>
      */
+    @Public
     @GetMapping("select/albumWithSongs/{id}")
     public Result<AlbumWithSongs> selectAlbumWithSongs(@PathVariable("id") Long id) {
         AlbumWithSongs albumWithSongs = albumService.selectAlbumWithSongs(id);
@@ -123,6 +125,7 @@ public class AlbumController {
      * @param pageSize 每页大小
      * @return Result<PageBean<CommentWithUser>>
      */
+    @Public
     @GetMapping("query/comment")
     public Result<PageBean<CommentWithUser>> queryCommentPaged(
             @RequestParam(required = false) Long targetId,
@@ -138,6 +141,7 @@ public class AlbumController {
      *
      * @param id 歌曲id
      */
+    @Public
     @Transactional
     @PutMapping("listenersPlusOne/{id}")
     public Result<String> listenersPlusOne(@PathVariable Long id) {

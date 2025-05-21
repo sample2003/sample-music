@@ -10,19 +10,21 @@
       <!-- 歌单 -->
       <span v-show="this.playlists.length === 0">未创建歌单</span>
       <div
-          class="playlist"
-          :class="{'it' : pl.id === playlistDetail.id}"
-          v-for="pl in this.playlists"
-          :key="pl.id"
-          @click="queryPlaylistDetail(pl)"
+        class="playlist"
+        :class="{'it' : pl.id === playlistDetail.id}"
+        v-for="pl in this.playlists"
+        :key="pl.id"
+        @click="queryPlaylistDetail(pl)"
       >
         <img :src="pl.cover ?? Icon.musicColorIcon" alt="">
         <span v-if="!isEdit">{{ pl.title }}</span>
       </div>
-
+    
     </div>
     <div id="right">
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
