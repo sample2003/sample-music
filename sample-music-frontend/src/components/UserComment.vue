@@ -1,6 +1,6 @@
 <template>
   <div id="userComment">
-    <TextArea message="说点什么吧（￣︶￣）" type="comment" @submit="insertContent"></TextArea>
+    <TextArea :message="msg" type="comment" @submit="insertContent"></TextArea>
     <div v-if="user_comment.length > 0" class="comments">
       <div
           class="comment"
@@ -49,6 +49,7 @@ export default {
   props: ['detailType', 'targetId'],
   data() {
     return {
+      msg: '说点什么吧（￣︶￣）',
       user_comment: [],
       isGoodArray: [], // 存储每个评论的点赞状态,
       key: 0,
@@ -58,26 +59,28 @@ export default {
   methods: {
     // 评论
     async insertContent(comment) {
-      if (this.detailType === 'album') {
-        try {
-          await AlbumService.insertAlbumComment(comment, this.targetId);
-          await this.queryComment();
-        } catch (error) {
-          console.error('插入专辑评论出错：', error);
-        }
-      } else if (this.detailType === 'playlist') {
-        try {
-          await PlaylistService.insertPlaylistComment(comment, this.targetId);
-          await this.queryComment();
-        } catch (error) {
-          console.error('插入播放列表评论出错：', error);
-        }
-      } else if (this.detailType === 'song') {
-        try {
-          await SongService.insertSongComment(comment, this.targetId);
-          await this.queryComment();
-        } catch (error) {
-          console.error('插入歌曲评论出错：', error);
+      if (this.userDetail === null) {
+        if (this.detailType === 'album') {
+          try {
+            await AlbumService.insertAlbumComment(comment, this.targetId);
+            await this.queryComment();
+          } catch (error) {
+            console.error('评论专辑出错');
+          }
+        } else if (this.detailType === 'playlist') {
+          try {
+            await PlaylistService.insertPlaylistComment(comment, this.targetId);
+            await this.queryComment();
+          } catch (error) {
+            console.error('评论歌单出错');
+          }
+        } else if (this.detailType === 'song') {
+          try {
+            await SongService.insertSongComment(comment, this.targetId);
+            await this.queryComment();
+          } catch (error) {
+            console.error('评论歌曲出错');
+          }
         }
       }
     },
@@ -104,6 +107,9 @@ export default {
     },
     // 查询评论
     async queryComment() {
+      if (this.userDetail === null) {
+        this.msg = '登录后评论'
+      }
       let comment;
       if (this.detailType === 'album') {
         comment = await AlbumService.queryCommentPaged(this.targetId, 1, 100);

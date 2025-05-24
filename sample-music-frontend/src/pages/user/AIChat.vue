@@ -59,7 +59,6 @@
 import Icon from "@/util/common/Icon";
 import TextArea from "@/components/TextArea.vue";
 import OpenAI from "openai";
-import axios from "axios";
 
 export default {
   name: 'AiChat',

@@ -36,7 +36,7 @@
           <div class="progress_volume progress-container">
             <!-- 音量控制条 -->
             <label class="slider">
-              <input type="range" class="level" min="0" max="100" v-model="volume" @input="changeVolume">
+              <input type="range" class="level" min="0" max="100" v-model="volume" @input="changeVolume" @change="changeVolume">
             </label>
           </div>
         </div>
@@ -64,7 +64,7 @@
       <div class="progress flex">
         <div class="progress-container">
           <span>{{ formattedTime(currentTime) }}</span>
-          <input class="level" type="range" min="0" :max="songDuration" v-model="timer" @input="changeProgress">
+          <input class="level" type="range" min="0" :max="songDuration" v-model="timer" @input="changeProgress($event)">
           <span>{{ formattedTime(songDuration) }}</span>
         </div>
       </div>
@@ -112,7 +112,7 @@ export default {
     searchArtist(value) {
       this.$router.push({
         name: "search",
-        params: { // 必须与路由 path 中的 :xxx 名称对应
+        params: {
           condition: value,
           params: 'ARTIST',
           sortType: 'LISTENERS_DESC',
@@ -123,8 +123,11 @@ export default {
       })
     },
     // 改变进度
-    changeProgress() {
-      this.audio.currentTime = this.timer
+    async changeProgress(e) {
+      await this.timer.set(e.target.value);
+      // alert(e.target.value);
+      this.audio.currentTime = this.timer;
+      await this.setCurrentTime(this.timer)
     },
     // 格式化时间格式
     formattedTime(time) {
@@ -365,6 +368,7 @@ span {
 }
 
 .historySong p {
+  font-size: 0.8em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -420,6 +424,7 @@ span {
 
 .historySong div span {
   width: 100%;
+  font-size: 0.8em;
   text-align: start;
   overflow: hidden;
   transition: 0.2s all ease;

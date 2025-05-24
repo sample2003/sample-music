@@ -85,7 +85,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="albumDetail?.songs"
+            :songs="format(albumDetail?.songs, pageSize, pageNum)"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -189,7 +189,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="this.playlist?.songs"
+            :songs="format(playlist?.songs, pageSize, pageNum)"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -295,6 +295,7 @@ import ArtistService from "@/api/service/ArtistService";
 import Icon from "@/util/common/Icon";
 import TextInput from "@/components/TextInput.vue";
 import PageNation from "@/components/PageNation.vue";
+
 
 export default {
   name: "MusicDetail",

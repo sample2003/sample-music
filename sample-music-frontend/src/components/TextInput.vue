@@ -136,6 +136,7 @@ export default {
   border-radius: 8px;
   transition: 0.2s all;
   text-align: center;
+  user-select: none;
 }
 
 .searchIcon {

@@ -89,7 +89,7 @@ public class SongController {
     @PutMapping("update")
     public Result<Song> updateSong(SongUpload songUpdate) {
         if (songUpdate == null) return Result.error("歌曲为空");
-        // 上传歌词文件到OSSd
+        // 上传歌词文件到OSS
         String lyricUrl = fileManageService.uploadFile(songUpdate.getLyric(), "lyric");
         // 上传图片文件到OSS
         String coverUrl = fileManageService.uploadFile(songUpdate.getImageFiles(), "cover");

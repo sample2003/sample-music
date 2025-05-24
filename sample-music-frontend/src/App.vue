@@ -60,7 +60,7 @@ export default {
   color: var(--third-color);
   font-family:
       'Times New Roman',
-      '微软雅黑',
+      '华文宋体',
       sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

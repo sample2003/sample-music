@@ -143,7 +143,8 @@ const router = new VueRouter({
               meta: {
                 access: ACCESS_ENUM.USER,
               },
-            }, {
+            },
+            {
               name: "listMusicManage",
               path: '/music/list/manage/playlist/:id',
               component: UserPlaylistManage,
@@ -152,7 +153,10 @@ const router = new VueRouter({
               },
               props: true
             }
-          ]
+          ],
+          meta: {
+            access: ACCESS_ENUM.USER
+          }
         },
         {
           name: "play",

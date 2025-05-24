@@ -49,7 +49,7 @@
       </div>
       <div v-if="isShowSongList" class="detail-bottom dt-songList">
         <SongList
-            :songs="songs(this.albumDetail.songs)"
+            :songs="format(albumDetail.songs)"
             :operator="'album'"
             @add="handleAdd"
             @delete="handleDelete"
@@ -155,7 +155,7 @@
         </div>
         <SongList
             class="dt-song-list"
-            :songs="playlistWithSongs?.songs"
+            :songs="format(playlistWithSongs?.songs, pageSize, pageNum)"
             :operator="'playlist'"
             @add="handleAdd"
             @delete="handleDelete"

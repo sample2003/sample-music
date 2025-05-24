@@ -76,7 +76,7 @@
     <!-- 右边部分 -->
     <div class="play_right" v-if="songLyric.length > 0">
       <!-- 歌词部分 -->
-      <div @scroll="stopScrollingLyrics" class="lyricsContainer" ref="lyricsContainer">
+      <div @scroll="stopScrollingLyrics" class="lyricsContainer" ref="lyricsContainer" @mouseenter="enter()" @mouseleave="leave()">
         <div class="lyricSpacer"></div>
         <span
             class="lyric"
@@ -84,9 +84,7 @@
             :style="{ filter: getLyricBlur(index) }"
             v-for="(lyric, index) in songLyric"
             :key="index"
-        >
-                    {{ lyric }}
-                </span>
+        >{{ lyric }}</span>
         <div class="lyricSpacer"></div>
       </div>
     </div>
@@ -115,7 +113,8 @@ export default {
       isShowComment: false,
       isShowDetail: false,
       isGoodArray: [], // 存储每个评论的点赞状态
-      animation: null
+      animation: null,
+      isHover: false,
     }
   },
   computed: {
@@ -132,6 +131,12 @@ export default {
     },
   },
   methods: {
+    enter() {
+      this.isHover = true;
+    },
+    leave() {
+      this.isHover = false;
+    },
     // 格式化时间格式
     formattedTime(time) {
       const minutes = Math.floor(time / 60);
@@ -241,6 +246,9 @@ export default {
 
     // 歌曲模糊效果
     getLyricBlur(index) {
+      if (this.isHover) {
+        return ;
+      }
       // 计算与当前歌词的距离
       const distance = Math.abs((index - this.currentLyricIndex) / 2);
 
@@ -540,6 +548,8 @@ export default {
   cursor: pointer;
   margin-bottom: 10px;
   font-size: 1.5em;
+  text-align: start;
+  text-indent: 5px;
 }
 
 .lyric:hover {

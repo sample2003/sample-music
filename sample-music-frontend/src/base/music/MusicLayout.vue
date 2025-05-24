@@ -7,10 +7,10 @@
     </transition>
     <div class="navigate">
       <!-- 左边框 -->
-      <div class="n1">
-
+      <div class="n1" @click="userDetail ? jumpUserCenter() : jumpUserEnter()">
+        <img :src="userDetail?.avatar ?? Icon.notLoginIcon" alt="">
+        <span>{{ userDetail?.username ?? accessEnum.NOT_LOGIN }}</span>
       </div>
-      <div class="n2"></div>
       <TextInput
           style="width: 20%;height: 90%;"
           @inputChange="handleInput"
@@ -21,17 +21,13 @@
           message="搜索歌曲吧">
       </TextInput>
       <!-- 右边框 -->
-      <div class="nn1" @click="userDetail ? jumpUserCenter() : jumpUserEnter()">
-        <img :src="userDetail?.avatar ?? Icon.notLoginIcon" alt="">
-        <span>{{ userDetail?.username ?? accessEnum.NOT_LOGIN }}</span>
-      </div>
-      <div class="nn2">
+      <div class="n2">
         <a href="https://www.kugou.com/" target="_blank"><img :src="Icon.kgyyIcon" alt=""></a>
         <a href="https://y.qq.com/" target="_blank"><img :src="Icon.qqyyIcon" alt=""></a>
         <a href="https://music.163.com/" target="_blank"><img :src="Icon.wyyyyIcon" alt=""></a>
         <a href="https://www.kuwo.cn/" target="_blank"><img :src="Icon.kwyyIcon" alt=""></a>
       </div>
-      <div class="nn3" @mouseenter="showWantList" @mouseleave="hideWantList">
+      <div class="n3" @mouseenter="showWantList" @mouseleave="hideWantList">
         <TextInput message="我想听"></TextInput>
         <div class="want-lists" v-show="isShowWantList">
           <div class="want-list">
@@ -160,13 +156,14 @@ export default {
   min-width: 1010px;
   min-height: 40px;
   padding-right: 2%;
+  gap: 10px;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
 }
 
-.nn1 {
+.n1 {
   width: 10%;
   height: 90%;
   display: flex;
@@ -179,7 +176,7 @@ export default {
   background-image: linear-gradient(315deg, var(--main-color), var(--second-color));
 }
 
-.nn1 img {
+.n1 img {
   height: 80%;
   border-radius: 50%;
   width: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
@@ -187,18 +184,18 @@ export default {
   object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
 }
 
-.nn1 span {
+.n1 span {
   width: 70%;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: 0.2s all ease;
 }
 
-.nn1:hover span {
+.n1:hover span {
   letter-spacing: 2px;
 }
 
-.nn2 {
+.n2 {
   width: 15%;
   height: 100%;
   display: flex;
@@ -206,16 +203,16 @@ export default {
   align-items: center;
 }
 
-.nn2 a {
+.n2 a {
   height: 50%;
 
 }
 
-.nn2 img {
+.n2 img {
   height: 100%;
 }
 
-.nn3 {
+.n3 {
   width: 10%;
   height: 80%;
   position: relative;
@@ -254,18 +251,6 @@ export default {
 
 .s2 {
   width: 90%;
-}
-
-.n1 {
-  width: 10%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.n2 {
-  width: 25%;
 }
 
 @keyframes changeColor {

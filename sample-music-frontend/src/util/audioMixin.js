@@ -44,26 +44,31 @@ export default {
   },
   watch: {},
   methods: {
-    // 获取歌曲并播放音频
-    playBySong(song) {
-      this.setIsLoading(true);
-      this.lyricsLoaded = false;
-      const songIndex = this.playlistPlaying.findIndex(s => s.id === song.id);
+    checkSongInList() {
+      // 判断当前歌曲是否在播放列表中
+      const songIndex = this.playlistPlaying.findIndex(s => s.id === this.songPlaying.id);
       if (songIndex === -1) {
         // 如果歌曲不在播放列表中,则添加到播放列表的末尾
-        this.setPlaylistPlaying([...this.playlistPlaying, song])
+        this.setPlaylistPlaying([...this.playlistPlaying, this.songPlaying])
         this.setSongIndex(this.playlistPlaying.length - 1)
       } else {
-        // 如果歌曲已在播放列表中,则移动到播放列表的末尾
+        // 如果歌曲已在播放列表中,则更新歌曲索引
         const updatedPlaylist = [
           ...this.playlistPlaying.slice(0, songIndex),
           ...this.playlistPlaying.slice(songIndex + 1),
-          song
+          this.songPlaying
         ];
         this.setPlaylistPlaying(updatedPlaylist);
         this.setSongIndex(updatedPlaylist.length - 1);
       }
+    },
+    // 获取歌曲并播放音频
+    playBySong(song) {
+      this.setIsLoading(true);
+      this.lyricsLoaded = false;
+
       this.setSongPlaying(song)
+      this.checkSongInList()
       this.playAudio();
       this.setIsLoading(false);
     },
@@ -75,6 +80,7 @@ export default {
       }
       // 销毁之前播放的音频并移除事件监听器
       await this.initPlayState()
+
 
       // 新建音频并添加事件监听器
       this.setAudio(new Audio());
@@ -117,10 +123,10 @@ export default {
     },
     // 音频播放时间更新时调用的方法
     handleAudioTimeUpdate() {
-      const currentTime = this.audio.currentTime;
+      let currentTime = this.audio.currentTime;
       let currentLyric = null;
       this.setCurrentTime(currentTime);
-      const currentSecond = Math.floor(currentTime); // 获取当前整秒数
+      let currentSecond = Math.floor(currentTime); // 获取当前整秒数
 
       // 初始化或更新上一次记录的秒数
       if (this.lastTriggeredSecond === undefined) {
@@ -129,7 +135,7 @@ export default {
 
       // 如果进入新的秒数区间
       if (currentSecond > this.lastTriggeredSecond) {
-        const delta = currentSecond - this.lastTriggeredSecond;
+        let delta = currentSecond - this.lastTriggeredSecond;
         this.listenTime += delta; // 累加实际经过的秒数
         this.lastTriggeredSecond = currentSecond;
 
@@ -313,8 +319,10 @@ export default {
     },
     // 播放下一首
     async playNext() {
+      // 当收听时间大于5秒，上传收听信息
       if (this.listenTime > 5) await this.listenRecord();
 
+      // 更新当前歌曲索引
       if (this.songIndex < this.playlistPlaying.length - 1) {
         await this.setSongIndex(this.songIndex + 1);
       } else {

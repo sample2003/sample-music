@@ -1,6 +1,6 @@
 <template>
   <div id="songList">
-    <div v-if="songs && songs.length !== 0" class="songs flex">
+    <div v-if="songs && songs.total !== 0" class="songs flex">
       <!-- 开始行 -->
       <div class="song flex songNav">
         <input
@@ -9,13 +9,13 @@
             v-model="wantChecked"
             @change="toggleAll">
         <div class="message flex">
-          <span style="width: 45%;">{{ songs.length }}首歌曲</span>
+          <span style="width: 45%;">{{ songs.total }}首歌曲</span>
           <span style="width: 15%;">歌手</span>
           <span style="width: 27%;">专辑</span>
           <span style="width: 10%">时长</span>
         </div>
         <div v-if="selectedSongs.length > 0" class="operator operatorNav flex">
-          <img :src="Icon.playIcon" alt="" @click="playAllSongs(operator, songs)">
+          <img :src="Icon.playIcon" alt="" @click="playAllSongs(operator, songs.items)">
           <img :src="Icon.addIcon" alt="" @click="handleAdd(selectedSongs)">
           <img v-if="operator === 'playlist'" :key="operator" :src="Icon.deleteIcon" alt=""
                @click="handleDelete(selectedSongs)">
@@ -30,7 +30,7 @@
       <!-- 歌曲列表 -->
       <div
           class="song flex"
-          v-for="s in songs"
+          v-for="s in songs.items"
           :key="s.id"
           :class="{ 'songPlayed': songPl(s.title) }"
           @dblclick="playBySong(s)"
@@ -46,7 +46,7 @@
             <img :src="s.cover" alt="">
             <div>
               <span style="margin-bottom: 5px;">{{ s.title }}</span>
-              <span v-if="s.permission !== 0" class="tag"> VIP </span>
+              <span v-if="s.permission !== 0" class="tag vip-tag">VIP</span>
               <span v-for="(t, index) in s.tags" :key="index" class="tag"> {{ t }}</span>
             </div>
           </div>
@@ -58,14 +58,14 @@
           <div style="width: 10%;display: flex;justify-content: start;"><span>{{durationInMinutes(s.duration) || '-' }}</span></div>
         </div>
         <div v-if="operator === 'playlist'" class="operator flex">
-          <img :src="Icon.playIcon" alt="" @click="playBySong(s)">
-          <img :src="Icon.addIcon" alt="" @click="handleAdd([s.id])">
-          <img :src="Icon.deleteIcon" alt="" @click="handleDelete([s.id])">
+          <img :src="Icon.playIcon" alt="" @click="playBySong(s)" title="播放">
+          <img :src="Icon.addIcon" alt="" @click="handleAdd([s.id])" title="添加到歌单">
+          <img :src="Icon.deleteIcon" alt="" @click="handleDelete([s.id])" title="删除">
         </div>
         <div v-if="operator === 'album'" class="operator flex">
-          <img :src="Icon.playIcon" alt="" @click="playBySong(s)">
-          <img :src="Icon.addIcon" alt="" @click="handleAdd([s.id])">
-          <img :src="Icon.notLoveIcon" alt="" @click="handleDelete([s.id])">
+          <img :src="Icon.playIcon" alt="" @click="playBySong(s)" title="播放">
+          <img :src="Icon.addIcon" alt="" @click="handleAdd([s.id])" title="添加到歌单">
+          <img :src="Icon.notLoveIcon" alt="" @click="handleDelete([s.id])" title="删除">
         </div>
       </div>
     </div>
@@ -97,7 +97,7 @@ export default {
   watch: {
     // 查看是否全部选中
     selectedSongs(val) {
-      this.wantChecked = val.length === this.songs.length;
+      this.wantChecked = val.length === this.songs.items.length;
     }
   },
   computed: {
@@ -112,7 +112,7 @@ export default {
     // 全选或全不选
     toggleAll() {
       if (this.wantChecked) {
-        this.selectedSongs = this.songs.map(s => s.id);
+        this.selectedSongs = this.songs.items.map(s => s.id);
         console.log(this.selectedSongs)
       } else {
         this.selectedSongs = [];
@@ -120,10 +120,15 @@ export default {
     },
     // 添加
     handleAdd(ids) {
-      if (ids.length > 0) {
-        this.$emit("add", ids)
-      } else {
-        this.$message("未选中歌曲")
+      if (this.userDetail) {
+
+        if (ids.length > 0) {
+          this.$emit("add", ids)
+        } else {
+          this.$message("未选中歌曲")
+        }
+      }else {
+        this.$message("登录获取歌单")
       }
     },
     // 移除
@@ -305,6 +310,20 @@ export default {
   padding: 1px 2px 2px 2px;
   margin-right: 2px;
   color: #48435a;
+  transition: 0.2s all ease;
+}
+
+
+.tag:hover {
+  color: var(--second-color);
+  border: 1px solid var(--second-color);
+  background-color: var(--main-color);
+}
+
+.vip-tag {
+  color: var(--second-color);
+  border: 1px solid var(--second-color);
+  background-color: var(--main-color);
 }
 
 .artist:hover {

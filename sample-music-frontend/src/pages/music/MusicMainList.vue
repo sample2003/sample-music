@@ -54,7 +54,8 @@ export default {
     // 初始化歌单
     async initPlaylist() {
       const res = await PlaylistService.UserPagedQuery("false", null, 1, 100);
-      this.playlists = res.data.items;
+      // this.playlists = res.data.items;
+      console.log(res)
     },
     // 查询歌单里的歌曲
     async queryPlaylistDetail(pl) {
@@ -64,12 +65,6 @@ export default {
       const currentRoute = this.$router.currentRoute.path; // 获取当前路由的路径信息
       if (currentRoute !== targetRoute) {
         await this.$router.push({path: targetRoute});
-      }
-    },
-    songs(songs) {
-      return {
-        total: songs.length,
-        items: songs,
       }
     },
     // 增加歌单

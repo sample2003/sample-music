@@ -117,7 +117,7 @@ export default {
   position: relative;
 }
 
-.left-top img {
+.left-top img, .left-top span {
   width: 90%;
   border-radius: 50%;
   box-shadow: var(--boxShadow);
@@ -126,29 +126,19 @@ export default {
   object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
   max-height: 300px; /* 限制最大高度 */
   position: absolute;
+  cursor: pointer;
   top: 0;
   left: 0;
   z-index: 0;
 }
 
 .left-top span {
-  width: 90%;
-  position: absolute;
-  height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
-  aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
-  object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
-  max-height: 300px; /* 限制最大高度 */
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--second-color);
-  border-radius: 50%;
   backdrop-filter: blur(5px);
-  top: 0;
-  left: 0;
   z-index: 1;
   opacity: 0;
-  cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: underline;
 }

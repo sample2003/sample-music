@@ -4,6 +4,7 @@
     <div>
       <button @click="check()">解析</button>
       <input type="file" id="folderInput" webkitdirectory directory multiple>
+      <button @click="aaa">aaa</button>
     </div>
   </div>
 </template>
@@ -27,6 +28,9 @@ export default {
     };
   },
   methods: {
+    async aaa() {
+      await this.setCurrentTime(200)
+    },
     async check() {
       const input = document.getElementById('folderInput');
       if (!input.files.length) return;
@@ -53,7 +57,7 @@ export default {
           })
           .catch(err => console.error("请求失败:", err));
     },
-    aaa() {
+    /*aaa() {
       const moment = require('moment')
       const formattedTime = moment().format('YYYY-MM-DD HH:mm:ss')
       const listenDetail = {
@@ -64,7 +68,7 @@ export default {
       }
       StatisticsService.recordListen(listenDetail)
       console.log(listenDetail)
-    },
+    },*/
     // 新增：启动流式请求
     async startStream(content) {
       try {

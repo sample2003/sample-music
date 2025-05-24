@@ -7,9 +7,11 @@ import ConfirmDialogPlugin from "@/util/common/confirmDialogPlugin";
 import musicStore from "@/util/common/MusicStore";
 import userStore from "@/util/common/UserStore";
 import pageNation from "@/util/common/pageNation";
+import musicTools from "@/util/common/musicTools";
 
 Vue.config.productionTip = false
 Vue.mixin(audioMixin)
+Vue.mixin(musicTools)
 Vue.mixin(pageNation)
 Vue.mixin(musicStore)
 Vue.mixin(userStore)

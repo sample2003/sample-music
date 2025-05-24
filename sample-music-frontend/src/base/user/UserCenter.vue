@@ -378,7 +378,7 @@ export default {
 }
 
 .userBasicInfo {
-  height: 96%;
+  height: 70%;
   margin: 0 2%;
   cursor: default;
   border-radius: 60px;

@@ -2,7 +2,11 @@
   <div id="Home">
     <div class="first flex">
       <div class="recommend">
-        <h3 class="headSpan">Hi，{{ this.userDetail?.username ?? '你好' }}，为你推荐歌曲</h3>
+        <h3 class="headSpan">
+          <!-- 完整文本（默认显示） -->
+          <span class="full-text">Hi，{{ userDetail?.username ?? '你好' }}，为你推荐歌曲</span>
+          <span class="short-text">为你推荐</span>
+        </h3>
         <div class="res">
           <div class="re" v-for="r in albumDetail.songs?.slice(0,10) || []"
                :key="r.id"
@@ -102,8 +106,10 @@
             <span>{{ al.releaseDate }}</span>
           </div>
           <span>{{ al.description }}</span>
-<!--          <span style="display: inline-flex;"><img :src="Icon.calendarIcon" alt="" style="width: 10%;padding-left: 5px;">{{ al.releaseDate }}</span>-->
-          <span style="display: inline-flex"><img :src="Icon.diskIcon" alt="" style="width: 10%;padding-left: 5px;">{{ al.title }} - <span style="display: inline-flex">{{ al.artist }}</span></span>
+          <!--          <span style="display: inline-flex;"><img :src="Icon.calendarIcon" alt="" style="width: 10%;padding-left: 5px;">{{ al.releaseDate }}</span>-->
+          <span style="display: inline-flex">
+            <img :src="Icon.diskIcon" alt="" style="width: 8%;padding-left: 5px;">{{ al.title }} - <span
+              style="display: inline-flex">{{ al.artist }}</span></span>
         </div>
       </div>
     </div>
@@ -124,7 +130,9 @@
             <span>{{ pl.createTime }}</span>
           </div>
           <span>{{ pl.description || '暂无描述' }}</span>
-          <span style="display: inline-flex;white-space: nowrap;"><img :src="Icon.diskIcon" alt="" style="width: 10%;padding-left: 5px;">{{ pl.title }} - <span style="display: inline-flex">{{ pl.username }}</span></span>
+          <span style="display: inline-flex;white-space: nowrap;">
+            <img :src="Icon.diskIcon" alt="" style="width: 8%;padding-left: 5px;">{{ pl.title }} - <span
+              style="display: inline-flex">{{ pl.username }}</span></span>
         </div>
       </div>
     </div>
@@ -186,7 +194,7 @@ export default {
     },
     // 跳转到公告页
     jumpPublicity(id) {
-      this.$router.push({ path: `/music/publicity/${id}` });
+      this.$router.push({path: `/music/publicity/${id}`});
     },
     // 设置自动滚动
     setActiveIndex(index, type) {
@@ -197,13 +205,13 @@ export default {
     },
     // 获取推荐专辑
     async getAlbums() {
-      const temp = await AlbumService.conditionAndPaged();
-      this.albumsAndSongs = temp.data.items?.slice(0, 6);
+      const temp = await AlbumService.conditionAndPaged(null, 1, 20);
+      this.albumsAndSongs = temp.data.items?.slice(9, 15);
     },
     // 获取推荐歌单
     async getPlaylists() {
       // todo
-      const playlists = await PlaylistService.UserPagedQuery("true", null, 1, 10);
+      const playlists = await PlaylistService.PagedQuery(null, 1, 10);
       this.playlistsAndSongs = playlists.data.items?.slice(0, 6);
     },
     // 获取公告
@@ -259,6 +267,19 @@ export default {
   display: flex;
   justify-content: start;
   align-items: end;
+}
+
+.short-text {
+  display: none;
+}
+
+@media (max-width: 1300px) {
+  .full-text {
+    display: none;
+  }
+  .short-text {
+    display: inline;
+  }
 }
 
 .recommend {
@@ -516,27 +537,23 @@ export default {
   width: 15%;
   padding-top: 16%;
   margin: 10px 5px 10px 10px;
-  overflow: hidden;
   position: relative;
   border-radius: 10px;
   transition: all 0.2s ease;
   cursor: pointer;
-  border: 2px solid var(--fourth-color);
-  box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
   box-sizing: border-box;
 }
 
 .card:hover {
-  border: 2px solid var(--main-color);
   box-shadow: none;
 }
 
 .card > img:nth-of-type(1) {
-  width: 90%;
+  width: 100%;
   z-index: 10;
   position: absolute;
-  top: 5%;
-  left: 5%;
+  top: 0;
+  left: 0;
   border-radius: 5px;
   transition: 0.2s all ease;
   height: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
@@ -545,16 +562,18 @@ export default {
   background-color: var(--fourth-color);
 }
 
-.card:hover > img:nth-of-type(1){
+.card:hover > img:nth-of-type(1) {
   width: 45%;
+  top: 5%;
+  left: 5%;
 }
 
 .card > img:nth-of-type(2) {
-  width: 70%;
+  width: 80%;
   padding: 10%;
   position: absolute;
-  top: 5%;
-  left: 5%;
+  top: 0;
+  left: 0;
   border-radius: 5px;
   opacity: 0;
   background-color: rgba(34, 34, 34, 0.58);
@@ -568,6 +587,8 @@ export default {
 .card:hover > img:nth-of-type(2) {
   width: 25%;
   opacity: 1;
+  top: 5%;
+  left: 5%;
 }
 
 .kik {
@@ -635,13 +656,14 @@ export default {
 
 .card > span:nth-of-type(3) {
   width: 100%;
-  bottom: 0;
+  bottom: -0.8em;
   left: 0;
   align-items: center;
   font-size: 0.8em;
   color: var(--third-color);
   text-align: start;
   background-color: var(--fourth-color);
+  border-radius: 5px;
   text-indent: 5px;
   overflow: hidden;
   text-overflow: ellipsis;

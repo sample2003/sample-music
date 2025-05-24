@@ -173,6 +173,23 @@ public class PlaylistController {
     }
 
     /**
+     * 分页与条件查询歌单（游客）
+     *
+     * @return Result<PageBean<PlaylistWithSongs>>
+     */
+    @Public
+    @GetMapping("query/PagedQuery")
+    public Result<PageBean<PlaylistWithSongs>> PagedQuery(
+            @RequestParam(defaultValue = "true") boolean isPublic,
+            @RequestParam(required = false) String condition,
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "10")Integer pageSize
+    ) {
+        PageBean<PlaylistWithSongs> pb = playlistService.UserPagedQuery(isPublic, condition, pageNum, pageSize);
+        return Result.success(pb);
+    }
+
+    /**
      * 查询歌单评论（用户）
      *
      * @param targetId 歌单id
