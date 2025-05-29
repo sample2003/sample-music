@@ -54,7 +54,7 @@ export default {
     // 初始化歌单
     async initPlaylist() {
       const res = await PlaylistService.UserPagedQuery("false", null, 1, 100);
-      // this.playlists = res.data.items;
+      this.playlists = res.data.items;
       console.log(res)
     },
     // 查询歌单里的歌曲

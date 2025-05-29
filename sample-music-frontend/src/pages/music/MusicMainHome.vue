@@ -292,7 +292,6 @@ export default {
   flex-direction: column;
 }
 
-/* CSS 样式 */
 .res {
   display: flex; /* 改为弹性布局 */
   flex-wrap: wrap; /* 禁止换行 */
@@ -304,9 +303,8 @@ export default {
 }
 
 .re {
-  /* 修改尺寸定义方式 */
   flex: 0 0 55px; /* 固定宽度 */
-  height: 55px; /* 正方形高度 */
+  height: 55px;
   position: relative;
   cursor: pointer;
   overflow: hidden;
@@ -393,12 +391,6 @@ export default {
   transition: all 0.2s ease;
   position: relative;
   cursor: default;
-  border: 1px solid var(--fourth-color);
-}
-
-.notice:hover {
-  height: 95%;
-  border: 1px solid var(--main-color);
 }
 
 .notice-slides {
@@ -455,7 +447,6 @@ export default {
 .back {
   width: 100%;
   height: 100%;
-  border: 1px solid black;
   box-sizing: border-box;
   border-radius: 5px;
   background-size: cover;
@@ -465,18 +456,6 @@ export default {
   overflow: hidden;
 }
 
-.back:hover {
-  transform: scaleY(1.01);
-}
-
-.second {
-  width: 96%;
-  height: 25%;
-  margin: 2% 2% 0;
-  display: flex;
-  flex-wrap: wrap;
-  cursor: pointer;
-}
 
 .headSpan {
   width: 100%;
@@ -488,39 +467,6 @@ export default {
   cursor: default;
 }
 
-.classifys {
-  display: flex;
-  width: 95%;
-  height: 80%;
-}
-
-.classify {
-  width: 20%;
-  flex-direction: column;
-  align-items: start;
-  font-weight: 600;
-}
-
-.classify img {
-  width: 35%;
-  border-radius: 50%;
-  background-clip: border-box;
-  border: 5px solid #ffffff00;
-  transition: all 0.2s ease;
-}
-
-.classify:hover img {
-  border: 5px solid var(--main-color);
-}
-
-.classify span {
-  width: 40%;
-}
-
-.classify:hover span {
-  color: var(--main-color);
-}
-
 .recommend-cards {
   width: 96%;
   margin: 2%;
@@ -530,13 +476,14 @@ export default {
   width: 100%;
   height: 9%;
   display: flex;
+  justify-content: space-between;
   user-select: none;
 }
 
 .card {
   width: 15%;
   padding-top: 16%;
-  margin: 10px 5px 10px 10px;
+  margin: 1%;
   position: relative;
   border-radius: 10px;
   transition: all 0.2s ease;
