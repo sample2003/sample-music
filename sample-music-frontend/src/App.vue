@@ -99,11 +99,11 @@ export default {
 }
 
 .songPaused {
-  animation: rotate 8s infinite linear paused;
+  animation: rotate 6s infinite linear paused;
 }
 
 .songRunning {
-  animation: rotate 8s infinite linear running;
+  animation: rotate 6s infinite linear running;
 }
 
 @keyframes rotate {

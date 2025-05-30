@@ -43,6 +43,16 @@
         <div class="control_icon" @click="isShowHistoryList">
           <img :src="Icon.historyIcon" alt="" :class="{'isShow':this.showList}">
           <div class="historyList" v-show="showList" @click.stop>
+            <div class="historyButton flex">
+              <button-select
+                  :show-icon="true"
+                  :button-list="btn"
+                  :is-active="(item) => currentBtn === item.btnName"
+                  :click-param-field="'btnName'"
+                  :key-field="'btnID'"
+                  @button-click="show"
+              ></button-select>
+            </div>
             <div class="historySong" v-for="s in playlistPlaying" :key="s.id" :class="{'hoi': s.id === songPlaying.id}">
               <img :src="s.cover" alt="" >
               <div style="flex-direction: column">
@@ -75,13 +85,29 @@
 <script>
 import Icon from "@/util/common/Icon";
 import ScrollText from "@/components/ScrollText.vue";
+import ButtonSelect from "@/components/ButtonSelect.vue";
+import {nanoid} from "nanoid";
 
 export default {
   name: 'MusicControl',
-  components: {ScrollText},
+  components: {ButtonSelect, ScrollText},
   data() {
     return {
       showList: false,
+      btn: [
+        {
+          btnID: nanoid(),
+          btnName: "list",
+          name: "播放列表",
+          btnIcon: Icon.listIcon
+        }, {
+          btnID: nanoid(),
+          btnName: "history",
+          name: "历史播放",
+          btnIcon: Icon.historyIcon
+        },
+      ],
+      currentBtn: "list"
     }
   },
   computed: {
@@ -91,13 +117,18 @@ export default {
     timer: {
       get() {
         return this.currentTime;
-      },
-      set(value) {
-        this.setCurrentTime(value);
       }
     },
   },
   methods: {
+    show(param) {
+      this.$nextTick(() =>{
+        if (param === this.currentBtn) return;
+        else {
+          this.currentBtn = param;
+        }
+      })
+    },
     songPl(title) {
       return this.songPlaying.title === title
     },
@@ -124,10 +155,11 @@ export default {
     },
     // 改变进度
     async changeProgress(e) {
-      await this.timer.set(e.target.value);
-      // alert(e.target.value);
-      this.audio.currentTime = this.timer;
-      await this.setCurrentTime(this.timer)
+      const newTime = parseFloat(e.target.value);
+      if (this.audio) {
+        this.audio.currentTime = newTime; // 直接设置音频进度
+      }
+      await this.setCurrentTime(newTime);  // 更新vuex状态
     },
     // 格式化时间格式
     formattedTime(time) {
@@ -149,7 +181,7 @@ export default {
     removeFromHistory(id, event) {
       this.setPlaylistPlaying(this.playlistPlaying.filter(item => item.id !== id));
       event.stopPropagation(); // 阻止事件冒泡，避免关闭历史列表
-    }
+    },
   },
   mounted() {
     document.addEventListener('click', this.handleGlobalClick);
@@ -347,7 +379,7 @@ span {
 
 .historyList {
   max-width: 100%;
-  max-height: 800%;
+  max-height: 80vh;
   position: absolute;
   overflow: auto;
   right: 0;
@@ -355,6 +387,17 @@ span {
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 5px;
+  user-select: none;
+}
+
+.historyButton {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: var(--fourth-color);
+  z-index: 10;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 .historySong {

@@ -37,7 +37,7 @@
       </div>
       <div class="progress-container flex">
         <span>{{ formattedTime(currentTime) }}</span>
-        <input type="range" class="level" min="0" :max="songDuration" v-model="timer" @input="changeProgress">
+        <input type="range" class="level" min="0" :max="songDuration" v-model="timer" @input="changeProgress($event)" @change="changeProgress($event)">
       </div>
     </div>
     <div class="main">
@@ -181,8 +181,12 @@ export default {
       }, () => {
       })
     },
-    changeProgress() {
-      this.audio.currentTime = this.timer
+    async changeProgress(e) {
+      const newTime = parseFloat(e.target.value);
+      if (this.audio) {
+        this.audio.currentTime = newTime; // 直接设置音频进度
+      }
+      await this.setCurrentTime(newTime);  // 更新vuex状态
     },
     isCurrentRoute(btnName) {
       return this.$route.matched.some(record => record.name === btnName);

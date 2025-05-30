@@ -112,6 +112,8 @@ export default {
           this.audio.addEventListener('ended', this.handleAudioEnd);
           // 随着歌曲播放，而更新时间
           this.audio.addEventListener('timeupdate', this.handleAudioTimeUpdate);
+          // 监听歌曲是否停止
+          this.audio.addEventListener('pause', this.pause);
           this.fetchAndParseLyric();
         })
         .catch((error) => {
@@ -400,7 +402,6 @@ export default {
       this.trackStartTime = null;
       this.currentTrackDuration = 0;
     },
-
     // 记录收听信息
     async listenRecord() {
       const moment = require('moment')

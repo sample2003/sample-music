@@ -185,21 +185,4 @@ export default {
   display: flex;
 }
 
-.edit-left {
-  width: 50%;
-  height: 100%;
-}
-
-.edit-left textarea {
-  width: 100%;
-  height: 100%;
-  font-family: 微软雅黑;
-  resize: none;
-}
-
-.edit-right {
-  width: 50%;
-  height: 100%;
-}
-
 </style>

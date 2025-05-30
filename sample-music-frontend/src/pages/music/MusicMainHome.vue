@@ -488,11 +488,13 @@ export default {
   border-radius: 10px;
   transition: all 0.2s ease;
   cursor: pointer;
+  border: 1px solid #0000;
   box-sizing: border-box;
 }
 
 .card:hover {
   box-shadow: none;
+  border: 1px solid var(--main-color);
 }
 
 .card > img:nth-of-type(1) {

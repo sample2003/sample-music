@@ -5,6 +5,7 @@
       <button @click="check()">解析</button>
       <input type="file" id="folderInput" webkitdirectory directory multiple>
       <button @click="aaa">aaa</button>
+      <button @click="bbb">bbb</button>
     </div>
   </div>
 </template>
@@ -14,6 +15,7 @@ import ChatService from "@/api/service/AIService";
 import TextInput from "@/components/TextInput.vue";
 import TextArea from "@/components/TextArea.vue";
 import StatisticsService from "@/api/service/StatisticsService";
+import {mapGetters} from "vuex";
 
 export default {
   name: 'MusicMainSet',
@@ -27,10 +29,25 @@ export default {
       controller: null     // 用于中断请求的控制器
     };
   },
+  computed: {
+    ...mapGetters({
+      // 从Vuex获取全局管理的音频实例
+      audio: 'music/getAudio'
+    })
+  },
   methods: {
-    async aaa() {
-      await this.setCurrentTime(200)
+    getRawAudio() {
+      return this.$store.state.music.play.audio;
     },
+
+    async aaa() {
+      const rawAudio = this.getRawAudio();
+      rawAudio.currentTime = 30;
+    },
+    async bbb() {
+      alert(this.audio.currentTime)
+    },
+
     async check() {
       const input = document.getElementById('folderInput');
       if (!input.files.length) return;
