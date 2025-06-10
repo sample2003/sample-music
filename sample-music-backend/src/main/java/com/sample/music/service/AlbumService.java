@@ -2,8 +2,10 @@ package com.sample.music.service;
 
 import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageHelper;
+import com.sample.music.constant.TargetType;
 import com.sample.music.exception.BusinessException;
 import com.sample.music.mapper.ArtistMapper;
+import com.sample.music.mapper.SongMapper;
 import com.sample.music.pojo.dto.PageBean;
 import com.sample.music.pojo.entity.Album;
 import com.sample.music.mapper.AlbumMapper;
@@ -13,6 +15,7 @@ import com.sample.music.pojo.vo.AlbumWithSongs;
 import com.sample.music.pojo.vo.upload.AlbumUpload;
 import com.sample.music.pojo.vo.view.AlbumView;
 import com.sample.music.pojo.vo.view.SongView;
+import io.netty.util.internal.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -33,11 +36,13 @@ public class AlbumService {
 
     private final ArtistService artistService;
 
+    private final SongMapper songMapper;
+
     public void insertAlbumByOne(AlbumUpload albumUpload) {
-        if(albumUpload.getImageFiles() != null) {
+        if (albumUpload.getImageFiles() != null) {
             String coverUrl = fileManageService.uploadFile(albumUpload.getImageFiles(), "cover");
             albumUpload.setCover(coverUrl);
-        }else {
+        } else {
             albumUpload.setCover(null);
         }
         Long artistId = artistService.selectArtistByName(albumUpload.getArtist()).getId();
@@ -54,7 +59,7 @@ public class AlbumService {
             AlbumView album = this.selectAlbumById(id);
             fileManageService.delete(album.getCover());
             albumMapper.deleteAlbumById(id);
-        }else {
+        } else {
             throw new BusinessException(500, "专辑不存在");
         }
     }
@@ -65,13 +70,18 @@ public class AlbumService {
             album.setCover(coverUrl);
             this.updateAlbumById(album);
             albumMapper.updateAlbumById(album);
-        }else {
+        } else {
             throw new BusinessException(500, "更新专辑失败");
         }
     }
 
     public AlbumView selectAlbumById(Long id) {
-        return albumMapper.selectAlbumById(id);
+        AlbumView albumView = albumMapper.selectAlbumById(id);
+        if (StringUtil.isNullOrEmpty(albumView.getCover())) {
+            List<Song> song = songMapper.conditionAndPagedQuery(albumView.getTitle(), "album");
+            albumView.setCover(song.get(0).getCover());
+        }
+        return albumView;
     }
 
     public Album selectAlbumByTitle(String title) {
@@ -98,6 +108,12 @@ public class AlbumService {
             // 有条件，执行条件查询
             albums = albumMapper.conditionAndPagedQuery(condition);
         }
+        for (AlbumView album : albums) {
+            if (StringUtil.isNullOrEmpty(album.getCover())) {
+                List<Song> song = songMapper.conditionAndPagedQuery(album.getTitle(), "album");
+                album.setCover(song.get(0).getCover());
+            }
+        }
         pb.setTotal(albums.size()); // 直接使用分页结果的size作为总数
         pb.setItems(albums);
         return pb;
@@ -106,7 +122,11 @@ public class AlbumService {
     public AlbumWithSongs selectAlbumWithSongs(Long albumId) {
         // 获取专辑信息
         AlbumView album = albumMapper.selectAlbumById(albumId);
-        if(album == null) throw new BusinessException(404, "未发现该专辑");
+        if (album == null) throw new BusinessException(404, "未发现该专辑");
+        if (StringUtil.isNullOrEmpty(album.getCover())) {
+            List<Song> song = songMapper.conditionAndPagedQuery(album.getTitle(), "album");
+            album.setCover(song.get(0).getCover());
+        }
         // 获取专辑及相关信息
         AlbumWithSongs albumWithSongs = new AlbumWithSongs();
         BeanUtils.copyProperties(album, albumWithSongs);

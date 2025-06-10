@@ -39,6 +39,10 @@ public class Artist extends FilesType {
      */
     private String tags;
     /**
+     * 是否认证
+     */
+    private Integer isCheck;
+    /**
      * 艺术家出生日期
      */
     @JsonFormat(pattern = "yyyy-MM-dd")

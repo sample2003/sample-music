@@ -41,7 +41,7 @@ public class SongService {
 
     private final SongMapper songMapper;
 
-    private final ArtistMapper artistMapper;
+    private final ArtistService artistService;
 
     private final AlbumMapper albumMapper;
 
@@ -260,6 +260,7 @@ public class SongService {
         PageBean<SongView> pb = new PageBean<>();
         // 设置分页参数
         PageHelper.startPage(pageNum, pageSize);
+        // 设置排序参数
         if (sortType != null) {
             PageHelper.orderBy(String.format("%s %s", sortType.getField(), sortType.getDirection()));
         }
@@ -279,7 +280,7 @@ public class SongService {
             songView.setTags(JSONUtil.toList(song.getTags(), String.class));
             songView.setArtists(JSONUtil.toList(song.getArtists(), String.class));
             if (song.getArtist() != null) {
-                Artist artist = artistMapper.selectArtistByName(song.getArtist());
+                Artist artist = artistService.selectArtistByName(song.getArtist());
                 if (artist != null) songView.setArtistAvatar(artist.getAvatar());
             }
             if (song.getAlbum() != null) {

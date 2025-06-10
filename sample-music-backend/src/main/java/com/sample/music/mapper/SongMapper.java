@@ -18,6 +18,8 @@ public interface SongMapper {
 
     Song querySongById(Long songId);
 
+    Song querySongByArtistName(String artistName);
+
     int countAll();
 
     int countByCondition(String condition, String params);

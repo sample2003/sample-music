@@ -1,11 +1,17 @@
 package com.sample.music.service;
 
 import com.github.pagehelper.PageHelper;
+import com.sample.music.constant.TargetType;
 import com.sample.music.mapper.ArtistMapper;
+import com.sample.music.mapper.SongMapper;
 import com.sample.music.pojo.dto.PageBean;
 import com.sample.music.pojo.entity.Artist;
+import com.sample.music.pojo.entity.Song;
+import com.sample.music.pojo.vo.view.SongView;
+import io.netty.util.internal.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -13,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArtistService {
     private final ArtistMapper artistMapper;
+    private final SongMapper songMapper;
     private final FileManageService fileManageService;
 
     public void insertArtistByOne(Artist artist) {
@@ -35,7 +42,12 @@ public class ArtistService {
     }
 
     public Artist selectArtistById(Long id) {
-        return artistMapper.selectArtistById(id);
+        Artist artist = artistMapper.selectArtistById(id);
+        if (StringUtil.isNullOrEmpty(artist.getAvatar()))  {
+            List<Song> song = songMapper.conditionAndPagedQuery(artist.getName(), "artist");
+            artist.setAvatar(song.get(0).getCover());
+        }
+        return artist;
     }
 
     public List<Artist> selectArtistByAll() {
@@ -48,7 +60,12 @@ public class ArtistService {
     }
 
     public Artist selectArtistByName(String name) {
-        return artistMapper.selectArtistByName(name);
+        Artist artist = artistMapper.selectArtistByName(name);
+        if (StringUtil.isNullOrEmpty(artist.getAvatar())) {
+            List<Song> song = songMapper.conditionAndPagedQuery(artist.getName(), "artist");
+            artist.setAvatar(song.get(0).getCover());
+        }
+        return artist;
     }
 
     public PageBean<Artist> conditionAndPagedQuery(String condition, Integer pageNum, Integer pageSize) {

@@ -77,6 +77,28 @@
         where s.id = #{songId}
     </select>
 
+    <select id="querySongByArtistName" resultType="com.sample.music.pojo.entity.Song">
+        SELECT s.id,
+               s.title,
+               ar.name  AS artist,
+               al.title AS album,
+               s.artists,
+               s.lyric,
+               s.duration,
+               s.cover,
+               s.mp3_url,
+               s.flac_url,
+               s.style,
+               s.tags,
+               s.listeners,
+               s.permission,
+               s.release_date
+        from song s
+                 LEFT JOIN artist ar ON s.artist_id = ar.id
+                 LEFT JOIN album al ON s.album_id = al.id
+        where ar.name = #{artistName}
+    </select>
+
     <select id="countAll" resultType="int">
         SELECT COUNT(*) from song
     </select>
