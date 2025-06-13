@@ -1,6 +1,6 @@
-package com.sample.music.recommended.mapper;
+package com.sample.music.recommend.mapper;
 
-import com.sample.music.recommended.pojo.SongFeature;
+import com.sample.music.recommend.pojo.SongFeature;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

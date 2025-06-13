@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sample.music.chat.ChatMapper">
+    <insert id="insertMessage">
+        INSERT INTO chat(user_id, session_id, message, is_ai)
+        VALUES (#{userId}, #{sessionId}, #{message}, #{isAi})
+    </insert>
+
+    <select id="selectAllSession" resultType="com.sample.music.chat.ChatMessage">
+        SELECT user_id, session_id, message, is_ai, create_time FROM chat
+    </select>
+
+    <select id="selectBySession" resultType="com.sample.music.chat.ChatMessage">
+        SELECT user_id, session_id, message, is_ai, create_time
+        FROM chat
+        WHERE session_id = #{sessionId}
+    </select>
+</mapper>

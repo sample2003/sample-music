@@ -1,4 +1,4 @@
-package com.sample.music.pojo.dto;
+package com.sample.music.chat;
 
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +11,7 @@ public class ChatRequest {
     private String model;
     private List<Message> messages;
     private Double temperature;
+    private Boolean stream;
 
     @Data
     @Builder

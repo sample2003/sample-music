@@ -1,8 +1,8 @@
-package com.sample.music.recommended.service;
+package com.sample.music.recommend.service;
 
-import com.sample.music.recommended.mapper.SongFeatureMapper;
-import com.sample.music.recommended.SongSimilarity;
-import com.sample.music.recommended.pojo.SongFeature;
+import com.sample.music.recommend.mapper.SongFeatureMapper;
+import com.sample.music.recommend.SongSimilarity;
+import com.sample.music.recommend.pojo.SongFeature;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

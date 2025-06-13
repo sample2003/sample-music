@@ -1,8 +1,8 @@
-package com.sample.music.recommended;
+package com.sample.music.recommend;
 
 import com.sample.music.common.Result;
-import com.sample.music.recommended.pojo.SongFeature;
-import com.sample.music.recommended.service.ContentBasedService;
+import com.sample.music.recommend.pojo.SongFeature;
+import com.sample.music.recommend.service.ContentBasedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

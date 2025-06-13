@@ -1,4 +1,4 @@
-package com.sample.music.recommended;
+package com.sample.music.recommend;
 
 public class SongSimilarity implements Comparable<SongSimilarity> {
     private final Long songId;     // 歌曲ID

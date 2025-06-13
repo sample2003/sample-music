@@ -1,4 +1,4 @@
-package com.sample.music.recommended.pojo;
+package com.sample.music.recommend.pojo;
 
 import lombok.Data;
 
