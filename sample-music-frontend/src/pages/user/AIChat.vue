@@ -17,24 +17,25 @@
       </div>
     </div>
     <div class="right flex">
-      <div v-if="streamingText === ''" class="welcome flex">
+      <div v-if="!isChat" class="welcome flex">
         <img :src="Icon.deepseekTIcon" alt="">
         <p>欢迎使用由样本音乐提供的聊天服务，你的聊天数据将只会存储不会被分析使用</p>
       </div>
 
       <div v-else class="content">
         <div class="user-info info flex">
-          <p>{{ streamingText }}</p>
+          <p>{{ value }}</p>
           <img :src="userDetail.avatar" alt="">
         </div>
-        <div class="chat-info info flex">
+        <div class="response-area info flex">
           <img :src="Icon.deepseekIcon" alt="">
-          <p>{{ streamingText }}</p>
+          <MdEditor :content="streamingText" :show-edit="false"></MdEditor>
+<!--          <p>{{ streamingText }}</p>-->
         </div>
       </div>
 
       <div class="input">
-        <TextArea message="寻找你想听的歌吧" :value="content" type="chat" @submit="main"></TextArea>
+        <TextArea message="寻找你想听的歌吧" :value="content" type="chat" @submit="streamGenerate"></TextArea>
       </div>
     </div>
     <!--    &lt;!&ndash; 会话历史 &ndash;&gt;
@@ -59,10 +60,12 @@
 import Icon from "@/util/common/Icon";
 import TextArea from "@/components/TextArea.vue";
 import OpenAI from "openai";
+import ChatService from "@/api/service/ChatService";
+import MdEditor from "@/components/MDEditor.vue";
 
 export default {
   name: 'AiChat',
-  components: {TextArea},
+  components: {MdEditor, TextArea},
   computed: {
     Icon() {
       return Icon
@@ -75,69 +78,75 @@ export default {
       streamingText: '',   // 实时流式文本
       chatList: [],
       content: '',
+      isChat: false,
     }
   },
   methods: {
     toggleCollapse() {
       this.isCollapsed = !this.isCollapsed
     },
-    async startStream(content) {
+
+    async streamGenerate(content) {
+      this.isChat = true;
+      this.value = content;
+      this.streamingText = '';
+      this.controller = new AbortController();
+
       try {
-        this.streamingText = '' // 清空上次内容Ni
-        this.controller = new AbortController() // 创建中断控制器
-
-        const response = await fetch('http://localhost:11434/api/chat', {
+        const response = await fetch('http://localhost:8080/api/chat/generate/stream', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: "deepseek-r1:8b",
-            messages: [
-              { role: "user", content: content }
-            ],
-            stream: true
-          }),
-          signal: this.controller.signal // 绑定中断信号
-        })
-        const reader = response.body.getReader()
-        const decoder = new TextDecoder()
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('userToken')
+          },
+          body: JSON.stringify({ prompt: content }),
+          signal: this.controller.signal
+        });
 
-        // 实时流式处理
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = ''; // 新增缓冲区
+
         while (true) {
-          const { done, value } = await reader.read()
-          if (done) break
+          const { done, value } = await reader.read();
+          if (done) break;
 
-          const chunk = decoder.decode(value)
-          const data = JSON.parse(chunk)
+          // 将二进制数据解码并添加到缓冲区
+          buffer += decoder.decode(value, { stream: true });
 
-          console.log(data)
+          // 处理缓冲区中完整的SSE事件
+          while (buffer.includes('\n\n')) {
+            const eventEndIndex = buffer.indexOf('\n\n');
+            const eventData = buffer.substring(0, eventEndIndex);
+            buffer = buffer.substring(eventEndIndex + 2); // 移除已处理数据
 
-          // 逐字追加到 streamingText（模拟逐字效果）
-          if (data.message?.content) {
-            this.streamingText += data.message.content
-            await this.$nextTick() // 确保 Vue 渲染更新
+            // 提取事件内容（关键步骤）
+            const contentLine = eventData.split('\n').find(line => line.startsWith('data:'));
+
+            if (contentLine) {
+              // 移除"data:"前缀并获取实际内容
+              const content = contentLine.replace('data:', '').trim();
+
+              // 逐字追加到显示文本
+              this.streamingText += content;
+              await this.$nextTick(); // 确保Vue更新渲染
+            }
           }
         }
       } catch (error) {
         if (error.name !== 'AbortError') {
-          console.error('请求失败:', error)
+          console.error('请求失败:', error);
         }
       }
     },
-    
-/*    async main(content) {
-      
-      const openai = new OpenAI({
-        baseURL: 'https://api.deepseek.com',
-        apiKey: 'sk-43af2c2f320944408bd6f24d25a58f61'
-      });
-      const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: content }],
-        model: "deepseek-chat",
-      });
-      console.log(completion)
-      console.log(completion.choices[0].message.content);
-    }
-  },*/
+
+    // 新增停止生成方法
+    stopGenerate() {
+      if (this.controller) {
+        this.controller.abort();
+        this.controller = null;
+      }
+    },
     async main(content) {
       const openai = new OpenAI({
         baseURL: 'https://api.deepseek.com',
@@ -348,8 +357,13 @@ export default {
   backdrop-filter: blur(10px);
 }
 
-.chat-info {
+.response-area {
   justify-content: start;
+  white-space: pre-wrap;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 10px;
+  border-radius: 4px;
 }
 
 .input {

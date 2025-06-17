@@ -1,13 +1,20 @@
-package com.sample.music.chat;
+package com.sample.music.controller;
 
+import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.pagehelper.PageHelper;
+import com.sample.music.chat.ChatMapper;
+import com.sample.music.chat.model.ChatMessage;
+import com.sample.music.chat.service.ChatService;
+import com.sample.music.chat.service.ChatServiceFactory;
 import com.sample.music.common.Result;
 import com.sample.music.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -119,5 +126,24 @@ public class ChatController {
         return Result.success(history);
     }
 
+    public static void main(String[] args) {
+        BigDecimal totalPrice = new BigDecimal("0");
+        totalPrice = totalPrice.add(new BigDecimal("0"));
+        System.out.println(totalPrice);
+    }
+
+/*    public Flux<Data> paginatedQuery(int pageSize) {
+        return Flux.generate(sink -> {
+            int currentPage = sink.currentContext().get("page");
+            List<Data> pageResult = mybatisMapper.getPage(currentPage, pageSize);
+
+            if(!pageResult.isEmpty()) {
+                pageResult.forEach(sink::next);
+                sink.currentContext().put("page", currentPage + 1);
+            } else {
+                sink.complete();
+            }
+        });
+    }*/
 }
 

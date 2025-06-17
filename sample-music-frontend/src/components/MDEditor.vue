@@ -1,13 +1,23 @@
 <template>
   <div id="MDEditor">
-    <v-md-editor
-        v-if="showEdit"
-        v-model="editorValue"
-        :disabled-menus="[]"
-        @upload-image="handleUploadImage"
-        height="calc(80vh)"
-    ></v-md-editor>
-    <div v-else v-html="editorValue"></div>
+    <div id="MDEditor">
+      <v-md-editor
+          v-if="showEdit"
+          v-model="editorValue"
+          :disabled-menus="[]"
+          @upload-image="handleUploadImage"
+          height="80%"
+      ></v-md-editor>
+      <!-- 修改预览模式 -->
+      <v-md-editor
+          v-else
+          v-model="editorValue"
+          mode="preview"
+          :disabled-menus="['all']"
+          hide-menu-bar
+          class="preview-only"
+      ></v-md-editor>
+    </div>
   </div>
 </template>
 
@@ -53,11 +63,13 @@ export default {
   watch: {
     editorValue(newVal) {
       this.$emit('update:content', newVal);
+    },
+    content(newVal) {
+      // 确保父组件传入的内容能实时更新编辑器
+      this.editorValue = newVal;
     }
   },
-  computed: {
-
-  }
+  computed: {}
 };
 </script>
 
@@ -66,5 +78,20 @@ export default {
   width: 100%;
   height: 100%;
   text-align: start;
+}
+
+.preview-only {
+  background-color: var(--second-color);
+  border: none !important;
+  padding: 0 !important;
+}
+
+.preview-only ::v-deep .github-markdown-body {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.preview-only ::v-deep .scrollbar__wrap {
+  padding: 10px !important;
 }
 </style>

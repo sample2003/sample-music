@@ -1,4 +1,4 @@
-package com.sample.music.chat;
+package com.sample.music.chat.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

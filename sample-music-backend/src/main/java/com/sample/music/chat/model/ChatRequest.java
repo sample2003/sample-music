@@ -1,4 +1,4 @@
-package com.sample.music.chat;
+package com.sample.music.chat.model;
 
 import lombok.Builder;
 import lombok.Data;

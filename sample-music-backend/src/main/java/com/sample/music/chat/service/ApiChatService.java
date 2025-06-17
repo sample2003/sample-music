@@ -1,6 +1,12 @@
-package com.sample.music.chat;
+package com.sample.music.chat.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sample.music.chat.ChatMapper;
+import com.sample.music.chat.model.ChatRequest;
+import com.sample.music.chat.config.DeepSeekConfig;
 import com.sample.music.pojo.vo.ChatResponse;
+import groovy.json.StringEscapeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -46,7 +52,7 @@ public class ApiChatService implements ChatService{
     }
 
     @Override
-    public Flux<String> generateStream(String prompt) {
+    /*public Flux<String> generateStream(String prompt) {
         ChatRequest request = ChatRequest.builder()
                 .model("deepseek-chat")
                 .messages(List.of(new ChatRequest.Message("user", prompt)))
@@ -61,8 +67,8 @@ public class ApiChatService implements ChatService{
                 .bodyValue(request)
                 .retrieve()
                 .bodyToFlux(String.class);
-    }
-    /*public Flux<String> generateStream(String prompt) {
+    }*/
+    public Flux<String> generateStream(String prompt) {
         ChatRequest request = ChatRequest.builder()
                 .model("deepseek-chat")
                 .messages(List.of(new ChatRequest.Message("user", prompt)))
@@ -94,6 +100,7 @@ public class ApiChatService implements ChatService{
                 if (delta.has("content")) {
                     String content = delta.path("content").asText();
                     // 处理unicode转义字符（如\u0026 -> &）
+                    System.out.println(StringEscapeUtils.unescapeJava(content));
                     return StringEscapeUtils.unescapeJava(content);
                 }
             }
@@ -101,15 +108,15 @@ public class ApiChatService implements ChatService{
             // 添加日志记录异常
         }
         return "";
-    }*/
+    }
 
     @Override
     @Transactional
     public void saveChatRecord(Long userId, String sessionId, String prompt, String response) {
         // 保存用户消息
-        chatMapper.insertMessage(userId, sessionId, prompt, 0);
+        chatMapper.insertMessage(userId, prompt, sessionId, 0);
         // 保存AI回复
-        chatMapper.insertMessage(userId, sessionId, response, 1);
+        chatMapper.insertMessage(userId, response, sessionId, 1);
     }
 
     @Bean

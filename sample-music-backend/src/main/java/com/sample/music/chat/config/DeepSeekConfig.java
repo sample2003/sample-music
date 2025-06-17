@@ -1,4 +1,4 @@
-package com.sample.music.chat;
+package com.sample.music.chat.config;
 
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
