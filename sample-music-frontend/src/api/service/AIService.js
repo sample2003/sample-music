@@ -1,3 +1,4 @@
+/*
 import service from "@/api/request";
 import axios from "axios";
 
@@ -52,4 +53,4 @@ const ChatService = {
     }
 };
 
-export default ChatService;
+export default ChatService;*/
