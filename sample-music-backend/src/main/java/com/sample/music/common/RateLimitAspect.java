@@ -1,6 +1,8 @@
 package com.sample.music.common;
 
 import com.sample.music.annotation.RateLimit;
+import com.sample.music.constant.HttpStatusCode;
+import com.sample.music.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -26,7 +28,8 @@ public class RateLimitAspect {
                 rateLimit.unit()
         );
         if (!limiter.tryAcquire(1)) {
-            throw new RuntimeException("请求频率过高！");
+//            return Result.success("请求频率过高");
+            throw new BusinessException(400, "请求频率过高！");
         }
         return joinPoint.proceed();
     }

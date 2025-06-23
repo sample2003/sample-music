@@ -1,6 +1,7 @@
 package com.sample.music.config;
 
 import com.sample.music.interceptors.AdminInterceptor;
+import com.sample.music.interceptors.LoggerInterceptor;
 import com.sample.music.interceptors.LoginInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
     private final LoginInterceptor loginInterceptor;
 
     private final AdminInterceptor adminInterceptor;
+
+    private final LoggerInterceptor loggerInterceptor;
 
     /**
      * 放行前端接口访问
@@ -63,6 +66,11 @@ public class WebConfig implements WebMvcConfigurer {
                         "/v3/api-docs/**",
                         "/doc.html/**"
                 );
+
+        registry
+                .addInterceptor(loggerInterceptor)
+                .addPathPatterns("/api/**")
+                ;
     }
 
     @Override

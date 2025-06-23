@@ -1,12 +1,15 @@
 package com.sample.music.controller;
 
 import cn.hutool.core.lang.UUID;
+import cn.hutool.json.JSONUtil;
 import com.sample.music.annotation.RateLimit;
+import com.sample.music.mapper.UserMapper;
 import com.sample.music.pojo.dto.EmailVerify;
 import com.sample.music.common.FilesType;
 import com.sample.music.pojo.dto.UserDTO;
 import com.sample.music.common.Result;
 import com.sample.music.pojo.dto.UserRegister;
+import com.sample.music.pojo.entity.RequestLog;
 import com.sample.music.pojo.vo.UserUpdateVO;
 import com.sample.music.pojo.vo.UserVO;
 import com.sample.music.service.EmailService;
@@ -15,12 +18,18 @@ import com.sample.music.service.UserService;
 import com.sample.music.utils.UserContext;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RateIntervalUnit;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.sample.music.constant.HttpStatusCode.*;
@@ -34,6 +43,7 @@ public class UserController {
     private final EmailService emailService;
     private final FileManageService fileManageService;
     private final RedisTemplate<String, Object> redisTemplate;
+    private final UserMapper userMapper;
 
     /**
      * 用户注册
@@ -70,7 +80,7 @@ public class UserController {
      * @param password 密码
      * @return Result
      */
-    @RateLimit
+    @RateLimit(key = "user:limit", rate = 5, rateInterval = 1, unit = RateIntervalUnit.MINUTES)
     @PostMapping("login")
     public Result<String> loginUser(
             @Pattern(regexp = ".*") String text,

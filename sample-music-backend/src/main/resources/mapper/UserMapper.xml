@@ -14,6 +14,28 @@
         </selectKey>
     </insert>
 
+    <insert id = "insertLogger" parameterType="com.sample.music.pojo.entity.RequestLog">
+        insert into api_log (url,
+
+            <if test="request!=null and request.length>0">
+                request,
+            </if>
+            request_method,
+            <if test="response!=null and response.length>0">
+                response,
+            </if>
+            request_time, consume)
+        values (#{url},
+                <if test="request!=null and request.length>0">
+                    #{request},
+                </if>
+                #{requestMethod},
+                <if test="response!=null and response.length>0">
+                    #{response},
+                </if>
+                NOW(), #{consume})
+    </insert>
+
     <!-- 假设user表的自增ID列名为id -->
     <insert id="addUserConfig">
         INSERT INTO user_config(user_id, role)
