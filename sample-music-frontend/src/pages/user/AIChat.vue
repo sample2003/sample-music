@@ -6,10 +6,10 @@
         <img class="kik" :src="Icon.addIcon" alt="" @click="toggleCollapse">
       </div>
       <div class="message-list">
-        <div class="message flex" v-for="c in chatList" :key="c.id">
-          <p>{{ c.title }}</p>
-          <img :src="Icon.moreIcon" alt="">
-          <div class="change">
+        <div class="message flex" v-for="c in chatList" :key="c.id" @click="selectChatDetail(c.sessionId)">
+          <p>{{ c.content }}</p>
+          <img :src="Icon.moreIcon" alt="" @click.stop="c.showChange = !c.showChange">
+          <div class="change" v-show="c.showChange">
             <button class="change-button">重命名</button>
             <button class="change-button">删除</button>
           </div>
@@ -17,20 +17,34 @@
       </div>
     </div>
     <div class="right flex">
-      <div v-if="!isChat" class="welcome flex">
+      <div v-if="chatList.length <= 0" class="welcome flex">
         <img :src="Icon.deepseekTIcon" alt="">
         <p>欢迎使用由样本音乐提供的聊天服务，你的聊天数据将只会存储不会被分析使用</p>
       </div>
 
       <div v-else class="content">
-        <div class="user-info info flex">
-          <p>{{ value }}</p>
-          <img :src="userDetail.avatar" alt="">
+        <div class="every" v-for="chat in chatDetail" :key="chat.id">
+          <div v-if="!chat.isAi" class="user-info info flex">
+            <p>{{ chat.message }}</p>
+            <img :src="userDetail.avatar" alt="">
+          </div>
+          <div v-else class="response-area info flex">
+            <img :src="Icon.deepseekIcon" alt="">
+            <MdEditor :content="chat.message" :show-edit="false"></MdEditor>
+            <!--          <p>{{ streamingText }}</p>-->
+          </div>
         </div>
-        <div class="response-area info flex">
-          <img :src="Icon.deepseekIcon" alt="">
-          <MdEditor :content="streamingText" :show-edit="false"></MdEditor>
-<!--          <p>{{ streamingText }}</p>-->
+
+        <div v-if="isChat">
+          <div class="user-info info flex">
+            <p>{{ value }}</p>
+            <img :src="userDetail.avatar" alt="">
+          </div>
+          <div class="response-area info flex">
+            <img :src="Icon.deepseekIcon" alt="">
+            <MdEditor :content="streamingText" :show-edit="false" class="editor"></MdEditor>
+            <!--          <p>{{ streamingText }}</p>-->
+          </div>
         </div>
       </div>
 
@@ -62,6 +76,7 @@ import TextArea from "@/components/TextArea.vue";
 import OpenAI from "openai";
 import ChatService from "@/api/service/ChatService";
 import MdEditor from "@/components/MDEditor.vue";
+import axios from "axios";
 
 export default {
   name: 'AiChat',
@@ -73,12 +88,19 @@ export default {
   },
   data() {
     return {
+      sessionId: null,
       isCollapsed: false,
       value: '',
       streamingText: '',   // 实时流式文本
       chatList: [],
+      chatDetail: [],
       content: '',
       isChat: false,
+    }
+  },
+  watch: {
+    '$route'(to) {
+      this.sessionId = to.params.sessionId || this.sessionId;
     }
   },
   methods: {
@@ -99,7 +121,7 @@ export default {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('userToken')
           },
-          body: JSON.stringify({ prompt: content }),
+          body: JSON.stringify({ prompt: content, sessionId: this.sessionId }),
           signal: this.controller.signal
         });
 
@@ -140,6 +162,33 @@ export default {
       }
     },
 
+    selectChatDetail(sessionId) {
+      axios.get('http://localhost:8080/api/chat/chatDetail/'+sessionId, {
+        headers: {
+          'Authorization': localStorage.getItem('userToken')
+        }
+      }).then((response) => {
+        this.chatDetail = response.data.data;
+      }).catch((error) => {
+        console.error('请求失败:', error);
+      })
+    },
+
+    async userSelectChatList() {
+      axios.get('http://localhost:8080/api/chat/chatList', {
+        headers: {
+          'Authorization': localStorage.getItem('userToken')
+        }
+      }).then((response) => {
+        this.chatList = response.data.data.map(item => ({
+          ...item,
+          showChange: false // 初始化显示状态为隐藏
+        }));
+      }).catch((error) => {
+        console.error('请求失败:', error);
+      })
+    },
+
     // 新增停止生成方法
     stopGenerate() {
       if (this.controller) {
@@ -161,7 +210,8 @@ export default {
     }
   },
   mounted() {
-
+    this.userSelectChatList();
+    // this.selectChatDetail("d983d4c7-ed0e-4ca4-96fc-2faf429d0e4c")
   }
 }
 </script>
@@ -370,5 +420,4 @@ export default {
   flex-grow: 1;
   width: 80%;
 }
-
 </style>

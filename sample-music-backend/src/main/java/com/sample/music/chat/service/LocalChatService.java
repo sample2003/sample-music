@@ -12,17 +12,17 @@ import reactor.core.publisher.Flux;
 @ConditionalOnProperty(name = "spring.ai.model-type", havingValue = "LOCAL_DEEPSEEK")
 public class LocalChatService implements ChatService{
     @Override
-    public String generateText(String prompt) {
+    public String generateText(String prompt, String sessionId) {
         return "";
     }
 
     @Override
-    public Flux<String> generateStream(String prompt) {
+    public Flux<String> generateStream(String prompt, String sessionId, boolean isNewChat) {
         return null;
     }
 
     @Override
-    public void saveChatRecord(Long userId, String sessionId, String prompt, String response) {
+    public void saveChatRecord(Long userId, String sessionId, String message, int isAi) {
 
     }
 }

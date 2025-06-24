@@ -1,4 +1,4 @@
-package com.sample.music.constant;
+package com.sample.music.chat.model;
 
 public enum ModelType {
     LOCAL_DEEPSEEK,

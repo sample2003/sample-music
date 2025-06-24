@@ -1,23 +1,22 @@
 <template>
   <div id="MDEditor">
-    <div id="MDEditor">
-      <v-md-editor
-          v-if="showEdit"
-          v-model="editorValue"
-          :disabled-menus="[]"
-          @upload-image="handleUploadImage"
-          height="80%"
-      ></v-md-editor>
-      <!-- 修改预览模式 -->
-      <v-md-editor
-          v-else
-          v-model="editorValue"
-          mode="preview"
-          :disabled-menus="['all']"
-          hide-menu-bar
-          class="preview-only"
-      ></v-md-editor>
-    </div>
+    <v-md-editor
+        v-if="showEdit"
+        v-model="editorValue"
+        :disabled-menus="[]"
+        @upload-image="handleUploadImage"
+        height="80%"
+    ></v-md-editor>
+    <!-- 修改预览模式 -->
+    <v-md-editor
+        v-else
+        style="border-radius: 10px"
+        v-model="editorValue"
+        mode="preview"
+        :disabled-menus="['all']"
+        hide-menu-bar
+        class="preview-only"
+    ></v-md-editor>
   </div>
 </template>
 
@@ -75,7 +74,7 @@ export default {
 
 <style scoped>
 #MDEditor {
-  width: 100%;
+  width: 80%;
   height: 100%;
   text-align: start;
 }
@@ -88,7 +87,12 @@ export default {
 
 .preview-only ::v-deep .github-markdown-body {
   padding: 0 !important;
+  line-height: 1 !important;
   background: transparent !important;
+}
+
+.preview-only ::v-deep .github-markdown-body p {
+  margin: 0 !important;
 }
 
 .preview-only ::v-deep .scrollbar__wrap {

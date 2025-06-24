@@ -3,9 +3,11 @@ package com.sample.music.chat.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sample.music.chat.ChatMapper;
+import com.sample.music.chat.model.ChatMessage;
 import com.sample.music.chat.model.ChatRequest;
 import com.sample.music.chat.config.DeepSeekConfig;
 import com.sample.music.pojo.vo.ChatResponse;
+import com.sample.music.utils.UserContext;
 import groovy.json.StringEscapeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +21,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Qualifier("apiChatService")
@@ -32,7 +35,7 @@ public class ApiChatService implements ChatService{
     private final WebClient deepSeekWebClient;
 
     @Override
-    public String generateText(String prompt) {
+    public String generateText(String prompt, String sessionId) {
         ChatRequest request = ChatRequest.builder()
                 .model("deepseek-chat")
                 .messages(List.of(
@@ -52,7 +55,39 @@ public class ApiChatService implements ChatService{
     }
 
     @Override
-    /*public Flux<String> generateStream(String prompt) {
+    public Flux<String> generateStream(String prompt, String sessionId, boolean isNewChat) {
+        List<ChatRequest.Message> messages;
+        if (isNewChat) {
+            messages = List.of(new ChatRequest.Message("user", prompt));
+        }else {
+            List<ChatMessage> chatMessages = chatMapper.userSelectChatDetail(UserContext.getUser(), sessionId);
+
+            messages = chatMessages.stream()
+                    .map(msg -> new ChatRequest.Message(msg.getIsAi() ? "assistant" : "user", msg.getMessage()))
+                    .collect(Collectors.toList());
+
+            messages.add(new ChatRequest.Message("user", prompt));
+        }
+
+        ChatRequest request = ChatRequest.builder()
+                .model("deepseek-chat")
+                .messages(messages)
+                .temperature(0.7)
+                .stream(true)
+                .build();
+
+        return deepSeekWebClient.post()
+                .uri(chatClient.getApiUrl())
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + chatClient.getApiKey())
+                .accept(MediaType.TEXT_EVENT_STREAM)  // 添加事件流接受类型
+                .bodyValue(request)
+                .retrieve()
+                .bodyToFlux(String.class)
+                .map(this::parseSSEEvent)  // 解析SSE事件格式
+                .filter(content -> !content.isEmpty());
+    }
+
+        /*public Flux<String> generateStream(String prompt) {
         ChatRequest request = ChatRequest.builder()
                 .model("deepseek-chat")
                 .messages(List.of(new ChatRequest.Message("user", prompt)))
@@ -68,24 +103,7 @@ public class ApiChatService implements ChatService{
                 .retrieve()
                 .bodyToFlux(String.class);
     }*/
-    public Flux<String> generateStream(String prompt) {
-        ChatRequest request = ChatRequest.builder()
-                .model("deepseek-chat")
-                .messages(List.of(new ChatRequest.Message("user", prompt)))
-                .temperature(0.7)
-                .stream(true)
-                .build();
 
-        return deepSeekWebClient.post()
-                .uri(chatClient.getApiUrl())
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + chatClient.getApiKey())
-                .accept(MediaType.TEXT_EVENT_STREAM)  // 添加事件流接受类型
-                .bodyValue(request)
-                .retrieve()
-                .bodyToFlux(String.class)
-                .map(this::parseSSEEvent)  // 解析SSE事件格式
-                .filter(content -> !content.isEmpty());
-    }
 
     private String parseSSEEvent(String event) {
         try {
@@ -112,11 +130,8 @@ public class ApiChatService implements ChatService{
 
     @Override
     @Transactional
-    public void saveChatRecord(Long userId, String sessionId, String prompt, String response) {
-        // 保存用户消息
-        chatMapper.insertMessage(userId, prompt, sessionId, 0);
-        // 保存AI回复
-        chatMapper.insertMessage(userId, response, sessionId, 1);
+    public void saveChatRecord(Long userId, String sessionId, String message, int isAi) {
+        chatMapper.insertMessage(userId, sessionId, message, isAi);
     }
 
     @Bean

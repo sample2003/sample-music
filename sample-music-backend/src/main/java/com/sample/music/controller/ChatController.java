@@ -2,12 +2,14 @@ package com.sample.music.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.sample.music.chat.ChatMapper;
+import com.sample.music.chat.model.ChatList;
 import com.sample.music.chat.model.ChatMessage;
 import com.sample.music.chat.service.ChatService;
 import com.sample.music.chat.service.ChatServiceFactory;
 import com.sample.music.common.Result;
 import com.sample.music.utils.UserContext;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -17,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/chat")
@@ -56,8 +58,8 @@ public class ChatController {
             Long userId = UserContext.getUser(); // 从上下文中获取当前用户
 
             ChatService chatService = chatServiceFactory.getChatService();
-            String response = chatService.generateText(prompt);
-            chatService.saveChatRecord(userId, sessionId, prompt, response);
+            String response = chatService.generateText(prompt, sessionId);
+//            chatService.saveChatRecord(userId, sessionId, prompt, response);
 
             return Result.success(Map.of(
                     "sessionId", sessionId,
@@ -71,14 +73,22 @@ public class ChatController {
     @PostMapping("/generate/stream")
     public SseEmitter streamGenerate(@RequestBody Map<String, String> request) {
         String prompt = request.get("prompt");
-        String sessionId = request.getOrDefault("sessionId", UUID.randomUUID().toString());
+        String sessionId;
+        boolean isNewChat = true;
+        sessionId = request.get("prompt");
+        if (sessionId != null) {
+            isNewChat = false;
+            sessionId = request.getOrDefault("sessionId", UUID.randomUUID().toString());
+        }
         Long userId = UserContext.getUser();
 
         SseEmitter emitter = new SseEmitter(60_000L); // 60秒超时
         StringBuilder fullResponse = new StringBuilder();
 
         ChatService chatService = chatServiceFactory.getChatService();
-        chatService.generateStream(prompt)
+        String finalSessionId = sessionId;
+        chatService.saveChatRecord(userId, finalSessionId, prompt, 0);
+        chatService.generateStream(prompt, sessionId, isNewChat)
                 .subscribe(
                         content -> {
                             fullResponse.append(content);
@@ -88,39 +98,48 @@ public class ChatController {
                                 throw new RuntimeException(e);
                             }
                         },
-                        error -> {
+                        /*error -> {
                             emitter.completeWithError(error);
-                            chatService.saveChatRecord(userId, sessionId, prompt, fullResponse.toString());
+                            chatService.saveChatRecord(userId, finalSessionId, prompt, fullResponse.toString());
                         },
                         () -> {
                             emitter.complete();
-                            chatService.saveChatRecord(userId, sessionId, prompt, fullResponse.toString());
+                            chatService.saveChatRecord(userId, finalSessionId, prompt, fullResponse.toString());
+                        }*/
+                        error -> {
+                            emitter.completeWithError(error);
+                            chatService.saveChatRecord(userId, finalSessionId, fullResponse.toString(), 1);
+                        },
+                        () -> {
+                            emitter.complete();
+                            chatService.saveChatRecord(userId, finalSessionId, fullResponse.toString(), 1);
                         }
                 );
 
         return emitter;
     }
 
-    @GetMapping("/chatData")
-    public Result<List<ChatMessage>> getChatHistory(
+    @GetMapping("/chatList")
+    public Result<List<ChatList>> getChat(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "20") Integer size) {
 
         Long userId = UserContext.getUser();
         PageHelper.startPage(page, size);
-        List<ChatMessage> history = chatMapper.selectAllSession();
+
+        List<ChatList> history = chatMapper.userSelectChatList(userId);
         return Result.success(history);
     }
 
-    @GetMapping("/history/one")
-    public Result<List<ChatMessage>> getChatHistory(
-            @RequestParam String sessionId,
+    @GetMapping("/chatDetail/{sessionId}")
+    public Result<List<ChatMessage>> getChat(
+            @PathVariable String sessionId ,
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "20") Integer size) {
 
         Long userId = UserContext.getUser();
         PageHelper.startPage(page, size);
-        List<ChatMessage> history = chatMapper.selectBySession(userId, sessionId);
+        List<ChatMessage> history = chatMapper.userSelectChatDetail(userId, sessionId);
         return Result.success(history);
     }
 
