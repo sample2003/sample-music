@@ -175,8 +175,8 @@ const router = new VueRouter({
         },
         {
           name: "AI",
-          path: "/music/ai",
-          component: AIChat
+          path: "/music/ai/:sessionId?",
+          component: AIChat,
         },
         {
           name: "publicity",
