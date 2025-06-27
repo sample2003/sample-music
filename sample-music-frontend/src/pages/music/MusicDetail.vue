@@ -78,7 +78,7 @@
             <p>播放全部</p>
           </div>
 
-          <div class="change-button" @click="changeFavoritesPlaylist(albumDetail.id)">
+          <div class="change-button" @click="changeFavoritesAlbum(albumDetail.id)">
             <img :src="isFavorite ? Icon.loveColorIcon : Icon.notLoveIcon" alt="">
             <p>{{ isFavorite ? '取消收藏' : `收藏${this.classify}` }}</p>
           </div>

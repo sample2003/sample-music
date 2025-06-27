@@ -65,6 +65,8 @@ const AlbumService = {
         }).catch(error => {
             throw error;
         })
+
+
     },
     // 查询评论
     queryCommentPaged: function (targetId) {
@@ -72,6 +74,7 @@ const AlbumService = {
             method: "GET",
             url: `/api/album/query/comment?targetId=${targetId}`,
         }).then(response => {
+            console.log('准备发送请求，内容:', response); // 添加请求
             return response.data;
         }).catch(error => {
             throw error;
@@ -83,6 +86,7 @@ const AlbumService = {
             method: "POST",
             url: `/api/album/insert/comment?content=${content}&targetId=${targetId}`,
         }).then(response => {
+          console.log('内容:', response); // 添加请求
             return response;
         }).catch(error => {
             throw error;

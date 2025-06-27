@@ -1,6 +1,6 @@
 <template>
   <div id="userComment">
-    <TextArea :message="msg" type="comment" @submit="insertContent"></TextArea>
+    <TextArea :message="msg" :value="comment" maxLimit="200" type="comment" @submit="insertContent"></TextArea>
     <div v-if="user_comment.length > 0" class="comments">
       <div
           class="comment"
@@ -49,6 +49,7 @@ export default {
   props: ['detailType', 'targetId'],
   data() {
     return {
+      comment: '',
       msg: '说点什么吧（￣︶￣）',
       user_comment: [],
       isGoodArray: [], // 存储每个评论的点赞状态,
@@ -59,7 +60,7 @@ export default {
   methods: {
     // 评论
     async insertContent(comment) {
-      if (this.userDetail === null) {
+      if (this.userDetail !== null) {
         if (this.detailType === 'album') {
           try {
             await AlbumService.insertAlbumComment(comment, this.targetId);
@@ -195,7 +196,7 @@ export default {
   break-inside: avoid; /* 防止评论被分割到两列中 */
   margin-bottom: 10px; /* 评论之间的垂直间隙 */
   padding: 1%;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 2px 2px 4px #b3b3b3, -2px -2px 4px #ffffff;
 }
 

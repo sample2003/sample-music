@@ -289,6 +289,8 @@ export default {
     },
     // 根据播放模式设置播放结束时的事件监听器
     handleAudioEnd() {
+      this.setSongLyric(null)
+      this.setCurrentTime(null)
       // 根据 mode_play 的值来决定播放逻辑
       switch (this.playMode) {
         case 'loop':

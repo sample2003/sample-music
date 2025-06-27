@@ -3,21 +3,28 @@
     <div class="left" :class="{ collapsed: isCollapsed }">
       <div class="control flex">
         <img class="kik" :src="isCollapsed ? Icon.toggleRightIcon : Icon.toggleLeftIcon" alt="" @click="toggleCollapse">
-        <img class="kik" :src="Icon.addIcon" alt="" @click="toggleCollapse">
+        <img class="kik" :src="Icon.addIcon" alt="" @click="newChat">
       </div>
       <div class="message-list">
-        <div class="message flex" v-for="c in chatList" :key="c.id" @click="selectChatDetail(c.sessionId)">
-          <p>{{ c.content }}</p>
-          <img :src="Icon.moreIcon" alt="" @click.stop="c.showChange = !c.showChange">
-          <div class="change" v-show="c.showChange">
-            <button class="change-button">重命名</button>
-            <button class="change-button">删除</button>
+        <div v-for="chats in groupedChats" :key="chats.title" style="width: 100%">
+          <h4 v-show="chats.chats.length > 0">{{ chats.title }}</h4>
+          <div
+              class="message flex"
+              v-for="c in chats.chats"
+              :key="c.id"
+              @click="selectChatDetail(c.sessionId)">
+            <p>{{ c.content }}</p>
+            <img :src="Icon.moreIcon" alt="" @click.stop="c.showChange = !c.showChange">
+            <div class="change" v-show="c.showChange">
+              <button class="change-button" @click="renameChat">重命名</button>
+              <button class="change-button" @click="removeChat">删除</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="right flex">
-      <div v-if="chatList.length <= 0" class="welcome flex">
+      <div v-if="chatDetail.length <= 0 && value.length <= 0" class="welcome flex">
         <img :src="Icon.deepseekTIcon" alt="">
         <p>欢迎使用由样本音乐提供的聊天服务，你的聊天数据将只会存储不会被分析使用</p>
       </div>
@@ -84,7 +91,16 @@ export default {
   computed: {
     Icon() {
       return Icon
-    }
+    },
+    groupedChats() {
+      return [
+        {title: '今日对话', chats: this.chatList.filter(chat => chat.timeCategory === 0)},
+        {title: '三天内对话', chats: this.chatList.filter(chat => chat.timeCategory === 1)},
+        {title: '七天内对话', chats: this.chatList.filter(chat => chat.timeCategory === 2)},
+        {title: '三十天内对话', chats: this.chatList.filter(chat => chat.timeCategory === 3)},
+        {title: '更早对话', chats: this.chatList.filter(chat => chat.timeCategory === 4)}
+      ]
+    },
   },
   data() {
     return {
@@ -121,7 +137,7 @@ export default {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('userToken')
           },
-          body: JSON.stringify({ prompt: content, sessionId: this.sessionId }),
+          body: JSON.stringify({prompt: content, ...(this.sessionId && {sessionId: this.sessionId})}),
           signal: this.controller.signal
         });
 
@@ -130,11 +146,11 @@ export default {
         let buffer = ''; // 新增缓冲区
 
         while (true) {
-          const { done, value } = await reader.read();
+          const {done, value} = await reader.read();
           if (done) break;
 
           // 将二进制数据解码并添加到缓冲区
-          buffer += decoder.decode(value, { stream: true });
+          buffer += decoder.decode(value, {stream: true});
 
           // 处理缓冲区中完整的SSE事件
           while (buffer.includes('\n\n')) {
@@ -163,12 +179,22 @@ export default {
     },
 
     selectChatDetail(sessionId) {
-      axios.get('http://localhost:8080/api/chat/chatDetail/'+sessionId, {
+      // 修改路由跳转方式
+      if (this.$route.path !== `/music/AI/${sessionId}`) {
+        this.$router.push({
+          path: `/music/AI/${sessionId}`,
+          query: this.$route.query
+        });
+      }
+
+      // 后续数据获取逻辑保持不变...
+      axios.get(`http://localhost:8080/api/chat/chatDetail/${sessionId}`, {
         headers: {
           'Authorization': localStorage.getItem('userToken')
         }
       }).then((response) => {
         this.chatDetail = response.data.data;
+        this.sessionId = sessionId;
       }).catch((error) => {
         console.error('请求失败:', error);
       })
@@ -202,16 +228,26 @@ export default {
         apiKey: 'sk-43af2c2f320944408bd6f24d25a58f61'
       });
       const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: content }],
+        messages: [{role: "system", content: content}],
         model: "deepseek-chat",
       });
       console.log(completion)
       alert(completion.choices[0].message.content);
-    }
+    },
+    newChat() {
+      this.chatDetail = [];
+      this.value = '';
+      this.sessionId = null;
+    },
+    renameChat() {
+
+    },
+    removeChat() {
+
+    },
   },
   mounted() {
     this.userSelectChatList();
-    // this.selectChatDetail("d983d4c7-ed0e-4ca4-96fc-2faf429d0e4c")
   }
 }
 </script>
@@ -262,6 +298,7 @@ export default {
 }
 
 .message-list {
+  flex: 1;
   width: 100%;
   height: 80%;
   display: flex;
@@ -330,7 +367,7 @@ export default {
 }
 
 .message img {
-  width: 9%;
+  height: 50%;
   margin: 1%;
   padding: 5px;
   opacity: 0;

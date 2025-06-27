@@ -22,7 +22,7 @@
       <img :src="songPlaying.cover" alt="" :class="isPlay? 'songRunning':'songPaused'">
       <img :src="Icon.nextPageWhiteIcon" alt="" @click="jump('play')">
       <div class="text flex">
-        <ScrollText></ScrollText>
+        <ScrollText :content="songPlaying.title"></ScrollText>
         <span class="song-artist" @click="searchArtist(songPlaying.artist)">{{ songPlaying.artist }}</span>
         <span class="song-lyric">{{ currentLyric }}</span>
       </div>

@@ -46,7 +46,7 @@
         </div>
       </transition>
       <div class="pl_control">
-        <ScrollText :max-width="'100%'" :font-size="'2em'" style="margin: 10px;"></ScrollText>
+        <ScrollText :content="songPlaying.title" :max-width="'100%'" :font-size="'2em'" style="margin: 10px;"></ScrollText>
         <div class="control-button flex">
           <img :src="Icon.fileIcon" alt="" :class="{'bac': this.isShowDetail}" @click="showDetail">
           <img :src="returnPlayIcon.icon" alt="" @click="togglePlayMode" :title="returnPlayIcon.prompt">

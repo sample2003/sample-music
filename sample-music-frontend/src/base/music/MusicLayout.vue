@@ -164,21 +164,23 @@ export default {
 }
 
 .n1 {
-  width: 10%;
   height: 90%;
+  padding: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 40px;
   user-select: none;
+  box-sizing: border-box;
   background-size: 300% 100%;
   animation: changeColor 4s ease infinite running;
   background-image: linear-gradient(315deg, var(--main-color), var(--second-color));
 }
 
 .n1 img {
-  height: 80%;
+  height: 100%;
   border-radius: 50%;
+  margin-right: 5px;
   width: auto; /* 先设置高度为自动，后续根据宽度来等比例调整高度 */
   aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
   object-fit: contain; /* 使用 contain 属性，让图片在保持宽高比的前提下，尽可能填满容器，同时不会变形 */
@@ -186,6 +188,7 @@ export default {
 
 .n1 span {
   width: 70%;
+  margin: 0 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: 0.2s all ease;

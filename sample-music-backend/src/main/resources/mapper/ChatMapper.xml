@@ -8,21 +8,28 @@
     </insert>
 
     <select id="userSelectChatList" resultType="com.sample.music.chat.model.ChatList">
-        SELECT
-            user_id,
-            session_id,
-            COUNT(*) AS messageCount,
-            (SELECT message
-             FROM chat c2
-             WHERE c2.user_id = c1.user_id
-               AND c2.session_id = c1.session_id
-             ORDER BY create_time DESC
-             LIMIT 1) AS content,
-            MAX(create_time) AS lastMessageTime,
-            MIN(create_time) AS firstMessageTime
+        SELECT user_id,
+               session_id,
+               COUNT(*)         AS messageCount,
+               (SELECT message
+                FROM chat c2
+                WHERE c2.user_id = c1.user_id
+                    AND c2.session_id = c1.session_id
+                    AND c2.is_ai = 0
+                ORDER BY create_time DESC
+                LIMIT 1)        AS content,
+               MAX(create_time) AS lastMessageTime,
+               MIN(create_time) AS firstMessageTime,
+            CASE
+            WHEN TIMESTAMPDIFF(HOUR, MAX(create_time), NOW()) &lt;= 24 THEN 0
+            WHEN TIMESTAMPDIFF(HOUR, MAX(create_time), NOW()) &lt;= 72 THEN 1
+            WHEN TIMESTAMPDIFF(DAY, MAX(create_time), NOW()) &lt;= 7 THEN 2
+            WHEN TIMESTAMPDIFF(DAY, MAX(create_time), NOW()) &lt;= 30 THEN 3
+            ELSE 4
+            END AS timeCategory
         FROM chat c1
         WHERE user_id = #{userId}
-        GROUP BY user_id, session_id
+        GROUP BY user_id, session_id, timeCategory
         ORDER BY lastMessageTime DESC
     </select>
 

@@ -7,7 +7,7 @@
         <img :src="Icon.diskPng" alt="" @click="jumpPlay">
       </div>
       <div class="text flex">
-        <ScrollText></ScrollText>
+        <ScrollText :content="songPlaying.title"></ScrollText>
         <span class="song-artist" @click="searchArtist(songPlaying.artist)">{{ songPlaying.artist }}</span>
         <span class="song-lyric">{{ currentLyric }}</span>
       </div>

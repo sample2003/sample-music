@@ -99,7 +99,7 @@ button {
 button:hover {
   background: #222;
   color: #fff;
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: 0 2px 15px #222;
   border: 1px solid #222;
 }

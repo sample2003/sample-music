@@ -8,14 +8,15 @@
           <span class="short-text">为你推荐</span>
         </h3>
         <div class="res">
-          <div class="re" v-for="r in albumDetail.songs?.slice(0,10) || []"
+          <div class="re" v-for="r in albumDetail.songs?.slice(0,6) || []"
                :key="r.id"
                @click="playBySong(r)">
             <div class="img-container">
               <img :src="r.cover" alt="专辑封面" class="cover">
               <img :src="Icon.playWhiteIcon" alt="播放" class="play-icon">
             </div>
-            <p class="song-title">{{ r.title }}</p>
+<!--            <p class="song-title">{{ r.title }}</p>-->
+            <scroll-text :content="r.title" color="var(--third-color)" max-width="100%" class="re-scroll-text"></scroll-text>
           </div>
         </div>
       </div>
@@ -42,7 +43,7 @@
           </span>
         </div>
       </div>
-      <!-- 广告滚动框 -->
+<!--      &lt;!&ndash; 广告滚动框 &ndash;&gt;
       <div class="notice">
         <div class="notice-slides">
           <div class="notice-slide" v-for="a in advert" :key="`advert-${a.id}`"
@@ -54,7 +55,7 @@
             <span>{{ a.title }}</span>
           </div>
         </div>
-        <!-- 指示器 -->
+        &lt;!&ndash; 指示器 &ndash;&gt;
         <div class="notice-indicators">
           <span
               v-for="(a, idx) in advert"
@@ -65,7 +66,7 @@
           </span>
         </div>
       </div>
-      <!-- 广告滚动框 -->
+      &lt;!&ndash; 广告滚动框 &ndash;&gt;
       <div class="notice">
         <div class="notice-slides">
           <div class="notice-slide" v-for="n in notice" :key="n.id"
@@ -77,7 +78,7 @@
             <span>{{ n.title }}</span>
           </div>
         </div>
-        <!-- 指示器 -->
+        &lt;!&ndash; 指示器 &ndash;&gt;
         <div class="notice-indicators">
           <span
               v-for="(n, idx) in notice"
@@ -87,7 +88,7 @@
               @click="setActiveIndex(idx, 'notice')">
           </span>
         </div>
-      </div>
+      </div>-->
     </div>
 
     <div class="recommend-cards">
@@ -145,9 +146,11 @@ import AlbumService from "@/api/service/AlbumService";
 import PlaylistService from "@/api/service/PlaylistService";
 import PublicityService from "@/api/service/PublicityService";
 import Icon from "@/util/common/Icon";
+import ScrollText from "@/components/ScrollText.vue";
 
 export default {
   name: "MusicMainHome",
+  components: {ScrollText},
   data() {
     return {
       playlists: [],
@@ -283,7 +286,7 @@ export default {
 }
 
 .recommend {
-  width: calc(25% - 50px);
+  width: 60%;
   height: 100%;
   border-radius: 10px;
   display: flex;
@@ -293,8 +296,9 @@ export default {
 }
 
 .res {
+  height: 100%;
   display: flex; /* 改为弹性布局 */
-  flex-wrap: wrap; /* 禁止换行 */
+  flex-wrap: nowrap; /* 禁止换行 */
   gap: 15px;
   padding-top: 10px;
   padding-left: 20px;
@@ -303,8 +307,9 @@ export default {
 }
 
 .re {
-  flex: 0 0 55px; /* 固定宽度 */
-  height: 55px;
+  height: 100%;
+  width: auto;
+  aspect-ratio: 1 / 1; /* 设置宽高比为1:1，确保图片为正方形 */
   position: relative;
   cursor: pointer;
   overflow: hidden;
@@ -317,7 +322,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: 50%; /* 初始只显示上半部分 */
+  height: calc(100% - 1em); /* 初始只显示上半部分 */
   overflow: hidden;
   transition: all 0.3s ease;
 }
@@ -341,27 +346,23 @@ export default {
   transition: all 0.3s ease;
 }
 
-.song-title {
+.re-scroll-text {
   position: absolute;
+  box-sizing: content-box;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50%;
+  height: 1.5em;
   margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--fourth-color);
   color: black;
   font-size: 0.8em;
   text-align: center;
   transition: all 0.3s ease;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  opacity: 1;
 }
 
-/* Hover 效果 */
 .re:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -378,7 +379,7 @@ export default {
   opacity: 1;
 }
 
-.re:hover .song-title {
+.re:hover .re-scroll-text {
   opacity: 0;
   transform: translateY(100%);
 }
@@ -397,6 +398,7 @@ export default {
   display: flex;
   height: 100%;
   position: relative;
+  backface-visibility: hidden; /* 防止闪烁 */
 }
 
 .notice-slide {

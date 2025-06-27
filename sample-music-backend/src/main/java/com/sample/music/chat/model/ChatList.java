@@ -9,4 +9,5 @@ public class ChatList {
     private String content;
     private String lastMessageTime;
     private String firstMessageTime;
+    private int timeCategory;
 }

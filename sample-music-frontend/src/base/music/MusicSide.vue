@@ -152,8 +152,7 @@ export default {
 
 /* 按钮图标 */
 .side-item img {
-  width: 20%;
-  height: 100%;
+  height: 60%;
   transition: 0.3s ease;
   position: absolute;
   left: 0;
@@ -188,7 +187,7 @@ export default {
 }
 
 .side-item:hover img, .it img {
-  width: 22%;
+  height: 70%;
   right: 45%;
 }
 
@@ -197,6 +196,45 @@ export default {
   left: 15%;
   transition: opacity 0.1s ease 0.2s;
 }
+
+
+.side-items {
+  width: calc(100% - 20px);
+  grid-row: 2 / span 1;
+  display: grid;
+  border-radius: 5px;
+  padding: 5px 0;
+  margin-left: 10px;
+  grid-template-rows: repeat(6, 1fr);
+  container-type: inline-size; /* 新增容器查询 */
+}
+
+/* 新增容器查询 */
+@container (max-width: 60px) {
+  .side-item span {
+    opacity: 0 !important;
+    display: none;
+  }
+
+  .it span {
+    opacity: 0 !important;
+    display: none;
+  }
+
+  .side-item:hover img {
+    right: 0;
+  }
+
+  .it img {
+    right: 0;
+  }
+}
+
+.it {
+  width: 90%;
+  box-shadow: inset 2px 2px 4px #b3b3b3, inset -2px -2px 4px #ffffff;
+}
+
 
 .it {
   width: 90%;

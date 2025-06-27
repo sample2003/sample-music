@@ -3,6 +3,7 @@
     <textarea
         required="required"
         @input="limitCommentLength"
+        @keyup.enter="submitFx"
         v-model="area"
     ></textarea>
     <span>{{ message }}</span>
@@ -29,6 +30,7 @@ export default {
   methods: {
     // 评论
     async submitFx() {
+      console.log('提交内容:', this.area);
       this.$emit('submit', this.area)
       this.area = ''
     },
